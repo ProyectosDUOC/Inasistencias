@@ -17,92 +17,58 @@ import modelo.InasistenciaImagen;
  * @author benja
  */
 public class ImagenDAO {
-    private ArrayList<InasistenciaDAO> arrayImg = new ArrayList<>();
 
-   
+    private ArrayList<InasistenciaImagen> arrayImg = new ArrayList<>();
+
     public ArrayList mostrarDatos() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
-
             Statement statement = connection.createStatement();
-
             String consultaSQL = "SELECT * FROM inasistencia_imagen;";
-
             ResultSet results = statement.executeQuery(consultaSQL);
 
-            int rut;
-            String dv, pnombre, snombre, appaterno, apmaterno, email;
-
-            /* rut_docente   INT NULL,
-                dv_docente    VARCHAR(1),
-                pnombre      VARCHAR(30),
-                snombre      VARCHAR(30),
-                appaterno    VARCHAR(30),
-                apmaterno    VARCHAR(30),
-                email        VARCHAR(30),
+            /* CREATE TABLE inasistencia_imagen(
+                id_inasistencia INT NOT NULL,
+                nombre_imagen VARCHAR(30),
+                imagen MEDIUMBLOB,
+                descripcion VARCHAR(30),
+                PRIMARY KEY(id_inasistencia));
              */
             arrayImg.removeAll(arrayImg);
             while (results.next()) {
-                rut = results.getInt("rut_docente");
-                dv = results.getString("dv_docente");
-                pnombre = results.getString("pnombre");
-                snombre = results.getString("snombre");
-                appaterno = results.getString("appaterno");
-                apmaterno = results.getString("apmaterno");
-                email = results.getString("email");
-                arrayDocentes.add(new Docente(rut, dv, pnombre, snombre, appaterno, apmaterno, email));
+                InasistenciaImagen imagen = new InasistenciaImagen();
+                imagen.setIdInasistencia(results.getInt("id_inasistecia"));
+                imagen.setNombreImagen(results.getString("nombre_imagen"));
+                imagen.setImagen(results.getBytes("imagen"));
+                imagen.setDescripcion(results.getString("descripcion"));
+
+                arrayImg.add(imagen);
             }
             connection.close();
         } catch (java.lang.Exception ex) {
             System.out.println("Error: " + ex);
         }
-        return arrayDocentes;
+        return arrayImg;
     }
 
-    @Override
-    public Docente buscarDatos(int rut) {
-        Docente obj = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
-
-            Statement statement = connection.createStatement();
-            String query = "SELECT * FROM docente WHERE rut_docente=" + rut + ";";
-
-            ResultSet results = statement.executeQuery(query);
-
-            int rut1;
-            String dv, pnombre, snombre, appaterno, apmaterno, email;
-
-            while (results.next()) {
-                rut1 = results.getInt("rut_docente");
-                dv = results.getString("dv_docente");
-                pnombre = results.getString("pnombre");
-                snombre = results.getString("snombre");
-                appaterno = results.getString("appaterno");
-                apmaterno = results.getString("apmaterno");
-                email = results.getString("email");
-
-                if (rut1 == rut) {
-                    obj = new Docente(rut1, dv, pnombre, snombre, appaterno, apmaterno, email);
-                    break;
-                }
-            }
-            connection.close();
-        } catch (java.lang.Exception ex) {
-            System.out.println("Error: " + ex);
-        }
-        return obj;
-    }
-
-    @Override
-    public int agregar(Docente docente) {
+    public int agregar(InasistenciaImagen imagen) {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
             Statement statement = connection.createStatement();
-            String agregarSQL = "INSERT INTO docente VALUES(" + docente.getRutDocente() + ",'" + docente.getDvDocente() + "','" + docente.getPnombre() + "','" + docente.getSnombre() + "','" + docente.getAppaterno() + "','" + docente.getApmaterno() + "','" + docente.getEmail() + "');";
+            /* CREATE TABLE inasistencia_imagen(
+                id_inasistencia INT NOT NULL,
+                nombre_imagen VARCHAR(30),
+                imagen MEDIUMBLOB,
+                descripcion VARCHAR(30),
+                PRIMARY KEY(id_inasistencia));
+             */
+            String agregarSQL = "INSERT INTO inasistencia_imagen VALUES("
+                    + imagen.getIdInasistencia()
+                    + ",'" + imagen.getNombreImagen()
+                    + "','" + imagen.getArchivoImagen()
+                    + "','" + imagen.getDescripcion() + "');";
             int results = statement.executeUpdate(agregarSQL);
             connection.close();
             return results;
@@ -111,25 +77,35 @@ public class ImagenDAO {
         }
     }
 
-    @Override
-    public int eliminar(int rut) {
+    public InasistenciaImagen buscar(int idInasistencia) {
+        InasistenciaImagen obj = new InasistenciaImagen();
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
+
             Statement statement = connection.createStatement();
-            String query = "DELETE FROM docente WHERE rut_docente=" + rut;
-            int results = statement.executeUpdate(query);
+            String query = "SELECT * FROM inasistencia_imagen WHERE id_inasistencia = " + idInasistencia + ";";
+
+            ResultSet results = statement.executeQuery(query);
+            /* CREATE TABLE inasistencia_imagen(
+                id_inasistencia INT NOT NULL,
+                nombre_imagen VARCHAR(30),
+                imagen MEDIUMBLOB,
+                descripcion VARCHAR(30),
+                PRIMARY KEY(id_inasistencia));
+             */
+            while (results.next()) {
+                obj.setIdInasistencia(results.getInt("id_inasistencia"));
+                obj.setNombreImagen(results.getString("nombre_imagen"));
+                obj.setImagen(results.getBytes("imagen"));
+                obj.setDescripcion(results.getString("descripcion"));
+                break;
+            }
             connection.close();
-            System.out.println("valor---> " + results);
-            return results;
         } catch (java.lang.Exception ex) {
             System.out.println("Error: " + ex);
-            return 2;
         }
+        return obj;
     }
 
-    @Override
-    public int actualizar(Docente docente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
