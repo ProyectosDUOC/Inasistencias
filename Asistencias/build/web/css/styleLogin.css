@@ -1,0 +1,33 @@
+/* 
+    Created on : 21-feb-2018, 21:46:26
+    Author     : benja
+*/
+.main {
+    background-color: #fff;
+    border: 10px solid #EAEAEA;
+}
+.color-Azul{
+    background-color: #092845;
+}
+.color-Azul-text{
+    color: #092845;
+}
+.color-AzulClaro{
+    background-color: #003462;
+}
+.color-AzulClaro-text{
+    color: #003462;
+}
+.color-Amarillo{
+    background-color: #D29524;
+}
+.color-Amarillo-text{
+    color: #D29524;
+}
+.color-Plomo{
+    background-color: #F3F3F3;
+}
+.color-Plomo-text{
+    color: #F3F3F3;
+}
+

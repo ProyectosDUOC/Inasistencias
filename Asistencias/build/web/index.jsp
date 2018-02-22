@@ -10,28 +10,68 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login</title>
-        <link rel="stylesheet" type="text/css" href="css/login.css">        
+        <link rel="stylesheet" type="text/css" href="css/styleLogin.css">     
+        <!-- CSS  -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     </head>
     <body>
-        <h1>Sistema Asistencia</h1>
-        <div id="main">
-        <h1>Ingresa acá</h1>
-        <form action="Login" method="post">
-            <table>
-                <tr>
-                    <td>Usuario:</td>
-                    <td><input type="text" name="txtUser"/></td>
-                </tr>
-                <tr>
-                    <td>Contraseña:</td>
-                    <td><input type="password" name="txtPass"/></td>
-                </tr>
-            </table>
-            <div>
-                <input id="entrar" type="submit" name="opcion" value="Entrar"/>
-                <span id="mensaje"> ${param.mensaje}</span>
+        <header class="color-Azul">
+            <div class="container">
+                <div class="row">                    
+                    <div class="center-align">
+                        <br>
+                        <h5 class="white-text"><strong>Sistema de inasistencia</strong></h5>
+                        <br>
+                    </div>
+                </div>
             </div>
-        </form>
+        </header>       
+        <br>
+        <br>
+        <div class="container">
+            <div class="center-align">
+                <p class="color-Azul-text color-Plomo"><strong>Centro de Notificaciones</strong></p>
+            </div>
         </div>
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 m4">     
+                        <div class="center-align main">
+                            <h5 class="color-AzulClaro-text"><strong>Ingresa acá</strong></h5>
+                            <form action="Login" method="post">
+                                <table>
+                                    <tr>
+                                        <td>Usuario:</td>
+                                        <td><input type="text" name="txtUser" required=""/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contraseña:</td>
+                                        <td><input type="password" name="txtPass" required=""/></td>
+                                    </tr>
+                                </table>
+                                <div >
+                                    <input id="entrar" type="submit" name="opcion" value="Entrar"/>                                
+                                </div>                            
+                            </form>
+                        </div>
+                        <span class="red-text"> ${param.mensaje}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <br><br><br><br>
+        <footer class="color-Azul">            
+            <div class="container">
+                <br>
+                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC 2018</p>
+                <br>
+                <br>
+            </div>
+        </footer>
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="js/materialize.js"></script>
+        <script src="js/init.js"></script>
     </body>
 </html>
