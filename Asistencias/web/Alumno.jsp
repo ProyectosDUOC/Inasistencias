@@ -18,30 +18,46 @@
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link href="css/style1.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link rel="stylesheet" type="text/css" href="css/styleLogin.css"> 
 
         <%
             ControlUsuario user = (ControlUsuario) session.getAttribute("usuario");
-            if (user == null) response.sendRedirect("error.jsp");
+            if (user == null) {
+                response.sendRedirect("error.jsp");
+            }
             int rutAlumno = user.getRutUsuario();
             Alumno alu = (new AlumnoDAO()).buscarDatos(rutAlumno);
-            if (alu == null) response.sendRedirect("error.jsp");
+            if (alu == null) {
+                response.sendRedirect("error.jsp");
+            }
             ArrayList<Inasistencia> faltas = (new InasistenciaDAO()).buscarRut(rutAlumno);
             ClasesConsultas consultaBD = new ClasesConsultas();
         %>
     </head>
     <body>
+        <header class="color-Azul">
+            <div class="container">
+                <div class="row"> 
+                    <div class="center-align">
+                        <br>
+                        <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
+                        <br>
+                        <div class="col s6 offset-s6">
+                            <p class="color-Amarillo-text"> <strong>Bienvenido</strong> <%=alu.getPnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno()%></p>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </header>   
         <div class="container">
-            <h1 class="yellow darken-1">Menu Alumno</h1>
+            <div class="row">
+                <h4 class="color-Azul-text color-Plomo center-align">Centro de Notificaciones Duoc</h4>
             <form action="ControladorAlumno" method="post" >
                 <button class="btn waves-effect waves-light red right" type="submit" name="opcion" value="Salir">
                     Cerrar Sesion
                 </button>
-                <h3 class="black-text">Datos Alumno</h3>               
-                <ul>
-                    <li class="amber darken-3 black-text">Nombre: <%=alu.getPnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno()%></li>
-                    <li class="amber darken-3 black-text">Rut: <%=rutAlumno + "-" + alu.getDvAlumno()%> </li>
-                </ul>
+                
                 <table class=" grey lighten-2">
                     <tr class="amber darken-3">
                         <th>Ramo</th>
@@ -51,7 +67,7 @@
                     </tr>
                     <% if (faltas.isEmpty()) {  %>
                     <tr><td>No tienes registrado inasistecias para justificar<td></tr>
-                     <%   }
+                    <%   }
                     %>
                     <% for (Inasistencia falta : faltas) {   %>
                     <tr>  
@@ -62,7 +78,7 @@
                         <td>
                             <% if (falta.getIdEstadoi() == 1) {%>
                             <button 
-                                class="btn waves-effect waves-light indigo darken-3" 
+                                class="btn  color-Azul amber-text" 
                                 type="submit" 
                                 name="opcion" 
                                 value="j<%=falta.getIdInasistencia()%>"> 
@@ -74,13 +90,21 @@
                     </tr>
                     <% }%>
                 </table>    
-                <button class="btn waves-effect waves-light red " type="submit" name="opcion" value="Salir">
-                    Cerrar Sesion
-                </button>
-            </form>                
-        </div>       
+            </form> 
+            </div>
+                           
+        </div>  
+        <footer class="color-Azul">            
+            <div class="container">
+                <br>
+                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>
+                <p class="color-Amarillo-text center-align">Carlos Orellana ★ Sebastian Orrego &#9733;  Benjamin Mora</p>
+                <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
+                <br>
+            </div>
+        </footer>
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="js/materialize.js"></script>
-        <script src="js/init.js"></script>
+        <script src="js/init.js"></script>    
     </body>
 </html>

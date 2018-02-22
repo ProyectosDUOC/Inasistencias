@@ -17,21 +17,41 @@
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link href="css/style1.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link rel="stylesheet" type="text/css" href="css/styleLogin.css"> 
     </head>
     <body>
         <%
             String idInasistencia = request.getParameter("id");
             session.setAttribute("inaActual", idInasistencia);
+            
+            
+
         %>
+        <header class="color-Azul">
+            <div class="container">
+                <div class="row">                    
+                    <div class="center-align">
+                        <br>
+                        <h5 class="white-text"><strong>Sistema de inasistencia</strong></h5>
+                        <br>
+                        <br>
+                        <div class="col s6 offset-s6">
+                            <p class="color-Amarillo-text"> <strong>Bienvenido</strong> <%=alu.getPnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno()%></p>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </header>   
+        
         <div class="container">
             <form action="ControladorJustificar" method="post">
-                <h1 class="yellow darken-1 center-align">Justificacion</h1>
-                <table class=" grey lighten-2">
+                <h4 class="color-Plomo color-Azul-text center-align">Justificacion</h4>
+                <table class=" color-Plomo color-Azul-text">
                     <tr>
                         <td >Motivo:</td>
                         <td class="col s12 m6 l3">
-                            <select name="motivo" class="yellow darken-1 center-align" required="required">
+                            <select name="motivo" class="color-Azul color-Amarillo-text center-align" required="required">
                                 <option value="" disabled selected>Seleccione un Motivo</option>                    
                                 <%  ArrayList<Motivo> motivos = new ArrayList();
                                     motivos = new ClasesConsultas().mostrarMotivos();
@@ -68,6 +88,15 @@
 
             </form>
         </div>
+        <footer class="color-Azul">            
+            <div class="container">
+                <br>
+                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>
+                <p class="color-Amarillo-text center-align">Carlos Orellana ★ Sebastian Orrego &#9733;  Benjamin Mora</p>
+                <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
+                <br>
+            </div>
+        </footer>                    
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
