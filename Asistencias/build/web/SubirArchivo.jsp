@@ -45,7 +45,7 @@
                     </div>
                 </div>
             </div>
-        </header>  
+        </header> 
         <div class="container">
             <div class="row center-align">
                 <h4 class="color-Azul-text color-Plomo center-align">Carga Inasistencias</h4>
@@ -71,7 +71,6 @@
                 <br>
             </div>
         </footer>
-        <script src="js/materialize.js"></script>
-        <script src="js/init.js"></script>
+        <script src="js/materialize.js"></script>        
     </body>
 </html>

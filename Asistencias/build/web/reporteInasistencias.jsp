@@ -4,6 +4,10 @@
     Author     : carlos
 --%>
 
+<%@page import="dao.DirectorDAO"%>
+<%@page import="modelo.Director"%>
+<%@page import="dao.DocenteDAO"%>
+<%@page import="modelo.Docente"%>
 <%@page import="dao.CoordinadorDAO"%>
 <%@page import="modelo.Coordinador"%>
 <%@page import="modelo.Coordinador"%>
@@ -21,21 +25,22 @@
         <link rel="stylesheet" type="text/css" href="css/styleLogin.css">  
         <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css"> 
         <title>Inasistencia por alumno</title>          
-        <script>
-            $(document).ready(function () {
-                $('select').material_select();
-            });
-        </script>
         <%
             HttpSession sesion = request.getSession(true);
             Coordinador coor = new Coordinador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-
+            Director dire = new Director();
             if (user == null) {
                 response.sendRedirect("error.jsp");
             } else {
                 int rut = user.getRutUsuario();
-                coor = (new CoordinadorDAO()).buscarDatos(rut);
+                //2 docente y 4 coordinador
+                if (user.getIdTipoUsuario() == 3) {
+                    dire = (new DirectorDAO()).buscarDatos(rut);
+                } else {
+                    coor = (new CoordinadorDAO()).buscarDatos(rut);
+                }
+
             }
         %>        
     </head>
@@ -48,8 +53,19 @@
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
 
                         <div class="col s6 offset-s6">
-                            <p class="color-Amarillo-text"><strong>Bienvenido </strong><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></p>
-                        </div>
+                            <%
+                                if (user.getIdTipoUsuario() == 3) { %>
+                                 <p class="color-Amarillo-text"><strong>Bienvenido </strong><%=dire.getPnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno()%></p>
+                      
+                            <%
+                                } else {
+                                %>
+                                 <p class="color-Amarillo-text"><strong>Bienvenido </strong><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></p>
+                      
+                                <%
+                                }
+                            %>
+                             </div>
                     </div>
                 </div>
             </div>
@@ -57,8 +73,12 @@
         <div class="container">
             <div class="row">
                 <h4 class="yellow darken-1 center-align">Reporte Inasistencias Justificado</h4>
+
             </div>
+
         </div>  
+
+
         <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core"%>
         <%@ taglib prefix="sql"   uri="http://java.sun.com/jstl/sql" %>
         <sql:setDataSource
@@ -130,8 +150,13 @@
         </footer>    
         <script src="js/materialize.js"></script>
         <script src="js/jquery.min.js"></script>
-        <script src="js/jquery.dataTables.min.js"></script>
+        <script src="js/jquery.dataTables.js"></script>
         <script src="js/script.js"></script>
+        <script>
 
+            $(document).ready(function () {
+                $('select').material_select();
+            });
+        </script>
     </body>
 </html>

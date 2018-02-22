@@ -20,7 +20,19 @@
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link href="css/style1.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <%
+            HttpSession sesion = request.getSession(true);
+            Director dire = new Director();
+            ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
+            
+            if (user == null) {
+                    response.sendRedirect("error.jsp");
+            }
+            else{
+                int rut = user.getRutUsuario();
+                dire = (new DirectorDAO()).buscarDatos(rut);
+            }            
+        %>
     </head>
     <body>
         <div class="section">
