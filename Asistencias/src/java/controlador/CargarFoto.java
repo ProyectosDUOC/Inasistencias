@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import dao.ImagenDAO;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import modelo.InasistenciaImagen;
 
 /**
  *
@@ -44,7 +46,12 @@ public class CargarFoto extends HttpServlet {
         Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
         InputStream fileContent = filePart.getInputStream();
-
+        
+        InasistenciaImagen imagen = new InasistenciaImagen(2, fileName, fileContent, "15 fps");
+        
+        int x = (new ImagenDAO()).agregar(imagen);
+        
+        response.sendError(x);
         
     }
 

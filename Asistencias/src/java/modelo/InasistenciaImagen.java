@@ -62,6 +62,12 @@ public class InasistenciaImagen implements Serializable {
         this.imagen = imagen;
         this.descripcion = descripcion;
     }
+    public InasistenciaImagen(Integer idInasistencia, String nombreImagen, InputStream imagen, String descripcion) {
+        this.idInasistencia = idInasistencia;
+        this.nombreImagen = nombreImagen;
+        this.archivoImagen = imagen;
+        this.descripcion = descripcion;
+    }
     
     public InputStream getArchivoImagen() {
         return archivoImagen;

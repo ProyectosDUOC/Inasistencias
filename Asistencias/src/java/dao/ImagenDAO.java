@@ -5,8 +5,10 @@
  */
 package dao;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -56,20 +58,23 @@ public class ImagenDAO {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
-            Statement statement = connection.createStatement();
+            
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO inasistencia_imagen VALUES (?,?,?,?)");
+                       
+            
             /* CREATE TABLE inasistencia_imagen(
                 id_inasistencia INT NOT NULL,
                 nombre_imagen VARCHAR(30),
                 imagen MEDIUMBLOB,
-                descripcion VARCHAR(30),
-                PRIMARY KEY(id_inasistencia));
+                descripcion VARCHAR(30);
              */
-            String agregarSQL = "INSERT INTO inasistencia_imagen VALUES("
-                    + imagen.getIdInasistencia()
-                    + ",'" + imagen.getNombreImagen()
-                    + "','" + imagen.getArchivoImagen()
-                    + "','" + imagen.getDescripcion() + "');";
-            int results = statement.executeUpdate(agregarSQL);
+            ps.setInt(1, imagen.getIdInasistencia());
+            ps.setString(2, imagen.getNombreImagen());
+            ps.setBlob(3, imagen.getArchivoImagen());            
+            ps.setString(4, imagen.getDescripcion());
+            
+           
+            int results = ps.executeUpdate();
             connection.close();
             return results;
         } catch (java.lang.Exception ex) {

@@ -4,6 +4,9 @@
     Author     : Seba
 --%>
 
+<%@page import="dao.CoordinadorDAO"%>
+<%@page import="modelo.Coordinador"%>
+<%@page import="modelo.ControlUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,6 +18,18 @@
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link rel="stylesheet" type="text/css" href="css/styleLogin.css">      
         <title>Menu Principal Coordinador</title>
+        <%
+            Coordinador coor = new Coordinador();
+            if (session.getAttribute("usuario") == null) {
+                    response.sendRedirect("error.jsp");
+            }
+            else{
+                ControlUsuario user = (ControlUsuario) session.getAttribute("usuario");
+
+                int rut = user.getRutUsuario();
+                coor = (new CoordinadorDAO()).buscarDatos(rut);
+            }            
+        %>
     </head>
     <body>
         <header class="color-Azul">
@@ -23,9 +38,9 @@
                     <div class="center-align">
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
-                        <br>
+                        
                         <div class="col s6 offset-s6">
-                            <p class="color-Amarillo-text"><strong>Bienvenido :</strong></p>
+                            <p class="color-Amarillo-text"><strong>Bienvenido </strong><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></p>
                         </div>
                     </div>
                 </div>
@@ -38,17 +53,17 @@
                     <table border="1">
                         <tr>
                             <td>
-                                <button class="btn-large waves-effect waves-light indigo darken-3" type="submit" name="opcion" value="Subir Inasistencias">Subir Inasistencias</button>
+                                <button class="btn-large waves-effect waves-light color-AzulClaro" type="submit" name="opcion" value="Subir Inasistencias">Subir Inasistencias</button>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <button class="btn-large waves-effect waves-light indigo darken-3" type="submit" name="opcion" value="Enviar Correos">Enviar Correos</button>
+                                <button class="btn-large waves-effect waves-light color-AzulClaro" type="submit" name="opcion" value="Enviar Correos">Enviar Correos</button>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <button class="btn-large waves-effect waves-light indigo darken-3" type="submit" name="opcion" value="Ver datos">Ver datos</button> 
+                                <button class="btn-large color-AzulClaro" type="submit" name="opcion" value="Ver datos">Ver datos</button> 
                             </td>
                         </tr>
                         <tr>

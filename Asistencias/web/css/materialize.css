@@ -5207,7 +5207,7 @@ small {
 .btn, .btn-large {
   text-decoration: none;
   color: #fff;
-  background-color: #26a69a;
+  background-color: #003461;
   text-align: center;
   letter-spacing: .5px;
   -webkit-transition: .2s ease-out;
@@ -5229,7 +5229,7 @@ small {
   height: 40px;
   line-height: 40px;
   padding: 0;
-  background-color: #26a69a;
+  background-color: #003462;
   border-radius: 50%;
   -webkit-transition: .3s;
   transition: .3s;
@@ -5238,7 +5238,7 @@ small {
 }
 
 .btn-floating:hover {
-  background-color: #26a69a;
+  background-color:#003462;
 }
 
 .btn-floating:before {
@@ -7415,11 +7415,11 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .side-nav li > a.btn:hover, .side-nav li > a.btn-large:hover, .side-nav li > a.btn-large:hover {
-  background-color: #2bbbad;
+  background-color: #003462;
 }
 
 .side-nav li > a.btn-floating:hover {
-  background-color: #26a69a;
+  background-color:  #003462;
 }
 
 .side-nav li > a > i,

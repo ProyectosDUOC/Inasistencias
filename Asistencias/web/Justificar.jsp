@@ -36,7 +36,7 @@
                         <br>
                         <br>
                         <div class="col s6 offset-s6">
-                            <p class="color-Amarillo-text"> <strong>Bienvenido</strong> <%=alu.getPnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno()%></p>
+                          <!--  <p class="color-Amarillo-text"> <strong>Bienvenido</strong></p> -->
                         </div>
                         <br>
                     </div>
