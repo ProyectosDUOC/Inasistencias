@@ -24,38 +24,41 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <br>
+                        <div class="col s6 offset-s6">
+                            <p class="color-Amarillo-text"><strong>Bienvenido :</strong></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </header>  
         <div class="container">
-
-            <h1 class="yellow darken-1 center-align" >Menu Coordinador</h1>
-            <form action="MenuCoordinador" method="post" >
-                <table border="1">
-                    <tr>
-                        <td>
-                            <button class="btn-large waves-effect waves-light indigo darken-3" type="submit" name="opcion" value="Subir Inasistencias">Subir Inasistencias</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button class="btn-large waves-effect waves-light indigo darken-3" type="submit" name="opcion" value="Enviar Correos">Enviar Correos</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button class="btn-large waves-effect waves-light indigo darken-3" type="submit" name="opcion" value="Ver datos">Ver datos</button> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button class="btn-large waves-effect  red waves-light " type="submit" name="opcion" value="Salir">Salir</button>
-                        </td>
-                    </tr>
-                </table>
-
-            </form>
+            <div class="row">
+                <h4 class="color-Plomo color-Azul-text center-align" >Menu Coordinador</h4>
+                <form action="MenuCoordinador" method="post" >
+                    <table border="1">
+                        <tr>
+                            <td>
+                                <button class="btn-large waves-effect waves-light indigo darken-3" type="submit" name="opcion" value="Subir Inasistencias">Subir Inasistencias</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button class="btn-large waves-effect waves-light indigo darken-3" type="submit" name="opcion" value="Enviar Correos">Enviar Correos</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button class="btn-large waves-effect waves-light indigo darken-3" type="submit" name="opcion" value="Ver datos">Ver datos</button> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button class="btn-large waves-effect  red waves-light " type="submit" name="opcion" value="Salir">Salir</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
         </div>
         <footer class="color-Azul">            
             <div class="container">
@@ -69,6 +72,5 @@
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
-
     </body>
 </html>
