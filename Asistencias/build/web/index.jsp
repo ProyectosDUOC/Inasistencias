@@ -9,9 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
         <title>Login</title>
         <link rel="stylesheet" type="text/css" href="css/styleLogin.css">     
-        <!-- CSS  -->
+        <!-- CSS  -->        
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     </head>
@@ -26,12 +27,10 @@
                     </div>
                 </div>
             </div>
-        </header>       
-        <br>
-        <br>
+        </header>   
         <div class="container">
             <div class="center-align">
-                <p class="color-Azul-text color-Plomo"><strong>Centro de Notificaciones</strong></p>
+                <p class="color-Plomo-text color-Plomo">hola</p>
             </div>
         </div>
         <section>
@@ -61,12 +60,13 @@
                 </div>
             </div>
         </section>
-        <br><br><br><br>
+        <br>
         <footer class="color-Azul">            
             <div class="container">
                 <br>
-                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC 2018</p>
-                <br>
+                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>
+                <p class="color-Amarillo-text center-align">Carlos Orellana ★ Sebastian Orrego &#9733;  Benjamin Mora</p>
+                <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
                 <br>
             </div>
         </footer>
