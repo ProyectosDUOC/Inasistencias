@@ -4,6 +4,9 @@
     Author     : Seba
 --%>
 
+<%@page import="dao.CoordinadorDAO"%>
+<%@page import="modelo.ControlUsuario"%>
+<%@page import="modelo.Coordinador"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,9 +16,20 @@
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link href="css/style1.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link rel="stylesheet" type="text/css" href="css/styleLogin.css">         
         <title>Coordinador | Subir Archivo Excel</title>
+        <%
+            HttpSession sesion = request.getSession(true);
+            Coordinador coor = new Coordinador();
+            ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
+
+            if (user == null) {
+                response.sendRedirect("error.jsp");
+            } else {
+                int rut = user.getRutUsuario();
+                coor = (new CoordinadorDAO()).buscarDatos(rut);
+            }
+        %>  
     </head>
     <body>
         <header class="color-Azul">
@@ -24,7 +38,7 @@
                     <div class="center-align">
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
-                        
+
                         <div class="col s6 offset-s6">
                             <p class="color-Amarillo-text"><strong>Bienvenido </strong><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></p>
                         </div>
@@ -33,20 +47,21 @@
             </div>
         </header>  
         <div class="container">
-            <div class="row">
-                <h1 class="yellow darken-1 center-align">Carga Inasistencias</h1>
-                <p class="red-text">Subir archivo Excel (.xlsx) </p>
+            <div class="row center-align">
+                <h4 class="color-Azul-text color-Plomo center-align">Carga Inasistencias</h4>
+                <br>
+                <p class="red-text"><strong>Subir archivo Excel (.xlsx)</strong></p>
                 <form action="CargarExcel" method="post" enctype="multipart/form-data">
                     <input type="file" name="file" required=""  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
-                    <input type="submit" value="Subir" />
+                    <input class="btn color-Azul" type="submit" value="Subir" />
                 </form>
                 <br>
-                <div class="mensaje">${param.mensaje}</div>
+                <div class="mensaje red-text"><strong>${param.mensaje}</strong></div>
                 <br>                
                 <a  class="white-text btn waves-effect waves-light red" href="Coordinador.jsp">Volver</a>
-          
             </div>        
-        </div>                
+        </div>     
+        <br><br><br><br>
         <footer class="color-Azul">            
             <div class="container">
                 <br>

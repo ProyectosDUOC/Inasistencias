@@ -19,13 +19,14 @@
         <link rel="stylesheet" type="text/css" href="css/styleLogin.css">      
         <title>Menu Principal Coordinador</title>
         <%
+            HttpSession sesion = request.getSession(true);
             Coordinador coor = new Coordinador();
-            if (session.getAttribute("usuario") == null) {
+            ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
+            
+            if (user == null) {
                     response.sendRedirect("error.jsp");
             }
             else{
-                ControlUsuario user = (ControlUsuario) session.getAttribute("usuario");
-
                 int rut = user.getRutUsuario();
                 coor = (new CoordinadorDAO()).buscarDatos(rut);
             }            
