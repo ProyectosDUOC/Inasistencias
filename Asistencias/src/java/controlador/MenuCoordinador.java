@@ -31,6 +31,7 @@ public class MenuCoordinador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+      
         String opcion =  request.getParameter("opcion");
         
         if(opcion.equals("Subir Inasistencias")){

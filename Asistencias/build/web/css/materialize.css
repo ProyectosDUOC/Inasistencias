@@ -5207,7 +5207,7 @@ small {
 .btn, .btn-large {
   text-decoration: none;
   color: #fff;
-  background-color: #003461;
+  background-color: #26a69a;
   text-align: center;
   letter-spacing: .5px;
   -webkit-transition: .2s ease-out;
@@ -5216,7 +5216,7 @@ small {
 }
 
 .btn:hover, .btn-large:hover {
-  background-color: #003462;
+  background-color: #2bbbad;
 }
 
 .btn-floating {
@@ -5229,7 +5229,7 @@ small {
   height: 40px;
   line-height: 40px;
   padding: 0;
-  background-color: #003462;
+  background-color: #26a69a;
   border-radius: 50%;
   -webkit-transition: .3s;
   transition: .3s;
@@ -5238,7 +5238,7 @@ small {
 }
 
 .btn-floating:hover {
-  background-color:#003462;
+  background-color: #26a69a;
 }
 
 .btn-floating:before {
@@ -5473,7 +5473,7 @@ button.btn-floating {
 
 .dropdown-content li > a, .dropdown-content li > span {
   font-size: 16px;
-  color: #092845;
+  color: #26a69a;
   display: block;
   line-height: 22px;
   padding: 14px 16px;
@@ -6084,9 +6084,9 @@ input[type=tel]:not(.browser-default):focus:not([readonly]),
 input[type=number]:not(.browser-default):focus:not([readonly]),
 input[type=search]:not(.browser-default):focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]) {
-  border-bottom: 1px solid red;
-  -webkit-box-shadow: 0 1px 0 0 red;
-          box-shadow: 0 1px 0 0 red;
+  border-bottom: 1px solid #26a69a;
+  -webkit-box-shadow: 0 1px 0 0 #26a69a;
+          box-shadow: 0 1px 0 0 #26a69a;
 }
 
 input:not([type]):focus:not([readonly]) + label,
@@ -6102,7 +6102,7 @@ input[type=tel]:not(.browser-default):focus:not([readonly]) + label,
 input[type=number]:not(.browser-default):focus:not([readonly]) + label,
 input[type=search]:not(.browser-default):focus:not([readonly]) + label,
 textarea.materialize-textarea:focus:not([readonly]) + label {
-  color: red;
+  color: #26a69a;
 }
 
 input:not([type]).validate + label,
@@ -6390,7 +6390,7 @@ textarea.materialize-textarea + label:after, .select-wrapper + label:after {
 }
 
 .input-field .prefix.active {
-  color: red;
+  color: #26a69a;
 }
 
 .input-field .prefix ~ input,
@@ -7415,11 +7415,11 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .side-nav li > a.btn:hover, .side-nav li > a.btn-large:hover, .side-nav li > a.btn-large:hover {
-  background-color: #003462;
+  background-color: #2bbbad;
 }
 
 .side-nav li > a.btn-floating:hover {
-  background-color:  #003462;
+  background-color: #26a69a;
 }
 
 .side-nav li > a > i,

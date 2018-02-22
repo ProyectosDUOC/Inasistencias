@@ -19,20 +19,37 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link rel="stylesheet" type="text/css" href="css/styleLogin.css"> 
-
+         <!-- JS -->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css"> 
+       
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();                
+            });
+        </script>
         <%
-            ControlUsuario user = (ControlUsuario) session.getAttribute("usuario");
-            if (user == null) {
-                response.sendRedirect("error.jsp");
+            ControlUsuario user = null;
+            int rutAlumno = 0;
+            Alumno alu = new Alumno();
+            ArrayList<Inasistencia> faltas = null;
+            ClasesConsultas consultaBD = null;
+            
+            if (session.getAttribute("usuario")==null) {
+                response.sendRedirect("index.jsp");
             }
-            int rutAlumno = user.getRutUsuario();
-            Alumno alu = (new AlumnoDAO()).buscarDatos(rutAlumno);
-            if (alu == null) {
-                response.sendRedirect("error.jsp");
+            else{
+                user = (ControlUsuario) session.getAttribute("usuario");
+                rutAlumno = user.getRutUsuario();
+                alu = (new AlumnoDAO()).buscarDatos(rutAlumno);
+                if (alu == null) {
+                    response.sendRedirect("error.jsp");
+                }
+                faltas = (new InasistenciaDAO()).buscarRut(rutAlumno);
+                consultaBD = new ClasesConsultas();
             }
-            ArrayList<Inasistencia> faltas = (new InasistenciaDAO()).buscarRut(rutAlumno);
-            ClasesConsultas consultaBD = new ClasesConsultas();
-        %>
+        %>        
     </head>
     <body>
         <header class="color-Azul">
@@ -43,7 +60,7 @@
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <br>
                         <div class="col s6 offset-s6">
-                            <p class="color-Amarillo-text"> <strong>Bienvenido</strong> <%=alu.getPnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno()%></p>
+                            <p class="color-Amarillo-text"><strong>Bienvenido</strong> <%=alu.getPnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno()%></p>
                         </div>
                         <br>
                     </div>
@@ -53,46 +70,57 @@
         <div class="container">
             <div class="row">
                 <h4 class="color-Azul-text color-Plomo center-align">Centro de Notificaciones Duoc</h4>
-            <form action="ControladorAlumno" method="post" >
-                <button class="btn waves-effect waves-light red right" type="submit" name="opcion" value="Salir">
-                    Cerrar Sesion
-                </button>
-                
-                <table class=" grey lighten-2">
-                    <tr class="amber darken-3">
-                        <th>Ramo</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Accion</th>
-                    </tr>
-                    <% if (faltas.isEmpty()) {  %>
-                    <tr><td>No tienes registrado inasistecias para justificar<td></tr>
-                    <%   }
-                    %>
-                    <% for (Inasistencia falta : faltas) {   %>
-                    <tr>  
-                        <%  if (falta.getIdEstadoi() != 0) {%>
-                        <td><%=falta.getIdSeccion()%></td>
-                        <td><%=falta.getFecha()%></td>
-                        <td><%=consultaBD.buscarEstadoInasistencia(falta.getIdEstadoi()).getNombreEstadoi()%></td>
-                        <td>
-                            <% if (falta.getIdEstadoi() == 1) {%>
-                            <button 
-                                class="btn  color-Azul amber-text" 
-                                type="submit" 
-                                name="opcion" 
-                                value="j<%=falta.getIdInasistencia()%>"> 
-                                Justificar 
-                            </button>
-                            <% }%>
-                        </td>   
-                        <% } %>
-                    </tr>
-                    <% }%>
-                </table>    
-            </form> 
+                <form action="ControladorAlumno" method="post" >
+
+                    <div class="col s12 m12">
+                        <button class="btn waves-effect waves-light red right" type="submit" name="opcion" value="Salir">
+                            Cerrar Sesion
+                        </button>
+                    </div>
+                    <div class="col s12 m12">
+                        <table id="example"  class="grey lighten-2 display" width="100%"> 
+                            <thead>
+                                <tr class="">
+                                    <th>Asignatura/sección</th>
+                                    <th>Nombre Asignatura</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th>Accion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (faltas.isEmpty()) {  %>
+                                <tr><td>No tienes registrado inasistecias para justificar<td></tr>
+                                <%   }
+                                    String nombreAsig = "";
+                                    for (Inasistencia falta : faltas) {
+                                        nombreAsig = (new ClasesConsultas()).buscarRamos(new ClasesConsultas().buscarSeccion(falta.getIdSeccion()).getIdRamo()).getNombreRamo();
+                                %>
+                                <tr>  
+                                    <%  if (falta.getIdEstadoi() != 0) {%>
+                                    <td><%=falta.getIdSeccion()%></td>
+                                    <td><%=nombreAsig%></td>
+                                    <td><%=falta.getFecha()%></td>
+                                    <td><%=consultaBD.buscarEstadoInasistencia(falta.getIdEstadoi()).getNombreEstadoi()%></td>
+                                    <td>
+                                        <% if (falta.getIdEstadoi() == 1) {%>
+                                        <button 
+                                            class="btn  color-Azul amber-text" 
+                                            type="submit" 
+                                            name="opcion" 
+                                            value="j<%=falta.getIdInasistencia()%>"> 
+                                            Justificar 
+                                        </button>
+                                        <% }%>
+                                    </td>   
+                                    <% } %>
+                                </tr>
+                                <% }%>
+                            </tbody>
+                        </table>  
+                    </div>
+                </form> 
             </div>
-                           
         </div>  
         <footer class="color-Azul">            
             <div class="container">
@@ -102,9 +130,8 @@
                 <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
                 <br>
             </div>
-        </footer>
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        </footer>        
         <script src="js/materialize.js"></script>
-        <script src="js/init.js"></script>    
+        <script src="js/init.js"></script>  
     </body>
 </html>
