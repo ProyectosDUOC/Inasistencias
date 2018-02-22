@@ -28,6 +28,10 @@
         <servlet-name>ControladorDocente</servlet-name>
         <servlet-class>controlador.ControladorDocente</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CargarFoto</servlet-name>
+        <servlet-class>controlador.CargarFoto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>ControladorDocente</servlet-name>
         <url-pattern>/ControladorDocente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CargarFoto</servlet-name>
+        <url-pattern>/CargarFoto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
