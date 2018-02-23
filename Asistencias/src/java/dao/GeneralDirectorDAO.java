@@ -16,6 +16,7 @@ import modelo.Director;
 public interface GeneralDirectorDAO {
     public abstract ArrayList mostrarDatos();
     public abstract Director buscarDatos(int rut) ;
+    public abstract Director buscarDatosCorreo(String correo) ;
     public abstract int agregar(Director director);
     public abstract int eliminar(int rut);
     public abstract int actualizar(Director director); 

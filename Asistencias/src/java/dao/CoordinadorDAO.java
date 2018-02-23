@@ -16,11 +16,13 @@ import modelo.Coordinador;
  *
  * @author benja
  */
-public class CoordinadorDAO implements GeneralCoordinadorDAO{
-     private ArrayList<Coordinador> arrayCoordinadores = new ArrayList<>();
+public class CoordinadorDAO implements GeneralCoordinadorDAO {
+
+    private ArrayList<Coordinador> arrayCoordinadores = new ArrayList<>();
+
     @Override
     public ArrayList mostrarDatos() {
-       try {
+        try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
 
@@ -97,11 +99,11 @@ public class CoordinadorDAO implements GeneralCoordinadorDAO{
 
     @Override
     public int agregar(Coordinador coordinador) {
-       try {
+        try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
             Statement statement = connection.createStatement();
-            String agregarSQL = "INSERT INTO coordinador VALUES(" + coordinador.getRutCoordinador()+ ",'" + coordinador.getDvCoordinador()+"','" + coordinador.getPnombre() + "','" + coordinador.getSnombre() + "','" + coordinador.getAppaterno() + "','" + coordinador.getApmaterno() + "','" + coordinador.getEmail() + "');";
+            String agregarSQL = "INSERT INTO coordinador VALUES(" + coordinador.getRutCoordinador() + ",'" + coordinador.getDvCoordinador() + "','" + coordinador.getPnombre() + "','" + coordinador.getSnombre() + "','" + coordinador.getAppaterno() + "','" + coordinador.getApmaterno() + "','" + coordinador.getEmail() + "');";
             int results = statement.executeUpdate(agregarSQL);
             connection.close();
             return results;
@@ -112,7 +114,7 @@ public class CoordinadorDAO implements GeneralCoordinadorDAO{
 
     @Override
     public int eliminar(int rut) {
-         try {
+        try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
             Statement statement = connection.createStatement();
@@ -126,9 +128,46 @@ public class CoordinadorDAO implements GeneralCoordinadorDAO{
             return 2;
         }
     }
+
     @Override
     public int actualizar(Coordinador cordinador) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public Coordinador buscarDatosCorreo(String correo) {
+        Coordinador obj = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
+
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM coordinador WHERE email='" + correo + "';";
+
+            ResultSet results = statement.executeQuery(query);
+
+            int rut;
+            String dv, pnombre, snombre, appaterno, apmaterno, email;
+
+            while (results.next()) {
+                rut = results.getInt("rut_coordinador");
+                dv = results.getString("dv_coordinador");
+                pnombre = results.getString("pnombre");
+                snombre = results.getString("snombre");
+                appaterno = results.getString("appaterno");
+                apmaterno = results.getString("apmaterno");
+                email = results.getString("email");
+
+                if (correo.equals(email)) {
+                    obj = new Coordinador(rut, dv, pnombre, snombre, appaterno, apmaterno, email);
+                    break;
+                }
+            }
+            connection.close();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return obj;
+    }
+
 }

@@ -22,14 +22,13 @@
             HttpSession sesion = request.getSession(true);
             Coordinador coor = new Coordinador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-            
+
             if (user == null) {
-                    response.sendRedirect("error.jsp");
-            }
-            else{
+                response.sendRedirect("error.jsp");
+            } else {
                 int rut = user.getRutUsuario();
                 coor = (new CoordinadorDAO()).buscarDatos(rut);
-            }            
+            }
         %>
     </head>
     <body>
@@ -39,11 +38,17 @@
                     <div class="center-align">
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
-                        
+
                         <div class="col s6 offset-s6">
-                            <p class="color-Amarillo-text"><strong>Bienvenido </strong><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></p>
+                            <h6 class="color-Amarillo-text"><strong><i class="material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></span>
+                                <i class="material-icons prefix">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></h6>  
                         </div>
                     </div>
+                                 <div class="input-field col s6">
+          <i class="material-icons prefix">phone</i>
+          <input id="icon_telephone" type="tel" class="validate">
+          <label for="icon_telephone">Telephone</label>
+        </div>
                 </div>
             </div>
         </header>  

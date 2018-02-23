@@ -15,6 +15,7 @@ import modelo.Coordinador;
 public interface GeneralCoordinadorDAO {
     public abstract ArrayList mostrarDatos();
     public abstract Coordinador buscarDatos(int rut) ;
+    public abstract Coordinador buscarDatosCorreo(String correo) ;
     public abstract int agregar(Coordinador cordinador);
     public abstract int eliminar(int rut);
     public abstract int actualizar(Coordinador cordinador); 

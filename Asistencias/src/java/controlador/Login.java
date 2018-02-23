@@ -36,11 +36,11 @@ public class Login extends HttpServlet {
         HttpSession sesion = request.getSession(true);
         String user = request.getParameter("txtUser");
         String pass = request.getParameter("txtPass");
-        String opcion = request.getParameter("opcion");
-        
-        ControlUsuario ingreso = (new ControlUsuarioDAO()).buscarDatosLogin(user);
+        String correo = request.getParameter("txtCorreo");
+        String opcion = request.getParameter("opcion");    
         
         if(opcion.equals("Entrar")){
+            ControlUsuario ingreso = (new ControlUsuarioDAO()).buscarDatosLogin(user);
             if(ingreso!=null){
                 if(ingreso.getClave().equals(pass)){
                     
@@ -78,6 +78,35 @@ public class Login extends HttpServlet {
             else {
                 // Usuario no existe
                 response.sendRedirect("index.jsp?mensaje=usuario no existe");
+            }
+        }
+        if (opcion.equals("Recuperar")) {
+            //Buscar en todos los correo
+            Alumno alu = (new AlumnoDAO()).buscarDatosCorreo(correo);    
+            String mensaje;
+            ControlUsuario ingreso;
+            if (alu == null) {
+                 Coordinador coor = (new CoordinadorDAO()).buscarDatosCorreo(correo);
+                 if (coor == null) {
+                    Director dire = (new DirectorDAO()).buscarDatosCorreo(correo);
+                     if (dire == null) {
+                         Docente doce = (new DocenteDAO()).buscarDatosCorreo(correo);
+                         if (doce == null) {
+                            response.sendRedirect("recuperarClave.jsp?mensaje=Usuario no existe");
+                         }
+                     }
+                }
+            }
+            else{
+            ingreso = (new ControlUsuarioDAO()).buscarDatos(alu.getRutAlumno());
+            mensaje = "Estimado Estudiante \n\nEl portal de inasistencias Duoc presenta una solicitud para recuperar su contraseña"
+                     + "\n\n   -Usuario : " + ingreso.getUsuario() + "\n   -Contraseña: " + ingreso.getClave() + "\n \n Ingrese al portal para cambiar su contraseña";
+                if (ControladorCorreo.EnviarCorreo(alu.getEmail(), mensaje, "recuperar contraseña")==1) {
+                    response.sendRedirect("recuperarClave.jsp?mensaje=Se ha enviado un correo");
+                }
+                else{
+                    response.sendRedirect("recuperarClave.jsp?mensaje=error al enviar correo");
+                }
             }
         }
     }

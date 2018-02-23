@@ -134,4 +134,40 @@ public class DocenteDAO implements GeneralDocenteDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Docente buscarDatosCorreo(String correo) {
+        Docente obj = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
+
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM docente WHERE email='" + correo + "';";
+
+            ResultSet results = statement.executeQuery(query);
+
+            int rut;
+            String dv, pnombre, snombre, appaterno, apmaterno, email;
+
+            while (results.next()) {
+                rut = results.getInt("rut_docente");
+                dv = results.getString("dv_docente");
+                pnombre = results.getString("pnombre");
+                snombre = results.getString("snombre");
+                appaterno = results.getString("appaterno");
+                apmaterno = results.getString("apmaterno");
+                email = results.getString("email");
+
+                if (email.equals(correo)) {
+                    obj = new Docente(rut, dv, pnombre, snombre, appaterno, apmaterno, email);
+                    break;
+                }
+            }
+            connection.close();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return obj;
+    }
+
 }

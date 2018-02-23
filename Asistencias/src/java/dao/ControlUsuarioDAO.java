@@ -46,7 +46,7 @@ public class ControlUsuarioDAO implements GeneralControlUDAO {
                 rut = results.getInt("rut_usuario");
                 id = results.getInt("id_control");
                 usuario = results.getString("usuario");
-                clave = results.getString("clave");  
+                clave = results.getString("clave");
                 tipo_usuario = results.getInt("id_tipo_usuario");
                 arrayControlU.add(new ControlUsuario(id, usuario, clave, rut, tipo_usuario));
             }
@@ -72,16 +72,15 @@ public class ControlUsuarioDAO implements GeneralControlUDAO {
             int rut1, id, tipo_usuario;
             String usuario, clave;
 
-
-            while (results.next()) {              
+            while (results.next()) {
                 rut1 = results.getInt("rut_usuario");
                 id = results.getInt("id_control");
                 usuario = results.getString("usuario");
-                clave = results.getString("clave");  
+                clave = results.getString("clave");
                 tipo_usuario = results.getInt("id_tipo_usuario");
 
                 if (rut1 == rut) {
-                    obj = new ControlUsuario(id,usuario, clave, rut1, tipo_usuario);
+                    obj = new ControlUsuario(id, usuario, clave, rut1, tipo_usuario);
                     break;
                 }
             }
@@ -94,7 +93,7 @@ public class ControlUsuarioDAO implements GeneralControlUDAO {
 
     @Override
     public ControlUsuario buscarDatosLogin(String username) {
-         ControlUsuario obj = null;
+        ControlUsuario obj = null;
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
@@ -107,16 +106,15 @@ public class ControlUsuarioDAO implements GeneralControlUDAO {
             int rut1, id, tipo_usuario;
             String usuario1, clave;
 
-
-            while (results.next()) {              
+            while (results.next()) {
                 rut1 = results.getInt("rut_usuario");
                 id = results.getInt("id_control");
                 usuario1 = results.getString("usuario");
-                clave = results.getString("clave");  
+                clave = results.getString("clave");
                 tipo_usuario = results.getInt("id_tipo_usuario");
 
                 if (usuario1.equals(username)) {
-                    obj = new ControlUsuario(id,usuario1, clave, rut1, tipo_usuario);
+                    obj = new ControlUsuario(id, usuario1, clave, rut1, tipo_usuario);
                     break;
                 }
             }
@@ -124,7 +122,8 @@ public class ControlUsuarioDAO implements GeneralControlUDAO {
         } catch (java.lang.Exception ex) {
             System.out.println("Error: " + ex);
         }
-        return obj;   }
+        return obj;
+    }
 
     @Override
     public int agregar(ControlUsuario control) {

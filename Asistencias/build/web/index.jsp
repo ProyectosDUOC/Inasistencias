@@ -30,7 +30,7 @@
         </header>   
         <div class="container">
             <div class="center-align">
-                <p class="color-Plomo-text color-Plomo">hola</p>
+                <p class="color-Plomo-text color-Plomo">-------</p>
             </div>
         </div>
         <section>
@@ -48,12 +48,15 @@
                                     <tr>
                                         <td>Contraseña:</td>
                                         <td><input type="password" name="txtPass" required=""/></td>
-                                    </tr>
+                                    </tr>                                    
                                 </table>
                                 <div >
-                                    <input id="entrar" type="submit" name="opcion" value="Entrar"/>                                
+                                    <input type="submit" name="opcion" value="Entrar" class="color-Azul-text"/>                                
                                 </div>                            
                             </form>
+                            <br>
+                            <a href="recuperarClave.jsp" class="color-Azul-text right">¿Olvidaste tu contraseña? </a>
+                            <br>
                         </div>
                         <span class="red-text"> ${param.mensaje}</span>
                     </div>
@@ -70,7 +73,6 @@
                 <br>
             </div>
         </footer>
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
     </body>

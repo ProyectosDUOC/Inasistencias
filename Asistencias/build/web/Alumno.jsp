@@ -18,28 +18,18 @@
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link rel="stylesheet" type="text/css" href="css/styleLogin.css"> 
-         <!-- JS -->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="js/jquery.dataTables.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css"> 
-       
-        <script>
-            $(document).ready(function () {
-                $('#example').DataTable();                
-            });
-        </script>
+        <link rel="stylesheet" type="text/css" href="css/styleLogin.css">        
+        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">        
         <%
             ControlUsuario user = null;
             int rutAlumno = 0;
             Alumno alu = new Alumno();
             ArrayList<Inasistencia> faltas = null;
             ClasesConsultas consultaBD = null;
-            
-            if (session.getAttribute("usuario")==null) {
+
+            if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
-            }
-            else{
+            } else {
                 user = (ControlUsuario) session.getAttribute("usuario");
                 rutAlumno = user.getRutUsuario();
                 alu = (new AlumnoDAO()).buscarDatos(rutAlumno);
@@ -77,10 +67,10 @@
                             Cerrar Sesion
                         </button>
                     </div>
-                    <div class="col s12 m12">
-                        <table id="example"  class="grey lighten-2 display" width="100%"> 
+                    <div class="col s12 m12" style="overflow-x:auto;">
+                        <table id="example" class="striped grey lighten-2 table table-striped table-bordered" cellspacing="0"  width="100%"> 
                             <thead>
-                                <tr class="">
+                                <tr class="amber darken-3 black-text">
                                     <th>Asignatura/sección</th>
                                     <th>Nombre Asignatura</th>
                                     <th>Fecha</th>
@@ -130,8 +120,16 @@
                 <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
                 <br>
             </div>
-        </footer>        
+        </footer>    
         <script src="js/materialize.js"></script>
-        <script src="js/init.js"></script>  
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.dataTables.js"></script>
+        <script src="js/script.js"></script>
+        <script>
+
+            $(document).ready(function () {
+                $('select').material_select();
+            });
+        </script>
     </body>
 </html>

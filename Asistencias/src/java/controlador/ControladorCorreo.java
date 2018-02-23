@@ -74,7 +74,7 @@ public class ControladorCorreo {
         return 1;
     }
 
-    public static int EnviarProfesor(String CorreoProfesor, String mensaje, String asunto) {
+    public static int EnviarProfesor(String Correo, String mensaje, String asunto) {
         String Username = "controlinasistencia@gmail.com";
         String PassWord = "abcd14abcd";
         String Subject = asunto;
@@ -83,7 +83,7 @@ public class ControladorCorreo {
 
         DateFormat hourdateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
 
-        String To = CorreoProfesor; //correo destinatario       
+        String To = Correo; //correo destinatario       
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -153,6 +153,49 @@ public class ControladorCorreo {
         String asunto = "Reenvio: Aviso de inasistencias";
 
        
+    }
+    
+    public static int EnviarCorreo(String Correo, String mensaje, String asunto) {
+        String Username = "controlinasistencia@gmail.com";
+        String PassWord = "abcd14abcd";
+        String Subject = asunto;
+        String Mensaje = mensaje;
+        Date date = new Date();
+
+        DateFormat hourdateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+
+        String To = Correo; //correo destinatario       
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session;
+
+        session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Username, PassWord);
+            }
+        }
+        );
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(Username));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(To));
+            message.setSubject(Subject);
+            message.setText(Mensaje);
+
+            Transport.send(message);
+
+        } catch (MessagingException e) {
+            return -1;
+        }
+        return 1;
     }
 
 }

@@ -103,7 +103,7 @@ public class DirectorDAO implements GeneralDirectorDAO {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
             Statement statement = connection.createStatement();
-            String agregarSQL = "INSERT INTO director VALUES(" + director.getRutDirector()+ ",'" + director.getDvDirector()+ "','" + director.getPnombre() + "','" + director.getSnombre() + "','" + director.getAppaterno() + "','" + director.getApmaterno() + "','" + director.getEmail() + "');";
+            String agregarSQL = "INSERT INTO director VALUES(" + director.getRutDirector() + ",'" + director.getDvDirector() + "','" + director.getPnombre() + "','" + director.getSnombre() + "','" + director.getAppaterno() + "','" + director.getApmaterno() + "','" + director.getEmail() + "');";
             int results = statement.executeUpdate(agregarSQL);
             connection.close();
             return results;
@@ -132,6 +132,42 @@ public class DirectorDAO implements GeneralDirectorDAO {
     @Override
     public int actualizar(Director director) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Director buscarDatosCorreo(String correo) {
+        Director obj = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
+
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM director WHERE email='" + correo + "';";
+
+            ResultSet results = statement.executeQuery(query);
+
+            int rut;
+            String dv, pnombre, snombre, appaterno, apmaterno, email;
+
+            while (results.next()) {
+                rut = results.getInt("rut_alumno");
+                dv = results.getString("dv_alumno");
+                pnombre = results.getString("pnombre");
+                snombre = results.getString("snombre");
+                appaterno = results.getString("appaterno");
+                apmaterno = results.getString("apmaterno");
+                email = results.getString("email");
+
+                if (email.equals(correo)) {
+                    obj = new Director(rut, dv, pnombre, snombre, appaterno, apmaterno, email);
+                    break;
+                }
+            }
+            connection.close();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return obj;
     }
 
 }

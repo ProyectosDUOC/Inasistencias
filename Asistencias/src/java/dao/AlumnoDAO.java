@@ -139,4 +139,41 @@ public class AlumnoDAO implements GeneralAlumnoDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Alumno buscarDatosCorreo(String correo) {
+        Alumno obj = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
+
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM alumno WHERE email='" + correo + "';";
+
+            ResultSet results = statement.executeQuery(query);
+
+            int rut;
+            String dv, pnombre, snombre, appaterno, apmaterno, email, idCarrera;
+
+            while (results.next()) {
+                rut = results.getInt("rut_alumno");
+                dv = results.getString("dv_alumno");
+                pnombre = results.getString("pnombre");
+                snombre = results.getString("snombre");
+                appaterno = results.getString("appaterno");
+                apmaterno = results.getString("apmaterno");
+                email = results.getString("email");
+                idCarrera = results.getString("id_carrera");
+
+                if (email.equals(correo)) {
+                    obj = new Alumno(rut, dv, pnombre, snombre, appaterno, apmaterno, email, idCarrera);
+                    break;
+                }
+            }
+            connection.close();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return obj;
+    }
+
 }

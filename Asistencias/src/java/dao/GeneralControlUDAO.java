@@ -14,7 +14,7 @@ import modelo.ControlUsuario;
  */
 public interface GeneralControlUDAO {
     public abstract ArrayList mostrarDatos();
-    public abstract ControlUsuario buscarDatos(int rut) ;    
+    public abstract ControlUsuario buscarDatos(int rut) ;     
     public abstract ControlUsuario buscarDatosLogin(String username) ;
     public abstract int agregar(ControlUsuario control);
     public abstract int eliminar(int rut);
