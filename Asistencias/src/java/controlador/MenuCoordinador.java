@@ -42,11 +42,13 @@ public class MenuCoordinador extends HttpServlet {
         }
         if(opcion.equals("Ver datos")){
             response.sendRedirect("reporteInasistencias.jsp");
-        }
-        
+        }        
         if(opcion.equals("Salir")){
             request.getSession().invalidate();
             response.sendRedirect("index.jsp");
+        }
+        if (opcion.equals("Configuracion")) {
+            response.sendRedirect("configuracion.jsp");
         }
     }
 

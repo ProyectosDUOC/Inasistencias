@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import modelo.Carrera;
 import modelo.EstadoCorreo;
 import modelo.EstadoInasistencia;
 import modelo.EstadoJustificativo;
@@ -188,7 +189,7 @@ public class ClasesConsultas implements GeneralClasesConsultas {
         }
         return obj;
     }
-    
+
     public Seccion buscarSeccionRut(int rut) {
         Seccion obj = null;
         try {
@@ -203,11 +204,11 @@ public class ClasesConsultas implements GeneralClasesConsultas {
                 id_ramo       VARCHAR(30) NOT NULL,
                 rut_docente   INT NOT NULL*/
             while (results.next()) {
-                
+
                 idSeccion = results.getString("id_seccion");
                 idRamo = results.getString("id_ramo");
                 rutDocente = results.getInt("rut_docente");
-                if (rutDocente == rut ) {
+                if (rutDocente == rut) {
                     obj = new Seccion(idSeccion, idRamo, rutDocente);
                     break;
                 }
@@ -218,7 +219,7 @@ public class ClasesConsultas implements GeneralClasesConsultas {
         }
         return obj;
     }
-    
+
     public ArrayList<Seccion> buscarSeccionesRut(int rut) {
         ArrayList<Seccion> secciones = new ArrayList<Seccion>();
         Seccion obj = null;
@@ -234,13 +235,13 @@ public class ClasesConsultas implements GeneralClasesConsultas {
                 id_ramo       VARCHAR(30) NOT NULL,
                 rut_docente   INT NOT NULL*/
             while (results.next()) {
-                
+
                 idSeccion = results.getString("id_seccion");
                 idRamo = results.getString("id_ramo");
                 rutDocente = results.getInt("rut_docente");
-                if (rutDocente == rut ) {
+                if (rutDocente == rut) {
                     obj = new Seccion(idSeccion, idRamo, rutDocente);
-                    secciones.add(obj);                    
+                    secciones.add(obj);
                 }
             }
             connection.close();
@@ -249,7 +250,7 @@ public class ClasesConsultas implements GeneralClasesConsultas {
         }
         return secciones;
     }
-    
+
     private ArrayList<TipoUsuario> arrayTipoUsarios = new ArrayList<>();
 
     @Override
@@ -384,7 +385,7 @@ public class ClasesConsultas implements GeneralClasesConsultas {
         } catch (java.lang.Exception ex) {
             System.out.println("Error: " + ex);
         }
-        return arrayEstadoI;    
+        return arrayEstadoI;
     }
 
     @Override
@@ -441,12 +442,12 @@ public class ClasesConsultas implements GeneralClasesConsultas {
         } catch (java.lang.Exception ex) {
             System.out.println("Error: " + ex);
         }
-        return arrayEstadoC;    
+        return arrayEstadoC;
     }
 
     @Override
     public EstadoCorreo buscarEstadoCorreo(int id) {
-          EstadoCorreo obj = null;
+        EstadoCorreo obj = null;
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
@@ -462,6 +463,36 @@ public class ClasesConsultas implements GeneralClasesConsultas {
                 nombre = results.getString("nombre_estadoc");
                 if (id1 == id) {
                     obj = new EstadoCorreo(id, nombre);
+                    break;
+                }
+            }
+            connection.close();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return obj;
+    }
+
+    @Override
+    public Carrera buscarCarrera(String id) {
+        Carrera obj = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM carrera WHERE id_carrera='" + id + "';";
+            ResultSet results = statement.executeQuery(query);
+            int rut;
+            String id1 ,nombre;
+            /* id_carrera       VARCHAR(30) NOT NULL,
+               nombre_carrera   VARCHAR(300),
+               rut_director     INT NOT NULL)*/
+            while (results.next()) {
+                id1 = results.getString("id_carrera");
+                nombre = results.getString("nombre_carrera");
+                rut = results.getInt("rut_director");
+                if (id1.equals(id)) {
+                    obj = new Carrera(nombre, nombre, rut);
                     break;
                 }
             }

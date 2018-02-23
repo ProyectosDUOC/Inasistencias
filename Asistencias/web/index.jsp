@@ -4,6 +4,7 @@
     Author     : benja
 --%>
 
+<%@page import="modelo.ControlUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,6 +16,14 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link rel="stylesheet" type="text/css" href="css/styleLogin.css">  
+         <%
+            HttpSession sesion = request.getSession(true);            
+            ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
+
+            if (user != null) {
+                sesion.invalidate();
+            } 
+        %>
     </head>
     <body>
         <header class="color-Azul">

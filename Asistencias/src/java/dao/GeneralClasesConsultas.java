@@ -6,6 +6,7 @@
 package dao;
 
 import java.util.ArrayList;
+import modelo.Carrera;
 import modelo.EstadoCorreo;
 import modelo.EstadoInasistencia;
 import modelo.EstadoJustificativo;
@@ -41,5 +42,5 @@ public interface GeneralClasesConsultas {
     public abstract ArrayList mostrarEstadoCorreo();
     public abstract EstadoCorreo buscarEstadoCorreo(int id);
 
-    
+    public abstract Carrera buscarCarrera(String id);
 }

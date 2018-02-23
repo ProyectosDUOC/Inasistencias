@@ -39,18 +39,17 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
 
+
                         <div class="col s6 offset-s6">
-                            <h6 class="color-Amarillo-text"><strong><i class="material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></span>
-                                <i class="material-icons prefix">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></h6>  
+                            <a href="Coordinador.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></span></a>
+                            <div class="cols s6">
+                                <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
+                                <a class="waves-effect waves-light" href="index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         
+                            </div>                            
                         </div>
                     </div>
-                                 <div class="input-field col s6">
-          <i class="material-icons prefix">phone</i>
-          <input id="icon_telephone" type="tel" class="validate">
-          <label for="icon_telephone">Telephone</label>
-        </div>
                 </div>
-            </div>
+            </div>                   
         </header>  
         <div class="container">
             <div class="row">
@@ -70,6 +69,11 @@
                         <tr>
                             <td>
                                 <button class="btn-large color-AzulClaro" type="submit" name="opcion" value="Ver datos">Ver datos</button> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button class="btn-large waves-effect  red waves-light " type="submit" name="opcion" value="Configuracion">Configuración</button>
                             </td>
                         </tr>
                         <tr>
