@@ -92,9 +92,9 @@
         <div class="container">
             <div class="row">
                 <h4 class="color-Plomo color-Azul-text center-align" >Mi Cuenta</h4>
-                <div class="col s12 m6">
+                <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo color-Azul-text center-align" >Datos Personales</h4>  
-                    <p class="color-Azul-text"><strong> Nombre :</strong> <span><%=nombre%></span></p>
+                    <p><strong> Nombre :</strong> <span><%=nombre%></span></p>
                     <p><strong> Rut :</strong> <span><%=rutD%></span></p>
                     <p><strong> Correo :</strong> <span><%=correo%></span></p>
                     <%if (estado.equals("Alumno")) {%>
@@ -102,9 +102,10 @@
                     <%
                         }
                     %>
+                    <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
                 </div>
-                <div class="col s12 m6">
-                    <h4 class="color-Plomo color-Azul-text center-align">Usuario</h4>     
+                <div class="col s12 m6 color-Azul-text">
+                    <h4 class="color-Plomo center-align">Usuario</h4>     
                     <div class="input-field">                                
                         <p><strong> Usuario :</strong> <span><%=usuario%></span></p>
                         <a class="btn amber" href="cambiarContra.jsp">Cambiar Contraseña</a>
