@@ -32,20 +32,23 @@
         %>  
     </head>
     <body>
-        <header class="color-Azul">
+         <header class="color-Azul">
             <div class="container">
                 <div class="row">                    
                     <div class="center-align">
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
-
                         <div class="col s6 offset-s6">
-                            <p class="color-Amarillo-text"><strong>Bienvenido </strong><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></p>
+                            <a href="Coordinador.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></span></a>
+                            <div class="cols s6">
+                                <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
+                                <a class="waves-effect waves-light" href="index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         
+                            </div>                            
                         </div>
                     </div>
                 </div>
-            </div>
-        </header> 
+            </div>                   
+        </header>  
         <div class="container">
             <div class="row center-align">
                 <h4 class="color-Azul-text color-Plomo center-align">Carga Inasistencias</h4>

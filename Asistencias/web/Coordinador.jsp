@@ -38,8 +38,6 @@
                     <div class="center-align">
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
-
-
                         <div class="col s6 offset-s6">
                             <a href="Coordinador.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></span></a>
                             <div class="cols s6">
@@ -69,11 +67,6 @@
                         <tr>
                             <td>
                                 <button class="btn-large color-AzulClaro" type="submit" name="opcion" value="Ver datos">Ver datos</button> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="btn-large waves-effect  red waves-light " type="submit" name="opcion" value="Configuracion">Configuración</button>
                             </td>
                         </tr>
                         <tr>

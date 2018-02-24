@@ -27,20 +27,40 @@
         <title>Inasistencia por alumno</title>          
         <%
             HttpSession sesion = request.getSession(true);
-            Coordinador coor = new Coordinador();
+
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
+            Coordinador coor = new Coordinador();
             Director dire = new Director();
+            Docente doce = new Docente();            
+            String nombre = " ", correo = " ", usuario = " ", clave = " ", rutD = " ";
+            String estado = " ";
+
             if (user == null) {
                 response.sendRedirect("error.jsp");
             } else {
+                estado = sesion.getAttribute("tipoUsuario").toString();
+                usuario = user.getUsuario();
+                clave = user.getClave();
                 int rut = user.getRutUsuario();
-                //2 docente y 4 coordinador
-                if (user.getIdTipoUsuario() == 3) {
-                    dire = (new DirectorDAO()).buscarDatos(rut);
-                } else {
-                    coor = (new CoordinadorDAO()).buscarDatos(rut);
+                
+                if (estado.equals("Docente")) {
+                    doce = (new DocenteDAO()).buscarDatos(rut);
+                    nombre = doce.getPnombre() + " " + doce.getSnombre() + " " + doce.getAppaterno() + " " + doce.getApmaterno();
+                    rutD = rut + "-" + doce.getDvDocente();
+                    correo = doce.getEmail();
                 }
-
+                if (estado.equals("Director")) {
+                    dire = (new DirectorDAO()).buscarDatos(rut);
+                    nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
+                    rutD = rut + "-" + dire.getDvDirector();
+                    correo = dire.getEmail();
+                }
+                if (estado.equals("Coordinador")) {
+                    coor = (new CoordinadorDAO()).buscarDatos(rut);
+                    nombre = coor.getPnombre() + " " + coor.getSnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno();
+                    rutD = rut + "-" + coor.getDvCoordinador();
+                    correo = coor.getEmail();
+                }
             }
         %>        
     </head>
@@ -52,23 +72,17 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
 
+
                         <div class="col s6 offset-s6">
-                            <%
-                                if (user.getIdTipoUsuario() == 3) { %>
-                                 <p class="color-Amarillo-text"><strong>Bienvenido </strong><%=dire.getPnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno()%></p>
-                      
-                            <%
-                                } else {
-                                %>
-                                 <p class="color-Amarillo-text"><strong>Bienvenido </strong><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></p>
-                      
-                                <%
-                                }
-                            %>
-                             </div>
+                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
+                            <div class="cols s6">
+                                <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
+                                <a class="waves-effect waves-light" href="index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         
+                            </div>                            
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div>                   
         </header>  
         <div class="container">
             <div class="row">
