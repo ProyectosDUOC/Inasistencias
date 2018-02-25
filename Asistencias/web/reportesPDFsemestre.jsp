@@ -31,7 +31,7 @@
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 int rut = user.getRutUsuario();
                 dire = (new DirectorDAO()).buscarDatos(rut);
-                nombre = dire.getPnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
+                nombre = dire.getPnombre() + " "+ dire.getSnombre()+" "+ dire.getAppaterno() + " " + dire.getApmaterno();
             }
         %>
 

@@ -39,7 +39,7 @@
                     response.sendRedirect("error.jsp");
                 }
                 faltas = (new InasistenciaDAO()).buscarRut(rutAlumno);
-                nombre = alu.getPnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno();
+                nombre = alu.getPnombre() + " " + alu.getSnombre() +" "+ alu.getAppaterno() + " " + alu.getApmaterno();
             }
         %>        
     </head>
@@ -111,13 +111,12 @@
                                         </div>                                
                                     </div>
                                 </td>
-                            </tr>
-                        </table>
-                        <button class="btn-large waves-effect waves-light" type="submit" name="opcion" value="Guardar">
+                            </tr>                            
+                        </table>                        
+                        <button class="btn amber waves-effect waves-light" type="submit" name="opcion" value="Guardar">
                             Guardar
                         </button>
-                        <a  class="white-text btn-large waves-effect waves-light red" href="<%=estado%>.jsp">Volver</a>
-                    </form>
+                          </form>
                 </div>
             </div>
         </div>         

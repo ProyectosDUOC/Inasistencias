@@ -40,7 +40,7 @@
                     response.sendRedirect("error.jsp");
                 }
                 faltas = (new InasistenciaDAO()).buscarRut(rutAlumno);
-                nombre = alu.getPnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno();
+                nombre = alu.getPnombre() + " " + alu.getSnombre()+" "+ alu.getAppaterno() + " " + alu.getApmaterno();
             }
         %>        
     </head>
