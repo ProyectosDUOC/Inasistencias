@@ -71,8 +71,6 @@
                     <div class="center-align">
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
-
-
                         <div class="col s6 offset-s6">
                             <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
