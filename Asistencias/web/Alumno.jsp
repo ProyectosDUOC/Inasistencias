@@ -4,6 +4,7 @@
     Author     : Seba
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="modelo.*"%>
 <%@page import="dao.*"%>
@@ -33,14 +34,19 @@
                 response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
-                user = (ControlUsuario) session.getAttribute("usuario");
-                rutAlumno = user.getRutUsuario();
-                alu = (new AlumnoDAO()).buscarDatos(rutAlumno);
-                if (alu == null) {
-                    response.sendRedirect("error.jsp");
+                if (estado.equals("Alumno")) {
+                    user = (ControlUsuario) session.getAttribute("usuario");
+                    rutAlumno = user.getRutUsuario();
+                    alu = (new AlumnoDAO()).buscarDatos(rutAlumno);
+                    if (alu == null) {
+                        response.sendRedirect("error.jsp");
+                    }
+                    faltas = (new InasistenciaDAO()).buscarRut(rutAlumno);
+                    nombre = alu.getPnombre() + " " + alu.getSnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno();
+
+                }else{
+                 response.sendRedirect("index.jsp");
                 }
-                faltas = (new InasistenciaDAO()).buscarRut(rutAlumno);
-                nombre = alu.getPnombre() + " " + alu.getSnombre()+" "+ alu.getAppaterno() + " " + alu.getApmaterno();
             }
         %>        
     </head>
@@ -52,6 +58,7 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <div class="col s6 offset-s6">
+                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>                            
                             <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
                                 <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
@@ -85,6 +92,7 @@
                                 <% if (faltas.isEmpty()) {  %>
                                 <tr><td>No tienes registrado inasistecias para justificar<td></tr>
                                 <%   }
+                                    SimpleDateFormat parseador = new SimpleDateFormat("dd-MM-yy");
                                     String nombreAsig = " ";
                                     for (Inasistencia falta : faltas) {
                                         nombreAsig = (new ClasesConsultas()).buscarRamos(new ClasesConsultas().buscarSeccion(falta.getIdSeccion()).getIdRamo()).getNombreRamo();
@@ -93,7 +101,7 @@
                                     <%  if (falta.getIdEstadoi() != 0) {%>
                                     <td><%=nombreAsig%></td>
                                     <td><%=falta.getIdSeccion()%></td>                                    
-                                    <td><%=falta.getFecha()%></td>
+                                    <td><input type="date" name="fecha" value="<%=falta.getFecha()%>" readonly=""></td>
                                     <td>
                                         <% if (falta.getIdEstadoi() == 1) {%>
                                         <button 

@@ -23,23 +23,31 @@
 
             int rutAlumno = 0;
             Alumno alu = new Alumno();
-            ArrayList<Inasistencia> faltas = new ArrayList<Inasistencia>();
-            String nombre = " ", estado = " ", idInasistencia = " ";
+            Docente docente = new Docente();
+            String nombre = "", estado = "", idInasistencia = "", nombreAsig = "", nombreDocente = "";
             ArrayList<Motivo> motivos = new ClasesConsultas().mostrarMotivos();
+            Justificacion justicacion = new Justificacion();
+            Inasistencia inasistencia = new Inasistencia();
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
             } else {
-                idInasistencia = sesion.getAttribute("idInasistencia").toString();
                 estado = sesion.getAttribute("tipoUsuario").toString();
-                user = (ControlUsuario) session.getAttribute("usuario");
-                rutAlumno = user.getRutUsuario();
-                alu = (new AlumnoDAO()).buscarDatos(rutAlumno);
+                if (estado.equals("Alumno")) {
+                    idInasistencia = sesion.getAttribute("idInasistencia").toString();
+                    user = (ControlUsuario) session.getAttribute("usuario");
+                    rutAlumno = user.getRutUsuario();
+                    alu = (new AlumnoDAO()).buscarDatos(rutAlumno);
+                    nombre = alu.getPnombre() + " " + alu.getSnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno();
 
-                if (alu == null) {
-                    response.sendRedirect("error.jsp");
+                    inasistencia = (new InasistenciaDAO()).buscar(Integer.parseInt(idInasistencia));
+                    justicacion = (new JustificacionDAO()).buscarDatos(Integer.parseInt(idInasistencia));
+                    nombreAsig = (new ClasesConsultas()).buscarRamos(new ClasesConsultas().buscarSeccion(inasistencia.getIdSeccion()).getIdRamo()).getNombreRamo();
+                    docente = (new DocenteDAO()).buscarDatos(new ClasesConsultas().buscarSeccion(inasistencia.getIdSeccion()).getRutDocente());
+                    nombreDocente = docente.getPnombre() + " " + docente.getAppaterno();
+
+                }else{
+                    response.sendRedirect("index.jsp");
                 }
-                faltas = (new InasistenciaDAO()).buscarRut(rutAlumno);
-                nombre = alu.getPnombre() + " " + alu.getSnombre() +" "+ alu.getAppaterno() + " " + alu.getApmaterno();
             }
         %>        
     </head>
@@ -51,6 +59,7 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <div class="col s6 offset-s6">
+                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>                            
                             <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
                                 <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
@@ -65,27 +74,21 @@
             <div class="row">
                 <h4 class="color-Plomo color-Azul-text center-align"></h4>
                 <div class="col s12 m6 color-Azul-text">
-                    <h4 class="color-Plomo color-Azul-text center-align">Motivos</h4>  
-                    <%
-                        String nombreAsig = " ";
-                        for (Inasistencia falta : faltas) {
-                            nombreAsig = (new ClasesConsultas()).buscarRamos(new ClasesConsultas().buscarSeccion(falta.getIdSeccion()).getIdRamo()).getNombreRamo();
-                        }
-                    %>
-                    <p><strong> Nombre Asignatura :</strong> <span><%=nombre%></span></p>
-                    <p><strong> Sección :</strong> <span><%=estado%></span></p>
-                    <p><strong> Profesor : </strong><span> </span></p>
-                    <p><strong> Fecha Inasistencia :</strong> <span><%=estado%></span></p>                    
+                    <h4 class="color-Plomo color-Azul-text center-align">Detalles</h4>  
+                    <p><strong>Nombre Asignatura :</strong> <span><%=nombreAsig%></span></p>
+                    <p><strong>Sección :</strong> <span><%=inasistencia.getIdSeccion()%></span></p>
+                    <p><strong>Profesor : </strong><span><%=nombreDocente%></span></p>
+                    <p><strong>Fecha Inasistencia :</strong><input type="date" name="fecha" value="<%=inasistencia.getFecha()%>" readonly=""></p>                    
                     <a class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
                 </div>
                 <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo center-align">Justificación</h4>     
-                    <form action="" method="post">
-                        <table class=" color-Plomo color-Azul-text">
+                    <form action="ControladorJustificar" method="post" enctype="multipart/form-data">
+                        <table class="color-Plomo color-Azul-text">
                             <tr>
                                 <td >Motivo:</td>
                                 <td class="col s12">
-                                    <select name="motivo" class="color-Azul color-Amarillo-text browser-default" required="required">
+                                    <select name="motivo" class="color-Azul color-Amarillo-text browser-default" required="">
                                         <option value="" disabled selected>Seleccione un Motivo</option>                    
                                         <% for (Motivo mot : motivos) {
                                                 if (mot.getIdMotivo() != 0) {
@@ -102,21 +105,21 @@
                             <tr>
                                 <td>Glosa: <i class="material-icons prefix">textsms</i></td>                       
                                 <td>
-                                    <div class="row">                                
-                                        <div class="row">
-                                            <div class="col s12 m9">
-                                                <textarea name="glosa" rows="10" cols="30" id="textarea1" maxlength="280" class="materialize-textarea" required="required"></textarea>
-                                                <label for="textarea1">Comente sus motivos</label>
-                                            </div>
-                                        </div>                                
-                                    </div>
+                                    <textarea name="glosa" rows="10" cols="30" id="textarea1" maxlength="280" data-length="280" class="materialize-textarea" required=""></textarea>
+                                    <label for="textarea1">Comente sus motivos</label>
                                 </td>
-                            </tr>                            
+                            </tr>
+                            <tr>
+                                <td>Imagen: <i class="material-icons prefix">add_a_photo</i></td>                       
+                                <td>
+                                    <input type="file" name="file" accept="image/*"/>
+                                </td>
+                            </tr>                                  
                         </table>                        
                         <button class="btn amber waves-effect waves-light" type="submit" name="opcion" value="Guardar">
                             Guardar
                         </button>
-                          </form>
+                    </form>
                 </div>
             </div>
         </div>         
@@ -134,6 +137,9 @@
         <script>
             $(document).ready(function () {
                 $('select').material_select();
+            });
+            $(document).ready(function () {
+                $('input#input_text, textarea#textarea1').characterCounter();
             });
         </script>
     </body>

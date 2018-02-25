@@ -36,18 +36,15 @@
             String estado = " ";
 
             if (user == null) {
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 usuario = user.getUsuario();
                 clave = user.getClave();
                 int rut = user.getRutUsuario();
                 
-                if (estado.equals("Docente")) {
-                    doce = (new DocenteDAO()).buscarDatos(rut);
-                    nombre = doce.getPnombre() + " " + doce.getSnombre() + " " + doce.getAppaterno() + " " + doce.getApmaterno();
-                    rutD = rut + "-" + doce.getDvDocente();
-                    correo = doce.getEmail();
+                if (estado.equals("Docente") || estado.equals("Alumno")) {
+                    response.sendRedirect("index.jsp");              
                 }
                 if (estado.equals("Director")) {
                     dire = (new DirectorDAO()).buscarDatos(rut);
@@ -85,12 +82,8 @@
         <div class="container">
             <div class="row">
                 <h4 class="yellow darken-1 center-align">Reporte Inasistencias Justificado</h4>
-
             </div>
-
         </div>  
-
-
         <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core"%>
         <%@ taglib prefix="sql"   uri="http://java.sun.com/jstl/sql" %>
         <sql:setDataSource
@@ -129,7 +122,7 @@
                                         ${row.apmaterno}
                                     </td>
                                     <td>
-                                        ${row.fecha}
+                                        <input type="date" name="fecha" value="${row.fecha}" readonly="">
                                     </td>   
                                     <td>
                                         ${row.nombre_ramo}

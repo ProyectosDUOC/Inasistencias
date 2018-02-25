@@ -23,12 +23,18 @@
             HttpSession sesion = request.getSession(true);
             Coordinador coor = new Coordinador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-
+            String estado = "", nombre = "";
             if (user == null) {
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("index.jsp");
             } else {
-                int rut = user.getRutUsuario();
-                coor = (new CoordinadorDAO()).buscarDatos(rut);
+                estado = sesion.getAttribute("tipoUsuario").toString();
+                if (estado.equals("Coordinador")) {
+                    int rut = user.getRutUsuario();
+                    coor = (new CoordinadorDAO()).buscarDatos(rut);
+                    nombre = coor.getPnombre() + " " + coor.getSnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno();
+                } else {
+                    response.sendRedirect("index.jsp");
+                }
             }
         %>  
     </head>
@@ -40,7 +46,7 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <div class="col s6 offset-s6">
-                            <a href="Coordinador.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno()%></span></a>
+                            <a href="Coordinador.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
                                 <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
                                 <a class="waves-effect waves-light" href="index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         

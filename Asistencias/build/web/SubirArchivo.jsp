@@ -22,18 +22,23 @@
             HttpSession sesion = request.getSession(true);
             Coordinador coor = new Coordinador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-            String nombre = " ";
+            String nombre = "", estado = "";
             if (user == null) {
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("index.jsp");
             } else {
-                int rut = user.getRutUsuario();
-                coor = (new CoordinadorDAO()).buscarDatos(rut);
-                nombre = coor.getPnombre() + " " + coor.getSnombre() +" "+coor.getAppaterno() + " " + coor.getApmaterno();
+                estado = sesion.getAttribute("tipoUsuario").toString();
+                if (estado.equals("Coordinador")) {
+                    int rut = user.getRutUsuario();
+                    coor = (new CoordinadorDAO()).buscarDatos(rut);
+                    nombre = coor.getPnombre() + " " + coor.getSnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno();
+                } else {
+                    response.sendRedirect("index.jsp");
+                }
             }
         %>  
     </head>
     <body>
-         <header class="color-Azul">
+        <header class="color-Azul">
             <div class="container">
                 <div class="row">                    
                     <div class="center-align">

@@ -24,12 +24,17 @@
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = " ", estado = " ";
             if (user == null) {
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
-                int rut = user.getRutUsuario();
-                coor = (new CoordinadorDAO()).buscarDatos(rut);
-                nombre = coor.getPnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno();
+                if (estado.equals("Coordinador")) {
+                    int rut = user.getRutUsuario();
+                    coor = (new CoordinadorDAO()).buscarDatos(rut);
+                    nombre = coor.getPnombre() + " " + coor.getSnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno();
+                } else {
+                    response.sendRedirect("index.jsp");
+                }
+
             }
         %>
     </head>

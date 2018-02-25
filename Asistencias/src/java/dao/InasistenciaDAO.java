@@ -53,7 +53,7 @@ public class InasistenciaDAO implements GeneralInasistenciaDAO{
             while (results.next()) {
                 idInasistencia = results.getInt("id_inasistencia");
                 rutAlumno = results.getInt("rut_alumno");
-                idSeccion = results.getString("id_Seccion");
+                idSeccion = results.getString("id_seccion");
                 fecha = results.getDate("fecha");
                 idEstadoi = results.getInt("id_estadoi");
                 
@@ -95,7 +95,7 @@ public class InasistenciaDAO implements GeneralInasistenciaDAO{
             while (results.next()) {
                 idInasistencia = results.getInt("id_inasistencia");
                 rutAlumno = results.getInt("rut_alumno");
-                idSeccion = results.getString("id_Seccion");
+                idSeccion = results.getString("id_seccion");
                 fecha = results.getDate("fecha");
                 idEstadoi = results.getInt("id_estadoi");
                 
@@ -128,7 +128,7 @@ public class InasistenciaDAO implements GeneralInasistenciaDAO{
             while (results.next()) {
                 idInasistencia1 = results.getInt("id_inasistencia");
                 rutAlumno = results.getInt("rut_alumno");
-                idSeccion = results.getString("id_Seccion");
+                idSeccion = results.getString("id_seccion");
                 fecha = results.getDate("fecha");
                 idEstadoi = results.getInt("id_estadoi");
 
@@ -267,7 +267,7 @@ public class InasistenciaDAO implements GeneralInasistenciaDAO{
                 if (rutAlumno2==rutAlumno) {
                     idInasistencia = results.getInt("id_inasistencia");
                     rutAlumno = results.getInt("rut_alumno");
-                    idSeccion = results.getString("id_Seccion");
+                    idSeccion = results.getString("id_seccion");
                     fecha = results.getDate("fecha");
                     idEstadoi = results.getInt("id_estadoi");                
                    arrayInasistencias2.add(new Inasistencia(idInasistencia, rutAlumno, idSeccion, fecha, idEstadoi));
