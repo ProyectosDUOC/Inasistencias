@@ -21,15 +21,18 @@
         <link rel="stylesheet" type="text/css" href="css/styleLogin.css">        
         <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">        
         <%
-            ControlUsuario user = null;
+            HttpSession sesion = request.getSession(true);
+            ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
+
             int rutAlumno = 0;
             Alumno alu = new Alumno();
-            ArrayList<Inasistencia> faltas = null;
-            ClasesConsultas consultaBD = null;
-
+            ArrayList<Inasistencia> faltas = new ArrayList<Inasistencia>();
+            String nombre = " ";
+            String estado = " ";
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
             } else {
+                estado = sesion.getAttribute("tipoUsuario").toString();
                 user = (ControlUsuario) session.getAttribute("usuario");
                 rutAlumno = user.getRutUsuario();
                 alu = (new AlumnoDAO()).buscarDatos(rutAlumno);
@@ -37,44 +40,44 @@
                     response.sendRedirect("error.jsp");
                 }
                 faltas = (new InasistenciaDAO()).buscarRut(rutAlumno);
-                consultaBD = new ClasesConsultas();
+                nombre = alu.getPnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno();
             }
         %>        
     </head>
     <body>
         <header class="color-Azul">
             <div class="container">
-                <div class="row"> 
+                <div class="row">                    
                     <div class="center-align">
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
-                        <br>
                         <div class="col s6 offset-s6">
-                            <p class="color-Amarillo-text"><strong>Bienvenido</strong> <%=alu.getPnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno()%></p>
+                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
+                            <div class="cols s6">
+                                <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
+                                <a class="waves-effect waves-light" href="index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         
+                            </div>                            
                         </div>
-                        <br>
                     </div>
                 </div>
-            </div>
-        </header>   
+            </div>                   
+        </header>    
         <div class="container">
             <div class="row">
                 <h4 class="color-Azul-text color-Plomo center-align">Centro de Notificaciones Duoc</h4>
                 <form action="ControladorAlumno" method="post" >
-
                     <div class="col s12 m12">
-                        <button class="btn waves-effect waves-light red right" type="submit" name="opcion" value="Salir">
+                        <button class="btn waves-effect waves-light red left" type="submit" name="opcion" value="Salir">
                             Cerrar Sesion
                         </button>
                     </div>
                     <div class="col s12 m12" style="overflow-x:auto;">
-                        <table id="example" class="striped grey lighten-2 table table-striped table-bordered" cellspacing="0"  width="100%"> 
+                        <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
                             <thead>
-                                <tr class="amber darken-3 black-text">
-                                    <th>Asignatura/sección</th>
+                                <tr class="amber darken-3">
                                     <th>Nombre Asignatura</th>
+                                    <th>Asignatura/sección</th>                                    
                                     <th>Fecha</th>
-                                    <th>Estado</th>
                                     <th>Accion</th>
                                 </tr>
                             </thead>
@@ -82,16 +85,15 @@
                                 <% if (faltas.isEmpty()) {  %>
                                 <tr><td>No tienes registrado inasistecias para justificar<td></tr>
                                 <%   }
-                                    String nombreAsig = "";
+                                    String nombreAsig = " ";
                                     for (Inasistencia falta : faltas) {
                                         nombreAsig = (new ClasesConsultas()).buscarRamos(new ClasesConsultas().buscarSeccion(falta.getIdSeccion()).getIdRamo()).getNombreRamo();
                                 %>
                                 <tr>  
                                     <%  if (falta.getIdEstadoi() != 0) {%>
-                                    <td><%=falta.getIdSeccion()%></td>
                                     <td><%=nombreAsig%></td>
+                                    <td><%=falta.getIdSeccion()%></td>                                    
                                     <td><%=falta.getFecha()%></td>
-                                    <td><%=consultaBD.buscarEstadoInasistencia(falta.getIdEstadoi()).getNombreEstadoi()%></td>
                                     <td>
                                         <% if (falta.getIdEstadoi() == 1) {%>
                                         <button 
@@ -101,7 +103,18 @@
                                             value="j<%=falta.getIdInasistencia()%>"> 
                                             Justificar 
                                         </button>
-                                        <% }%>
+                                        <% }
+                                            if (falta.getIdEstadoi() > 1) {%>
+                                        <button 
+                                            class="btn indigo darken-1" 
+                                            type="submit" 
+                                            name="opcion" 
+                                            value="v<%=falta.getIdInasistencia()%>"> 
+                                            ver 
+                                        </button>
+                                        <%
+                                            }
+                                        %>
                                     </td>   
                                     <% } %>
                                 </tr>

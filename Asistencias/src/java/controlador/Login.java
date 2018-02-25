@@ -45,7 +45,7 @@ public class Login extends HttpServlet {
             if (ingreso != null) {
                 if (ingreso.getClave().equals(pass)) {
 
-                    sesion.setAttribute("usuario", ingreso);
+                    sesion.setAttribute("usuario", ingreso); 
                     int tipousuario = ingreso.getIdTipoUsuario();
 
                     switch (tipousuario) {
@@ -128,12 +128,12 @@ public class Login extends HttpServlet {
         if (opcion.equals("Guardar")) {
                       
             ControlUsuario user1 = sesion.getAttribute("usuario") == null ? new ControlUsuario() : (ControlUsuario) sesion.getAttribute("usuario");
-        
+            
             String passAnterior = request.getParameter("txtPassAnterior");
             String pass1 = request.getParameter("txtPassNueva1");
             String pass2 = request.getParameter("txtPassNueva2");
             
-            if (pass1.equals(pass2)) {
+            if (pass1.equals(pass2)) {                
                 if (passAnterior.equals(user1.getClave())) {
                     if (!passAnterior.equals(pass1)) {
                         user1.setClave(pass1);

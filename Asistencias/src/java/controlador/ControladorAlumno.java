@@ -11,6 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import modelo.ControlUsuario;
 
 /**
  *
@@ -29,17 +31,23 @@ public class ControladorAlumno extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String opcion  =  request.getParameter("opcion");
+        HttpSession sesion = request.getSession(true);
+        String opcion  =  request.getParameter("opcion");        
         
         if(opcion.equals("Salir")){
             request.getSession().invalidate();
             response.sendRedirect("index.jsp");
         }
         
-        if(opcion.charAt(0)=='j'){
-            int idJust = Integer.parseInt(opcion.substring(1));
-            response.sendRedirect("Justificar.jsp?id="+idJust);
+        if(opcion.charAt(0)=='j'){ 
+            String idJust = opcion.substring(1);
+            sesion.setAttribute("idInasistencia",idJust);
+            response.sendRedirect("Justificar.jsp");
+        }
+        if(opcion.charAt(0)=='v'){             
+            String idVer = opcion.substring(1);
+            sesion.setAttribute("idInasistencia", idVer );
+            response.sendRedirect("Justificar.jsp");
         }
     }
 

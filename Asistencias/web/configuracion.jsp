@@ -37,7 +37,7 @@
             String estado = " ";
 
             if (user == null) {
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 usuario = user.getUsuario();
@@ -96,7 +96,7 @@
                     <h4 class="color-Plomo color-Azul-text center-align" >Datos Personales</h4>  
                     <p><strong> Nombre :</strong> <span><%=nombre%></span></p>
                     <p><strong> Rut :</strong> <span><%=rutD%></span></p>
-                    <p><strong> Correo :</strong> <span><%=correo%></span></p>
+                    <p><strong> Correo :</strong> <span><%=correo%></span></p>                    
                     <%if (estado.equals("Alumno")) {%>
                     <p><strong> Carrera :</strong> <span><%=carrera%></span></p>
                     <%

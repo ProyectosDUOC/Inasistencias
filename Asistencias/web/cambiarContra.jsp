@@ -42,7 +42,7 @@
             String nombre = " ", correo = " ", usuario = " ", clave = " ", carrera = " ", rutD = " ";
             String estado = " ";
 
-            if (user == null) {
+            if (session.getAttribute("usuario")==null) {
                 response.sendRedirect("error.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
@@ -104,15 +104,15 @@
                         <table class="col s12 table-new-contract">
                             <tr>
                                 <td><strong>Contraseña Anterior:</strong></td>
-                                <td><input type="password" name="txtPassAnterior" required=""/></td>                                
+                                <td><input type="password" name="txtPassAnterior" required="" maxlength="10"/></td>                                
                             </tr> 
                             <tr>
                                 <td><strong>Contraseña Nueva:</strong></td>
-                                <td><input type="password" name="txtPassNueva1" required=""/></td>
+                                <td><input type="password" name="txtPassNueva1" required=""  maxlength="10"/></td>
                             </tr> 
                             <tr>
                                 <td><strong>Contraseña Nueva:</strong></td>
-                                <td><input type="password" name="txtPassNueva2" required=""/></td>
+                                <td><input type="password" name="txtPassNueva2" required=""  maxlength="10"/></td>
                             </tr> 
                             <tr>
                                 <td>

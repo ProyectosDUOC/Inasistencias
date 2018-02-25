@@ -77,8 +77,8 @@ public class DirectorDAO implements GeneralDirectorDAO {
             String dv, pnombre, snombre, appaterno, apmaterno, email;
 
             while (results.next()) {
-                rut1 = results.getInt("rut_alumno");
-                dv = results.getString("dv_alumno");
+                rut1 = results.getInt("rut_director");
+                dv = results.getString("dv_director");
                 pnombre = results.getString("pnombre");
                 snombre = results.getString("snombre");
                 appaterno = results.getString("appaterno");
@@ -150,8 +150,8 @@ public class DirectorDAO implements GeneralDirectorDAO {
             String dv, pnombre, snombre, appaterno, apmaterno, email;
 
             while (results.next()) {
-                rut = results.getInt("rut_alumno");
-                dv = results.getString("dv_alumno");
+                rut = results.getInt("rut_director");
+                dv = results.getString("dv_director");
                 pnombre = results.getString("pnombre");
                 snombre = results.getString("snombre");
                 appaterno = results.getString("appaterno");
