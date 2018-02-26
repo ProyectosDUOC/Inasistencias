@@ -34,7 +34,6 @@
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 if (estado.equals("Alumno")) {
                     idInasistencia = sesion.getAttribute("idInasistencia").toString();
-                    user = (ControlUsuario) session.getAttribute("usuario");
                     rutAlumno = user.getRutUsuario();
                     alu = (new AlumnoDAO()).buscarDatos(rutAlumno);
                     nombre = alu.getPnombre() + " " + alu.getSnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno();
@@ -45,11 +44,11 @@
                     docente = (new DocenteDAO()).buscarDatos(new ClasesConsultas().buscarSeccion(inasistencia.getIdSeccion()).getRutDocente());
                     nombreDocente = docente.getPnombre() + " " + docente.getAppaterno();
 
-                }else{
+                } else {
                     response.sendRedirect("index.jsp");
                 }
             }
-        %>        
+        %>    
     </head>
     <body>
         <header class="color-Azul">
@@ -74,19 +73,19 @@
             <div class="row">
                 <h4 class="color-Plomo color-Azul-text center-align"></h4>
                 <div class="col s12 m6 color-Azul-text">
-                    <h4 class="color-Plomo color-Azul-text center-align">Detalles</h4>  
+                    <h4 class="color-Plomo center-align">Detalles</h4>  
                     <p><strong>Nombre Asignatura :</strong> <span><%=nombreAsig%></span></p>
                     <p><strong>Sección :</strong> <span><%=inasistencia.getIdSeccion()%></span></p>
                     <p><strong>Profesor : </strong><span><%=nombreDocente%></span></p>
                     <p><strong>Fecha Inasistencia :</strong><input type="date" name="fecha" value="<%=inasistencia.getFecha()%>" readonly=""></p>                    
-                    <a class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
+                    <br>
                 </div>
                 <div class="col s12 m6 color-Azul-text">
-                    <h4 class="color-Plomo center-align">Justificación</h4>     
-                    <form action="ControladorJustificar" method="post" enctype="multipart/form-data">
+                    <h4 class="color-Plomo center-align">Justificación</h4>
+                    <form action="ControladorJusti" method="post" >
                         <table class="color-Plomo color-Azul-text">
                             <tr>
-                                <td >Motivo:</td>
+                                <td><strong>Motivo:</strong></td>
                                 <td class="col s12">
                                     <select name="motivo" class="color-Azul color-Amarillo-text browser-default" required="">
                                         <option value="" disabled selected>Seleccione un Motivo</option>                    
@@ -103,22 +102,22 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Glosa: <i class="material-icons prefix">textsms</i></td>                       
-                                <td>
+                                <td><strong>Glosa:</strong><i class="material-icons prefix">textsms</i></td>                       
+                                <td class="col s12">
                                     <textarea name="glosa" rows="10" cols="30" id="textarea1" maxlength="280" data-length="280" class="materialize-textarea" required=""></textarea>
                                     <label for="textarea1">Comente sus motivos</label>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Imagen: <i class="material-icons prefix">add_a_photo</i></td>                       
-                                <td>
-                                    <input type="file" name="file" accept="image/*"/>
-                                </td>
-                            </tr>                                  
-                        </table>                        
-                        <button class="btn amber waves-effect waves-light" type="submit" name="opcion" value="Guardar">
-                            Guardar
-                        </button>
+                        </table>
+                        <br>
+                        <div>
+                            <input type="file" name="file" accept="image/*"/>
+                        </div>
+                        <br>
+                        <div>
+                            <a class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
+                            <button class="btn amber waves-effect waves-light" type="submit" name="opcion" value="g<%=idInasistencia%>">Guardar</button>
+                        </div>
                     </form>
                 </div>
             </div>

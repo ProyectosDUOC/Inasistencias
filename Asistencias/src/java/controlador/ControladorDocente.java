@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,16 +31,18 @@ public class ControladorDocente extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession sesion = request.getSession(true);
         String opcion  =  request.getParameter("opcion");
-        
+        String idIna = "";
         if(opcion.equals("Salir")){
             request.getSession().invalidate();
             response.sendRedirect("index.jsp");
         }
         
         if(opcion.charAt(0)=='j'){
-            int idJust = Integer.parseInt(opcion.substring(1));
-            response.sendRedirect("VerJustificacion.jsp?id="+idJust);
+            idIna = opcion.substring(1); 
+            sesion.setAttribute("idInasistencia",idIna);            
+            response.sendRedirect("VerJustificacion.jsp");
         }
     }
 

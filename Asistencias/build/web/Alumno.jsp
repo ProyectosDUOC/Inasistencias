@@ -24,7 +24,6 @@
         <%
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-
             int rutAlumno = 0;
             Alumno alu = new Alumno();
             ArrayList<Inasistencia> faltas = new ArrayList<Inasistencia>();
@@ -35,7 +34,6 @@
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 if (estado.equals("Alumno")) {
-                    user = (ControlUsuario) session.getAttribute("usuario");
                     rutAlumno = user.getRutUsuario();
                     alu = (new AlumnoDAO()).buscarDatos(rutAlumno);
                     if (alu == null) {

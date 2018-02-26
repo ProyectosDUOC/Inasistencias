@@ -31,7 +31,7 @@
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 int rut = user.getRutUsuario();
                 dire = (new DirectorDAO()).buscarDatos(rut);
-                nombre = dire.getPnombre() + " "+ dire.getSnombre()+" "+ dire.getAppaterno() + " " + dire.getApmaterno();
+                nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
             }
         %>
 
@@ -62,7 +62,7 @@
                     <form action="ControladorDirector" method="post">
                         <table class=" color-Plomo color-Azul-text">
                             <tr>
-                                <td >Semestre:</td>
+                                <td>Semestre:</td>
                                 <td class="col s12">
                                     <select class="browser-default" name="semestre" required="required">
                                         <option value="" disabled selected>Seleccione Semestre</option>

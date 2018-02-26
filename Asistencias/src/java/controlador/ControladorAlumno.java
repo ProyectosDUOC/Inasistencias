@@ -47,7 +47,7 @@ public class ControladorAlumno extends HttpServlet {
         if(opcion.charAt(0)=='v'){             
             String idVer = opcion.substring(1);
             sesion.setAttribute("idInasistencia", idVer );
-            response.sendRedirect("Justificar.jsp");
+            response.sendRedirect("VerJustificacion.jsp");
         }
     }
 

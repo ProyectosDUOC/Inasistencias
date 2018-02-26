@@ -29,25 +29,35 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Docente</title>
         <%
+            HttpSession sesion = request.getSession(true);
             ControlUsuario user = (ControlUsuario) session.getAttribute("usuario");
-            if (user == null) {
-                response.sendRedirect("error.jsp");
-            }
-            int rutDocente = user.getRutUsuario();
-            Docente docente = (new DocenteDAO()).buscarDatos(rutDocente);
-            if (docente == null) {
-                response.sendRedirect("error.jsp");
-            }
-            AlumnoDAO alumnos= new AlumnoDAO();
+            Docente docente = new Docente();
+            int rutDocente = 0;
+            String estado = "", nombre = "", rutD="";
+            AlumnoDAO alumnos = new AlumnoDAO();
             ClasesConsultas consultaBD = new ClasesConsultas();
             ArrayList<Seccion> secciones = consultaBD.buscarSeccionesRut(rutDocente);
             ArrayList<Inasistencia> faltas = new ArrayList();
             ArrayList<Inasistencia> faltasTemp = new ArrayList();
             InasistenciaDAO faltaDAO = new InasistenciaDAO();
-            for (Seccion sec : secciones) {
-                faltasTemp = faltaDAO.buscarSeccion(sec.getIdSeccion());
-                for (Inasistencia ina : faltasTemp) {
-                    faltas.add(ina);
+
+            if (session.getAttribute("usuario") == null) {
+                response.sendRedirect("index.jsp");
+            } else {
+                estado = sesion.getAttribute("tipoUsuario").toString();
+                if (estado.equals("Docente")) {
+                    rutDocente = user.getRutUsuario();
+                    docente = (new DocenteDAO()).buscarDatos(rutDocente);
+                    nombre = docente.getPnombre() + " " + docente.getSnombre() + " " + docente.getAppaterno() + " " + docente.getApmaterno();
+                    rutD = rutDocente + "-" + docente.getDvDocente();
+                    for (Seccion sec : secciones) {
+                        faltasTemp = faltaDAO.buscarSeccion(sec.getIdSeccion());
+                        for (Inasistencia ina : faltasTemp) {
+                            faltas.add(ina);
+                        }
+                    }
+                } else {
+                    response.sendRedirect("index.jsp");
                 }
             }
         %>
@@ -61,7 +71,7 @@
                 </button>
                 <h3 class="black-text">Datos Docente</h3>               
                 <ul>
-                    <li class="amber darken-3 black-text">Nombre: <%=docente.getPnombre() + " " + docente.getAppaterno() + " " + docente.getApmaterno()%></li>
+                    <li class="amber darken-3 black-text">Nombre: <%=nombre%></li>
                     <li class="amber darken-3 black-text">Rut: <%=docente.getRutDocente() + "-" + docente.getDvDocente()%></li>
                 </ul>
                 <table class=" grey lighten-2">
@@ -79,35 +89,34 @@
                         <td><%=falta.getIdSeccion()%></td>
                         <td><%=falta.getFecha()%></td>
                         <td><%=falta.getRutAlumno()%>-<%=alumnos.buscarDatos(falta.getRutAlumno()).getDvAlumno()%>  </td>
-                        <td><%=consultaBD.buscarMotivos(((new JustificacionDAO()).buscarDatos(falta.getIdInasistencia())).getIdMotivo()).getNombreMotivo() %></td>
+                        <td><%=consultaBD.buscarMotivos(((new JustificacionDAO()).buscarDatos(falta.getIdInasistencia())).getIdMotivo()).getNombreMotivo()%></td>
                         <td><%=consultaBD.buscarEstadoInasistencia(falta.getIdEstadoi()).getNombreEstadoi()%></td>
-                         <td>
-                            <% if(falta.getIdEstadoi()==2){%>
-                                <button 
-                                 class="btn waves-effect waves-light indigo darken-3" 
-                                 type="submit" 
-                                 name="opcion" 
-                                 value="j<%=falta.getIdInasistencia()%>"> 
-                                    Aceptar Justificacion 
-                                </button>
+                        <td>
+                            <% if (falta.getIdEstadoi() == 2) {%>
+                            <button 
+                                class="btn waves-effect waves-light indigo darken-3" 
+                                type="submit" 
+                                name="opcion" 
+                                value="j<%=falta.getIdInasistencia()%>"> 
+                                Aceptar Justificacion 
+                            </button>
                             <% }
-                               if(falta.getIdEstadoi()==3){ %>
-                                <button 
-                                 class="btn waves-effect waves-light  grey darken-1" 
-                                 type="submit" 
-                                 name="opcion" 
-                                 value="j<%=falta.getIdInasistencia()%>"> 
-                                     ver
-                                </button>
-                           <% }%>
+                                if (falta.getIdEstadoi() == 3) {%>
+                            <button 
+                                class="btn waves-effect waves-light  grey darken-1" 
+                                type="submit" 
+                                name="opcion" 
+                                value="j<%=falta.getIdInasistencia()%>"> 
+                                ver
+                            </button>
+                            <% }%>
                         </td>   
                         <% } %>
                     </tr>
                     <% }%>
                 </table>
             </form>
-        </div>       
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        </div>
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
     </body>

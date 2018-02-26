@@ -25,12 +25,17 @@
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = " ", estado = " ";
             if (user == null) {
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
-                int rut = user.getRutUsuario();
+                if (estado.equals("Director")) {
+                        int rut = user.getRutUsuario();
                 dire = (new DirectorDAO()).buscarDatos(rut);
                 nombre = dire.getPnombre() + " "+ dire.getSnombre()+" "+ dire.getAppaterno() + " " + dire.getApmaterno();
+                    }else{
+                    response.sendRedirect("index.jsp");
+                }
+                
             }
         %>
     </head>
@@ -42,6 +47,7 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <div class="col s6 offset-s6">
+                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>
                             <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
                                 <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
@@ -63,67 +69,67 @@
                 </button>
                 <a  class="white-text btn-large  waves-effect waves-light  red" href="Director.jsp">Volver</a>
             </form>
-                <sql:setDataSource
-                    driver="com.mysql.jdbc.Driver"
-                    url="jdbc:mysql://localhost:3306/instituto"
-                    user="root"
-                    password=""/>      
+            <sql:setDataSource
+                driver="com.mysql.jdbc.Driver"
+                url="jdbc:mysql://localhost:3306/instituto"
+                user="root"
+                password=""/>      
 
-                <sql:query var="consulta">
-                    SELECT *
-                    FROM inasistencia
-                    JOIN seccion using(id_seccion) 
-                    JOIN docente using(rut_docente)
-                    JOIN justificacion using(id_inasistencia)
-                    JOIN motivo using(id_motivo)
-                    JOIN estado_inasistencia using(id_estadoi)
-                    where id_estadoi = 3
-                    order by rut_docente;
-                </sql:query>
-                <div style="overflow-x:auto;">
-                    <table id="example" class="striped grey lighten-2 table table-striped table-bordered" cellspacing="0"  width="100%">
-                        <thead>
-                            <tr class="amber darken-3">                    
-                                <th>Rut Docente</th> 
-                                <th>Nombre Docente</th>
-                                <th>Seccion</th>
-                                <th>Rut alumno</th>
-                                <th>Fecha inasistencia</th>
-                                <th>Motivo</th>
-                                <th>Dscripcion del Motivo</th>
-                                <th>Estado</th>
+            <sql:query var="consulta">
+                SELECT *
+                FROM inasistencia
+                JOIN seccion using(id_seccion) 
+                JOIN docente using(rut_docente)
+                JOIN justificacion using(id_inasistencia)
+                JOIN motivo using(id_motivo)
+                JOIN estado_inasistencia using(id_estadoi)
+                where id_estadoi = 3
+                order by rut_docente;
+            </sql:query>
+            <div style="overflow-x:auto;">
+                <table id="example" class="striped grey lighten-2 table table-striped table-bordered" cellspacing="0"  width="100%">
+                    <thead>
+                        <tr class="amber darken-3">                    
+                            <th>Rut Docente</th> 
+                            <th>Nombre Docente</th>
+                            <th>Seccion</th>
+                            <th>Rut alumno</th>
+                            <th>Fecha inasistencia</th>
+                            <th>Motivo</th>
+                            <th>Dscripcion del Motivo</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="row" items="${consulta.rows}">
+                            <tr>
+                                <td>${row.rut_docente} - 
+                                    ${row.dv_docente}</td>
+                                <td>
+                                    ${row.pnombre}
+                                    ${row.snombre}
+                                    ${row.appaterno}
+                                    ${row.apmaterno}
+                                </td>
+                                <td>
+                                    ${row.id_seccion}
+                                </td>
+                                <td>${row.rut_alumno}</td>
+                                <td>
+                                    ${row.fecha} 
+                                </td>
+                                <td>
+                                    ${row.nombre_motivo} 
+                                </td>
+                                <td>
+                                    ${row.glosa}
+                                </td>
+                                <td>${row.nombre_estadoi}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="row" items="${consulta.rows}">
-                                <tr>
-                                    <td>${row.rut_docente} - 
-                                        ${row.dv_docente}</td>
-                                    <td>
-                                        ${row.pnombre}
-                                        ${row.snombre}
-                                        ${row.appaterno}
-                                        ${row.apmaterno}
-                                    </td>
-                                    <td>
-                                        ${row.id_seccion}
-                                    </td>
-                                    <td>${row.rut_alumno}</td>
-                                    <td>
-                                        ${row.fecha} 
-                                    </td>
-                                    <td>
-                                        ${row.nombre_motivo} 
-                                    </td>
-                                    <td>
-                                        ${row.glosa}
-                                    </td>
-                                    <td>${row.nombre_estadoi}</td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>  
-                </div>   
+                        </c:forEach>
+                    </tbody>
+                </table>  
+            </div>   
         </div>
         <br>
         <footer class="color-Azul">            

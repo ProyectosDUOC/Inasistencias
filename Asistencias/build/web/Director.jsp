@@ -27,13 +27,17 @@
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = " ", estado = " ";
             if (user == null) {
-                    response.sendRedirect("error.jsp");
-            }
-            else{
+                response.sendRedirect("index.jsp");
+            } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
-                int rut = user.getRutUsuario();
-                dire = (new DirectorDAO()).buscarDatos(rut);
-                nombre = dire.getPnombre() + " " + dire.getSnombre()+" "+ dire.getAppaterno() + " " + dire.getApmaterno();
+                if (estado.equals("Director")) {
+                    int rut = user.getRutUsuario();
+                    dire = (new DirectorDAO()).buscarDatos(rut);
+                    nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
+                } else {
+                    response.sendRedirect("index.jsp");
+                }
+                
             }            
         %>
     </head>
@@ -93,7 +97,7 @@
                 </form>
             </div>
         </div>
-                            <footer class="color-Azul">            
+        <footer class="color-Azul">            
             <div class="container">
                 <br>
                 <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>
