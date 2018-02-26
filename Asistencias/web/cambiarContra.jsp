@@ -29,7 +29,8 @@
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link rel="stylesheet" type="text/css" href="css/styleLogin.css">      
+        <link rel="stylesheet" type="text/css" href="css/styleLogin.css">
+        <link rel="shortcut icon" href="images/favicon.ico?" type="images/favicon.ico" />
         <title>Configuracion | cambiar clave </title>
         <%
             HttpSession sesion = request.getSession(true);

@@ -19,6 +19,7 @@
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link rel="stylesheet" type="text/css" href="css/styleLogin.css">           
         <title>Enviar Correos</title>
+        <link rel="shortcut icon" href="images/favicon.ico?" type="images/favicon.ico" />
         <%
             HttpSession sesion = request.getSession(true);
             Coordinador coor = new Coordinador();

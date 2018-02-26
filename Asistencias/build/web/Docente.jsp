@@ -27,6 +27,7 @@
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link rel="stylesheet" type="text/css" href="css/styleLogin.css">        
         <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">   
+        <link rel="shortcut icon" href="images/favicon.ico?" type="images/favicon.ico" />
         <title>Docente</title>
         <%
             HttpSession sesion = request.getSession(true);

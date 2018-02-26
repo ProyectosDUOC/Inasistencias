@@ -178,3 +178,17 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
 .file-input:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
+
+/*
+    IMAGEN
+*/
+.gallery img:hover{
+  filter: grayscale(0);
+  transform: scale(1.1);
+}
+.gallery img{
+  width: 100px !important;
+  padding: 5px;
+  filter: grayscale(10%);
+  transition: 0.5s;
+}

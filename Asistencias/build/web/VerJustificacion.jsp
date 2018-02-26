@@ -16,7 +16,9 @@
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link rel="stylesheet" type="text/css" href="css/styleLogin.css">   
+        <link rel="stylesheet" type="text/css" href="css/styleLogin.css"> 
+        <link rel="stylesheet" type="text/css" href="css/lightbox.css">
+        <link rel="shortcut icon" href="images/favicon.ico?" type="images/favicon.ico" />
         <title>Ver Justificación</title>
         <%
             HttpSession sesion = request.getSession(true);
@@ -115,11 +117,12 @@
                             <tr>
                                 <td><strong>Glosa:</strong> <i class="material-icons prefix">textsms</i></td>                       
                                 <td><%=justicacion.getGlosa()%></td>
-                            </tr>
+                            </tr>                            
                         </table>
                         <br>
-                        <div>
-                            <p>imagen por si acaso</p>
+                        <div class="gallery">                       
+                            <a href="images/test.jpg" data-lightbox="mygallery" alt="Galer" data-title="Justificacion">
+                                <img src="images/test.jpg" alt="Justificacion alumno" class="circle" width="100" height="100"></a>
                         </div>
                         <br>
                         <div>
@@ -142,6 +145,7 @@
                 <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
                 <br>
             </div>
-        </footer>    
+        </footer>                                
+        <script src="js/lightbox-plus-jquery.min.js" type="text/javascript"></script>
     </body>
 </html>

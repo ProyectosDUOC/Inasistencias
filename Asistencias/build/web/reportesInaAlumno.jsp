@@ -17,6 +17,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link href="css/style1.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link rel="shortcut icon" href="images/favicon.ico?" type="images/favicon.ico" />
     </head>
     <body>
         <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core"%>
