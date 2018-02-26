@@ -83,6 +83,5 @@
             </div>
         </footer>
         <script src="js/materialize.js"></script>
-        <script src="js/init.js"></script>
     </body>
 </html>

@@ -14,7 +14,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Alumno</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -143,12 +142,6 @@
         <script src="js/materialize.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery.dataTables.js"></script>
-        <script src="js/script.js"></script>
-        <script>
-
-            $(document).ready(function () {
-                $('select').material_select();
-            });
-        </script>
+        <script src="js/script.js"></script>        
     </body>
 </html>
