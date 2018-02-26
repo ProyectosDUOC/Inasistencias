@@ -31,7 +31,7 @@
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             Coordinador coor = new Coordinador();
             Director dire = new Director();
-            Docente doce = new Docente();            
+            Docente doce = new Docente();
             String nombre = " ", correo = " ", usuario = " ", clave = " ", rutD = " ";
             String estado = " ";
 
@@ -42,9 +42,9 @@
                 usuario = user.getUsuario();
                 clave = user.getClave();
                 int rut = user.getRutUsuario();
-                
+
                 if (estado.equals("Docente") || estado.equals("Alumno")) {
-                    response.sendRedirect("index.jsp");              
+                    response.sendRedirect("index.jsp");
                 }
                 if (estado.equals("Director")) {
                     dire = (new DirectorDAO()).buscarDatos(rut);
@@ -110,6 +110,7 @@
                                 <th>Seccion</th>
                                 <th>Motivo</th>
                                 <th>Descripcion del Motivo</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>                        
@@ -137,6 +138,17 @@
                                     <td>
                                         ${row.glosa}
                                     </td>
+                                    <td>
+                                        <form action="ControladorSeccionAlumnos" method="post" >
+                                        <button 
+                                            class="btn color-Azul darken-1" 
+                                            type="submit" 
+                                            name="opcion" 
+                                            value="v${row.id_inasistencia}"> 
+                                            ver
+                                        </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -158,11 +170,5 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery.dataTables.js"></script>
         <script src="js/script.js"></script>
-        <script>
-
-            $(document).ready(function () {
-                $('select').material_select();
-            });
-        </script>
     </body>
 </html>

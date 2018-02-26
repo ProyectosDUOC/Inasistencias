@@ -29,14 +29,15 @@
         <title>Docente</title>
         <%
             HttpSession sesion = request.getSession(true);
-            ControlUsuario user = (ControlUsuario) session.getAttribute("usuario");
+            ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
+
             Docente docente = new Docente();
             int rut = 0, contador = 0;
             String estado = "", nombre = "", rutD = "", idSeccion="", nombreAsig = "";
             Alumno alumno = new Alumno();
-            ArrayList<Inasistencia> arrayInasistencia = null;
+            ArrayList<Inasistencia> arrayInasistencia = new ArrayList<Inasistencia>();
             Seccion seccion = new Seccion();
-            if (session.getAttribute("usuario") == null) {
+            if (session.getAttribute("usuario") == null || sesion.getAttribute("idSeccion")==null) {
                 response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();

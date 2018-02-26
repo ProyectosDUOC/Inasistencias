@@ -30,7 +30,8 @@
         <title>Docente</title>
         <%
             HttpSession sesion = request.getSession(true);
-            ControlUsuario user = (ControlUsuario) session.getAttribute("usuario");
+            ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
+
             Docente docente = new Docente();
             int rut = 0, contador = 0;
             String estado = "", nombre = "", rutD = "", nombreAsig = "";

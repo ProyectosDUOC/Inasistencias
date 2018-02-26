@@ -30,7 +30,7 @@
             Justificacion justicacion = new Justificacion();
             Inasistencia inasistencia = new Inasistencia();
             ClasesConsultas consultaDB = new ClasesConsultas();
-            String nombre = "", rutD = "", estado = "", estado1="", idInasistencia = "", nombreAsig = "", nombreDocente = "", motivo ="";
+            String nombre = "", rutD = "", estado = "", estado1="", idInasistencia = "", nombreAsig = "", nombreDocente = "", motivo ="", nombreAlumno="";
             int rut = 0;
             
             if (session.getAttribute("usuario") == null || sesion.getAttribute("idInasistencia") == null) {
@@ -54,6 +54,8 @@
                     doce = (new DocenteDAO()).buscarDatos(rut);
                     nombre = doce.getPnombre() + " " + doce.getSnombre() + " " + doce.getAppaterno() + " " + doce.getApmaterno();
                     estado1 = "seccionAlumnos";
+                    alum = (new AlumnoDAO()).buscarDatos(inasistencia.getRutAlumno());
+                    nombreAlumno = alum.getPnombre() + " " + alum.getSnombre() + " " + alum.getAppaterno() + " " + alum.getApmaterno(); 
                 }
                 if (estado.equals("Director")) {
                     dire = (new DirectorDAO()).buscarDatos(rut);
@@ -98,8 +100,14 @@
                 </div>
                 <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo center-align">Justificación</h4>
-                    <form action="ControladorJusti" method="post" enctype="multipart/form-data">
+                    <form action="ControladorJusti" method="post">
                         <table class="color-Plomo color-Azul-text">
+                            <%if (estado.equals("Docente")) { %>
+                                   <tr>
+                                <td><strong>Nombre Alumno:</strong></td>
+                                <td><%=nombreAlumno%></td>
+                            </tr> 
+                            <% } %>                             
                             <tr>
                                 <td><strong>Motivo:</strong></td>
                                 <td><%=motivo%></td>

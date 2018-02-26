@@ -101,7 +101,7 @@ public class ControladorJusti extends HttpServlet {
             sesion.setAttribute("idInasistencia",idIna);
             response.sendRedirect("VerJustificacion.jsp");
         }
-         if (opcion.charAt(0) == 'j') {
+        if (opcion.charAt(0)=='j') {
             idIna = opcion.substring(1);
             (new InasistenciaDAO()).actualizarEnviadoAlumnos(Integer.parseInt(idIna), 3);
             sesion.setAttribute("idInasistencia",idIna);
