@@ -80,7 +80,6 @@
                 <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
                 <br>
             </div>
-        </footer>
-        <script src="js/materialize.js"></script>        
+        </footer>      
     </body>
 </html>

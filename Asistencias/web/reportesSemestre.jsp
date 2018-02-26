@@ -111,14 +111,6 @@
                 <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
                 <br>
             </div>
-        </footer>    
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="js/materialize.js"></script>
-        <script src="js/init.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('select').material_select();
-            });
-        </script>  
+        </footer>             
     </body>
 </html>

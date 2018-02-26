@@ -19,7 +19,8 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link rel="stylesheet" type="text/css" href="css/styleLogin.css">        
-        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">        
+        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css"> 
+        <link rel="shortcut icon" href="images/favicon.ico?" type="images/favicon.ico" />
         <%
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
@@ -138,8 +139,7 @@
                 <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
                 <br>
             </div>
-        </footer>    
-        <script src="js/materialize.js"></script>
+        </footer>            
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery.dataTables.js"></script>
         <script src="js/script.js"></script>        

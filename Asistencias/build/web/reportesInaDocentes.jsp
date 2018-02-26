@@ -141,15 +141,8 @@
                 <br>
             </div>
         </footer>    
-        <script src="js/materialize.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery.dataTables.js"></script>
         <script src="js/script.js"></script>
-        <script>
-
-            $(document).ready(function () {
-                $('select').material_select();
-            });
-        </script>
     </body>
 </html>

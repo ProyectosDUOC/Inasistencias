@@ -130,17 +130,7 @@
                 <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
                 <br>
             </div>
-        </footer>    
-        <script src="js/materialize.js"></script>
-        <script src="js/init.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('select').material_select();
-            });
-            $(document).ready(function () {
-                $('input#input_text, textarea#textarea1').characterCounter();
-            });
-        </script>
+        </footer>  
     </body>
 </html>
 
