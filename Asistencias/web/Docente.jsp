@@ -33,7 +33,7 @@
             ControlUsuario user = (ControlUsuario) session.getAttribute("usuario");
             Docente docente = new Docente();
             int rutDocente = 0;
-            String estado = "", nombre = "", rutD="";
+            String estado = "", nombre = "", rutD = "";
             AlumnoDAO alumnos = new AlumnoDAO();
             ClasesConsultas consultaBD = new ClasesConsultas();
             ArrayList<Seccion> secciones = consultaBD.buscarSeccionesRut(rutDocente);
@@ -80,61 +80,34 @@
                     </div>
                 </div>
             </div>                   
-        </header>  
+        </header> 
         <div class="container">
-            <form action="ControladorDocente" method="POST">                
-                <h1 class="yellow darken-1 center-align">Docente</h1>
-                <button class="btn waves-effect waves-light red right" type="submit" name="opcion" value="Salir">
-                    Cerrar Sesion
-                </button>
-                <h3 class="black-text">Datos Docente</h3>               
-                <ul>
-                    <li class="amber darken-3 black-text">Nombre: <%=nombre%></li>
-                    <li class="amber darken-3 black-text">Rut: <%=docente.getRutDocente() + "-" + docente.getDvDocente()%></li>
-                </ul>
-                <table class=" grey lighten-2">
-                    <tr class="amber darken-3">
-                        <th>Ramo</th>
-                        <th>Fecha</th>
-                        <th>Rut Alumno</th>
-                        <th>Motivo</th>
-                        <th>Estado</th>                        
-                        <th>Accion</th>
-                    </tr>
-                    <% for (Inasistencia falta : faltas) {   %>
-                    <tr>  
-                        <%  if (falta.getIdEstadoi() > 1) {%>
-                        <td><%=falta.getIdSeccion()%></td>
-                        <td><%=falta.getFecha()%></td>
-                        <td><%=falta.getRutAlumno()%>-<%=alumnos.buscarDatos(falta.getRutAlumno()).getDvAlumno()%>  </td>
-                        <td><%=consultaBD.buscarMotivos(((new JustificacionDAO()).buscarDatos(falta.getIdInasistencia())).getIdMotivo()).getNombreMotivo()%></td>
-                        <td><%=consultaBD.buscarEstadoInasistencia(falta.getIdEstadoi()).getNombreEstadoi()%></td>
-                        <td>
-                            <% if (falta.getIdEstadoi() == 2) {%>
-                            <button 
-                                class="btn waves-effect waves-light indigo darken-3" 
-                                type="submit" 
-                                name="opcion" 
-                                value="j<%=falta.getIdInasistencia()%>"> 
-                                Aceptar Justificacion 
-                            </button>
-                            <% }
-                                if (falta.getIdEstadoi() == 3) {%>
-                            <button 
-                                class="btn waves-effect waves-light  grey darken-1" 
-                                type="submit" 
-                                name="opcion" 
-                                value="j<%=falta.getIdInasistencia()%>"> 
-                                ver
-                            </button>
-                            <% }%>
-                        </td>   
-                        <% } %>
-                    </tr>
-                    <% }%>
-                </table>
-            </form>
-        </div>
+            <div class="row">
+                <h4 class="color-Azul-text color-Plomo center-align">Menu Docente</h4>
+                <form action="ControladorDocente" method="post" >
+                    <div class="col s12 m12">
+                        <button class="btn waves-effect waves-light red left" type="submit" name="opcion" value="Salir">
+                            Cerrar Sesion
+                        </button>
+                    </div>
+                    <div class="col s12 m12" style="overflow-x:auto;">
+                        <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
+                            <thead>
+                                <tr class="amber darken-3">
+                                    <th>Nombre Asignatura</th>
+                                    <th>Sección</th>                        
+                                    <th>Cantiadad Justificados</th>
+                                    <th>Cantiadad no Justificados</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>  
+                    </div>
+                </form> 
+            </div>
+        </div>                      
         <footer class="color-Azul">            
             <div class="container">
                 <br>

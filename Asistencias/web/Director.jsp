@@ -49,6 +49,7 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <div class="col s6 offset-s6">
+                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>  
                             <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
                                 <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
@@ -62,7 +63,6 @@
         <div class="container">
             <div class="row">            
                 <h4 class="color-Plomo color-Azul-text center-align" >Menu Director de Carrera</h4>  
-
                 <form method="POST" action="ControladorDirector">
                     <table border="1" class="center-align">   
                         <tr>
@@ -81,14 +81,14 @@
                         </tr>
                         <tr>
                             <td>
-                                <button class="btn-large waves-effect waves-light color-AzulClaro" type="submit" name="Opcion" value="Reporte por Semestre">
+                                <button class="btn waves-effect waves-light color-AzulClaro" type="submit" name="Opcion" value="Reporte por Semestre">
                                     Reporte por Semestre
                                 </button>
                             </td>
                         </tr> 
                         <tr>
                             <td>
-                                <button class="btn-large waves-effect red waves-light " type="submit" name="Opcion" value="Salir">
+                                <button class="btn waves-effect red waves-light " type="submit" name="Opcion" value="Salir">
                                     Salir <i class="material-icons right">exit_to_app</i>
                                 </button> 
                             </td>

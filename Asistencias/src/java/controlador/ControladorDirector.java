@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,7 +31,7 @@ public class ControladorDirector extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        HttpSession sesion = request.getSession(true);
         String opcion = request.getParameter("Opcion");
         
         if(opcion.equalsIgnoreCase("Acceder"))
@@ -41,7 +42,7 @@ public class ControladorDirector extends HttpServlet {
             response.sendRedirect("reportesInaDocentes.jsp");
         }
         if (opcion.equalsIgnoreCase("Reporte por Semestre")) {
-             response.sendRedirect("reportesPDFsemestre.jsp");
+             response.sendRedirect("reportesSemestre.jsp");
         }
         if (opcion.equalsIgnoreCase("Enviar")) {
             String semestre="2", anio = "2017";
@@ -54,7 +55,9 @@ public class ControladorDirector extends HttpServlet {
                 for (int i = 0; i < miselect1.length; i++) {
                     anio = miselect1[i];
                 }
-            response.sendRedirect("reportesSemestrales.jsp?anio="+anio+"&sem="+semestre);
+            sesion.setAttribute("semestre", semestre);
+            sesion.setAttribute("anio", anio);
+            response.sendRedirect("reportesSemestrales.jsp?s="+semestre+"&a="+anio);
         }
         if(opcion.equals("Salir")){
             request.getSession().invalidate();

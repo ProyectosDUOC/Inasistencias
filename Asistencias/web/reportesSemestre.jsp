@@ -26,12 +26,17 @@
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = " ", estado = " ";
             if (user == null) {
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
-                int rut = user.getRutUsuario();
-                dire = (new DirectorDAO()).buscarDatos(rut);
-                nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
+                if (estado.equals("Director")) {
+                    int rut = user.getRutUsuario();
+                    dire = (new DirectorDAO()).buscarDatos(rut);
+                    nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
+
+                } else {
+                    response.sendRedirect("index.jsp");
+                }
             }
         %>
 
@@ -44,6 +49,7 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <div class="col s6 offset-s6">
+                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>  
                             <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
                                 <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
@@ -86,11 +92,11 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a  class="white-text btn-large waves-effect waves-light red" href="<%=estado%>.jsp">Volver</a>
+                                    <a  class="white-text btn waves-effect waves-light red" href="<%=estado%>.jsp">Volver</a>
                                 </td>
                                 <td>
-                                    <button class="btn-large waves-effect waves-light btn amber" type="submit" name="opcion" value="Guardar">
-                                        Guardar
+                                    <button class="btn waves-effect waves-light btn amber" type="submit" name="Opcion" value="Enviar">
+                                        Buscar
                                     </button> 
                                 </td> 
                             </tr>
