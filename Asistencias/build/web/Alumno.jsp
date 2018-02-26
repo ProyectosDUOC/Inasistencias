@@ -82,7 +82,7 @@
                                     <th>Nombre Asignatura</th>
                                     <th>Asignatura/sección</th>                                    
                                     <th>Fecha</th>
-                                    <th>Accion</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>

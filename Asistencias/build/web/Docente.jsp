@@ -32,30 +32,23 @@
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = (ControlUsuario) session.getAttribute("usuario");
             Docente docente = new Docente();
-            int rutDocente = 0;
-            String estado = "", nombre = "", rutD = "";
+            int rut = 0, contador = 0;
+            String estado = "", nombre = "", rutD = "", nombreAsig = "";
             AlumnoDAO alumnos = new AlumnoDAO();
-            ClasesConsultas consultaBD = new ClasesConsultas();
-            ArrayList<Seccion> secciones = consultaBD.buscarSeccionesRut(rutDocente);
-            ArrayList<Inasistencia> faltas = new ArrayList();
-            ArrayList<Inasistencia> faltasTemp = new ArrayList();
-            InasistenciaDAO faltaDAO = new InasistenciaDAO();
+            ArrayList<Seccion> arraySecciones = null;
+            ArrayList<Inasistencia> arrayInasistencia = null;
 
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 if (estado.equals("Docente")) {
-                    rutDocente = user.getRutUsuario();
-                    docente = (new DocenteDAO()).buscarDatos(rutDocente);
+                    rut = user.getRutUsuario();
+                    docente = (new DocenteDAO()).buscarDatos(rut);
                     nombre = docente.getPnombre() + " " + docente.getSnombre() + " " + docente.getAppaterno() + " " + docente.getApmaterno();
-                    rutD = rutDocente + "-" + docente.getDvDocente();
-                    for (Seccion sec : secciones) {
-                        faltasTemp = faltaDAO.buscarSeccion(sec.getIdSeccion());
-                        for (Inasistencia ina : faltasTemp) {
-                            faltas.add(ina);
-                        }
-                    }
+                    rutD = rut + "-" + docente.getDvDocente();
+                    arraySecciones = (new ClasesConsultas()).buscarSeccionesRut(rut);
+
                 } else {
                     response.sendRedirect("index.jsp");
                 }
@@ -96,12 +89,39 @@
                                 <tr class="amber darken-3">
                                     <th>Nombre Asignatura</th>
                                     <th>Sección</th>                        
-                                    <th>Cantiadad Justificados</th>
-                                    <th>Cantiadad no Justificados</th>
+                                    <th>N° no Justificados</th>
+                                    <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                
+                            <tbody>                                 
+                                <%for (Seccion obj : arraySecciones) {
+                                        nombreAsig = (new ClasesConsultas()).buscarRamos(obj.getIdRamo()).getNombreRamo();
+                                %>
+                                <tr>                                    
+                                    <td><%=nombreAsig%></td>
+                                    <td><%=obj.getIdSeccion()%></td>
+                                    <td><%
+                                        contador = 0;
+                                        arrayInasistencia = (new InasistenciaDAO()).buscarSeccion(obj.getIdSeccion());
+                                        for (Inasistencia ina : arrayInasistencia) {
+                                            if (ina.getIdEstadoi() == 2) {
+                                                contador++;
+                                            }
+                                        }
+                                        %>
+                                        <%=contador%>
+                                    </td>
+                                    <td> 
+                                        <button 
+                                            class="btn indigo darken-1" 
+                                            type="submit" 
+                                            name="opcion" 
+                                            value="s<%=obj.getIdSeccion()%>"> 
+                                            ver sección 
+                                        </button>
+                                    </td>
+                                </tr>
+                                <% }%>                                
                             </tbody>
                         </table>  
                     </div>

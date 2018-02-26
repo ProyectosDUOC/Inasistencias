@@ -107,6 +107,7 @@ public class InasistenciaDAO implements GeneralInasistenciaDAO{
         }
         return arrayInasistencias;
     }
+    
     @Override
     public Inasistencia buscar(int idInasistencia) {
         Inasistencia obj = null;
@@ -143,7 +144,7 @@ public class InasistenciaDAO implements GeneralInasistenciaDAO{
         }
         return obj;
     }
-
+    
     @Override
     public int agregar(Inasistencia inasistencia) {
         try {
@@ -235,8 +236,9 @@ public class InasistenciaDAO implements GeneralInasistenciaDAO{
         return results;
     }
 
-     private ArrayList<Inasistencia> arrayInasistencias2 = new ArrayList<>();
+    private ArrayList<Inasistencia> arrayInasistencias2 = new ArrayList<>();
     @Override
+    
     public ArrayList buscarRut(int rutAlumno) {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -244,7 +246,7 @@ public class InasistenciaDAO implements GeneralInasistenciaDAO{
 
             Statement statement = connection.createStatement();
 
-            String consultaSQL = "SELECT * FROM inasistencia WHERE rut_alumno="+rutAlumno;
+            String consultaSQL = "SELECT * FROM inasistencia WHERE rut_alumno="+rutAlumno+" order by fecha desc";
 
             ResultSet results = statement.executeQuery(consultaSQL);
 
@@ -280,9 +282,8 @@ public class InasistenciaDAO implements GeneralInasistenciaDAO{
         }
         return arrayInasistencias2;
     }
-     
-    
-    public ArrayList buscarSeccion(String seccion) {
+        
+    public ArrayList<Inasistencia> buscarSeccion(String seccion) {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
@@ -308,9 +309,50 @@ public class InasistenciaDAO implements GeneralInasistenciaDAO{
             */
             arrayInasistencias2.removeAll(arrayInasistencias2);
             while (results.next()) {                
-                    idSeccion = results.getString("id_Seccion");
+                    idSeccion = results.getString("id_seccion");
                 if (idSeccion.equals(seccion)) {
+                    idInasistencia = results.getInt("id_inasistencia");
                     rutAlumno2 = results.getInt("rut_alumno");
+                    fecha = results.getDate("fecha");
+                    idEstadoi = results.getInt("id_estadoi");                
+                   arrayInasistencias2.add(new Inasistencia(idInasistencia, rutAlumno2, idSeccion, fecha, idEstadoi));
+            
+                }
+            }
+            connection.close();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayInasistencias2;
+    }
+    public ArrayList<Inasistencia> buscarSeccionOrdenFecha(String seccion) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/instituto", "root", "");
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM inasistencia WHERE id_seccion='"+seccion+"' and id_estadoi>1 order by fecha desc";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+
+            int idInasistencia;
+            int rutAlumno2; 
+            String idSeccion;
+            Date fecha;
+            int idEstadoi;
+            
+            /* 
+            id_inasistencia   INT NOT NULL AUTO_INCREMENT,
+            rut_alumno        INT NOT NULL,
+            id_seccion    VARCHAR(30) NOT NULL,
+            fecha             DATE,
+            id_estadoi        INT NOT NULL,
+            */
+            arrayInasistencias2.removeAll(arrayInasistencias2);
+            while (results.next()) {                
+                    idSeccion = results.getString("id_seccion");
+                if (idSeccion.equals(seccion)) {
                     idInasistencia = results.getInt("id_inasistencia");
                     rutAlumno2 = results.getInt("rut_alumno");
                     fecha = results.getDate("fecha");
@@ -355,7 +397,7 @@ public class InasistenciaDAO implements GeneralInasistenciaDAO{
                 if (rutAlumno2==rutAlumno) {
                     idInasistencia = results.getInt("id_inasistencia");
                     rutAlumno = results.getInt("rut_alumno");
-                    idSeccion = results.getString("id_Seccion");
+                    idSeccion = results.getString("id_seccion");
                     fecha = results.getDate("fecha");
                     idEstadoi = results.getInt("id_estadoi");                
                    arrayInasistencias2.add(new Inasistencia(idInasistencia, rutAlumno, idSeccion, fecha, idEstadoi));

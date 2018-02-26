@@ -33,16 +33,16 @@ public class ControladorDocente extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sesion = request.getSession(true);
         String opcion  =  request.getParameter("opcion");
-        String idIna = "";
+        String idSeccion = "";
         if(opcion.equals("Salir")){
             request.getSession().invalidate();
             response.sendRedirect("index.jsp");
         }
         
-        if(opcion.charAt(0)=='j'){
-            idIna = opcion.substring(1); 
-            sesion.setAttribute("idInasistencia",idIna);            
-            response.sendRedirect("VerJustificacion.jsp");
+        if(opcion.charAt(0)=='s'){
+            idSeccion = opcion.substring(1); 
+            sesion.setAttribute("idSeccion",idSeccion);            
+            response.sendRedirect("seccionAlumnos.jsp");
         }
     }
 
