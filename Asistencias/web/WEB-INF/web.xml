@@ -32,6 +32,10 @@
         <servlet-name>ControladorJusti</servlet-name>
         <servlet-class>controlador.ControladorJusti</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorSeccionAlumnos</servlet-name>
+        <servlet-class>controlador.ControladorSeccionAlumnos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>ControladorJusti</servlet-name>
         <url-pattern>/ControladorJusti</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorSeccionAlumnos</servlet-name>
+        <url-pattern>/ControladorSeccionAlumnos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

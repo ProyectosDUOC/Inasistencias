@@ -106,7 +106,7 @@
                                             class="btn amber darken-1" 
                                             type="submit" 
                                             name="opcion" 
-                                            value="s<%=obj.getIdSeccion()%>"> 
+                                            value="j<%=obj.getIdInasistencia()%>"> 
                                             Justificar
                                         </button>
                                         <%}%>
@@ -115,14 +115,13 @@
                                             class="btn color-Azul darken-1" 
                                             type="submit" 
                                             name="opcion" 
-                                            value="s<%=obj.getIdSeccion()%>"> 
+                                            value="v<%=obj.getIdInasistencia()%>"> 
                                             ver
                                         </button>
                                         <%}%>
                                         <%if (obj.getIdEstadoi()==1) { %>
                                         No ha justificado
                                         <%}%>
-                                        
                                     </td>
                                 </tr>
                                 <% }%>                                

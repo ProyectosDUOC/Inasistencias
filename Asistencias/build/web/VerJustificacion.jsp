@@ -30,13 +30,14 @@
             Justificacion justicacion = new Justificacion();
             Inasistencia inasistencia = new Inasistencia();
             ClasesConsultas consultaDB = new ClasesConsultas();
-            String nombre = "", rutD = "", estado = "", idInasistencia = "", nombreAsig = "", nombreDocente = "", motivo ="";
+            String nombre = "", rutD = "", estado = "", estado1="", idInasistencia = "", nombreAsig = "", nombreDocente = "", motivo ="";
             int rut = 0;
             
             if (session.getAttribute("usuario") == null || sesion.getAttribute("idInasistencia") == null) {
                 response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
+                estado1 = estado;
                 idInasistencia = sesion.getAttribute("idInasistencia").toString();
                 rut = user.getRutUsuario();
                 inasistencia = (new InasistenciaDAO()).buscar(Integer.parseInt(idInasistencia));
@@ -52,6 +53,7 @@
                 if (estado.equals("Docente")) {
                     doce = (new DocenteDAO()).buscarDatos(rut);
                     nombre = doce.getPnombre() + " " + doce.getSnombre() + " " + doce.getAppaterno() + " " + doce.getApmaterno();
+                    estado1 = "seccionAlumnos";
                 }
                 if (estado.equals("Director")) {
                     dire = (new DirectorDAO()).buscarDatos(rut);
@@ -113,8 +115,8 @@
                         </div>
                         <br>
                         <div>
-                            <a class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
-                            <%if (estado.equals("Docente")) { %>    
+                            <a class="white-text btn  waves-effect waves-light  red" href="<%=estado1%>.jsp">Volver</a>
+                            <%if (estado.equals("Docente") && inasistencia.getIdEstadoi()==2) { %>    
                             <button class="btn amber waves-effect waves-light" type="submit" name="opcion" value="j<%=idInasistencia%>">Justificar</button>
                             <%
                                 }
