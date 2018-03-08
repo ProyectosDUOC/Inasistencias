@@ -8,6 +8,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="modelo.*"%>
 <%@page import="dao.*"%>
+<%@page errorPage="error.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

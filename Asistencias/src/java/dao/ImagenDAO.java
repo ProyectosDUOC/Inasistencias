@@ -104,6 +104,7 @@ public class ImagenDAO {
                 obj.setNombreImagen(results.getString("nombre_imagen"));
                 obj.setImagen(results.getBytes("imagen"));
                 obj.setDescripcion(results.getString("descripcion"));
+                
                 break;
             }
             connection.close();

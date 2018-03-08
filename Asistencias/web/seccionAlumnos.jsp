@@ -34,15 +34,15 @@
 
             Docente docente = new Docente();
             int rut = 0, contador = 0;
-            String estado = "", nombre = "", rutD = "", idSeccion="", nombreAsig = "";
+            String estado = "", nombre = "", rutD = "", idSeccion = "", nombreAsig = "";
             Alumno alumno = new Alumno();
             ArrayList<Inasistencia> arrayInasistencia = new ArrayList<Inasistencia>();
             Seccion seccion = new Seccion();
-            if (session.getAttribute("usuario") == null || sesion.getAttribute("idSeccion")==null) {
+            if (session.getAttribute("usuario") == null || sesion.getAttribute("idSeccion") == null) {
                 response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
-                if (estado.equals("Docente")) {                    
+                if (estado.equals("Docente")) {
                     idSeccion = sesion.getAttribute("idSeccion").toString();
                     rut = user.getRutUsuario();
                     docente = (new DocenteDAO()).buscarDatos(rut);
@@ -51,12 +51,25 @@
                     arrayInasistencia = (new InasistenciaDAO()).buscarSeccionOrdenFecha(idSeccion);
                     seccion = (new ClasesConsultas()).buscarSeccion(idSeccion);
                     nombreAsig = (new ClasesConsultas()).buscarRamos(seccion.getIdRamo()).getNombreRamo();
-                              
+
                 } else {
                     response.sendRedirect("index.jsp");
                 }
             }
         %>
+        <script type="text/javascript">
+            function marcar(source)
+            {
+                checkboxes = document.getElementsByTagName('input'); //obtenemos todos los controles del tipo Input
+                for (i = 0; i < checkboxes.length; i++) //recoremos todos los controles
+                {
+                    if (checkboxes[i].type == "checkbox") //solo si es un checkbox entramos
+                    {
+                        checkboxes[i].checked = source.checked; //si es un checkbox le damos el valor del checkbox que lo llamó (Marcar/Desmarcar Todos)
+                    }
+                }
+            }
+        </script>
     </head>
     <body>
         <header class="color-Azul">
@@ -79,15 +92,26 @@
         </header> 
         <div class="container">
             <div class="row">
-                <h4 class="color-Azul-text color-Plomo center-align"><%=nombreAsig+" - "+idSeccion%></h4>
+                <h4 class="color-Azul-text color-Plomo center-align"><%=nombreAsig + " - " + idSeccion%></h4>
                 <form action="ControladorSeccionAlumnos" method="post" >
                     <div class="col s12 m12">
                         <a class="btn waves-effect waves-light red" href="<%=estado%>.jsp">Atras</a>
+                        <div class="col s12 offset-6">
+                            <input type="checkbox" onclick="marcar(this);" id="c" /><label for="c"> Marcar/Desmarcar Todos</label>
+                            <button 
+                                class="btn color-Azul darken-1" 
+                                type="submit" 
+                                name="opcion" 
+                                value="Justi"> 
+                                Justificar Todos
+                            </button>
+                        </div>                        
                     </div>
                     <div class="col s12 m12" style="overflow-x:auto;">
                         <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
                             <thead>
                                 <tr class="amber darken-3">
+                                    <th></th>                                    
                                     <th>Rut Alumno</th>
                                     <th>Nombre Alumno</th>                        
                                     <th>Fecha Inasistencia</th>
@@ -96,14 +120,22 @@
                             </thead>
                             <tbody>                                 
                                 <%for (Inasistencia obj : arrayInasistencia) {
-                                    alumno = (new AlumnoDAO()).buscarDatos(obj.getRutAlumno());
+                                        alumno = (new AlumnoDAO()).buscarDatos(obj.getRutAlumno());
                                 %>
-                                <tr>                                    
+                                <tr>    
+                                    <td>
+                                        <% if (obj.getIdEstadoi() == 2) {%>
+                                        <input type="checkbox" id="<%=obj.getIdInasistencia()%>" name="check" value="<%=obj.getIdInasistencia()%>" />
+                                        <label for="<%=obj.getIdInasistencia()%>"></label>     
+                                        <%
+                                            }
+                                        %>                                        
+                                    </td>
                                     <td><%=alumno.getRutAlumno()%>-<%=alumno.getDvAlumno()%></td>
                                     <td><%=alumno.getPnombre()%> <%=alumno.getAppaterno()%></td>
                                     <td><input type="date" name="fecha" value="<%=obj.getFecha()%>" readonly=""></td>
                                     <td>
-                                        <%if (obj.getIdEstadoi()==2) { %>
+                                        <%if (obj.getIdEstadoi() == 2) {%>
                                         <button 
                                             class="btn amber darken-1" 
                                             type="submit" 
@@ -112,7 +144,7 @@
                                             Justificar
                                         </button>
                                         <%}%>
-                                        <%if (obj.getIdEstadoi()==3) { %>
+                                        <%if (obj.getIdEstadoi() == 3) {%>
                                         <button 
                                             class="btn color-Azul darken-1" 
                                             type="submit" 
@@ -121,7 +153,7 @@
                                             ver
                                         </button>
                                         <%}%>
-                                        <%if (obj.getIdEstadoi()==1) { %>
+                                        <%if (obj.getIdEstadoi() == 1) { %>
                                         No ha justificado
                                         <%}%>
                                     </td>
@@ -141,9 +173,10 @@
                 <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
                 <br>
             </div>
-        </footer>    
+        </footer>  
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery.dataTables.js"></script>
         <script src="js/script.js"></script>
+        <script src="js/materialize.min.js"></script>
     </body>
 </html>

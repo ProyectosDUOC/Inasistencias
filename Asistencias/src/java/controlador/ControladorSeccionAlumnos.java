@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import dao.InasistenciaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -34,6 +35,7 @@ public class ControladorSeccionAlumnos extends HttpServlet {
         HttpSession sesion = request.getSession(true);
         String opcion  =  request.getParameter("opcion");
         String idIna = "";
+        String[] titulos = request.getParameterValues("check"); 
         
         if(opcion.charAt(0)=='j'){ 
             String idJust = opcion.substring(1);
@@ -44,6 +46,13 @@ public class ControladorSeccionAlumnos extends HttpServlet {
             String idVer = opcion.substring(1);
             sesion.setAttribute("idInasistencia", idVer );
             response.sendRedirect("VerJustificacion.jsp");
+        }
+        if (opcion.equals("Justi")) {            
+            for (int i = 0; i< titulos.length; i++) { 
+                idIna = titulos[i];
+                (new InasistenciaDAO()).actualizarEnviadoAlumnos(Integer.parseInt(idIna), 3);
+            } 
+            response.sendRedirect("seccionAlumnos.jsp"); 
         }
         
         
