@@ -69,6 +69,9 @@
                     }
                 }
             }
+            function validarJusti(){
+                
+            }
         </script>
     </head>
     <body>
@@ -95,18 +98,19 @@
                 <h4 class="color-Azul-text color-Plomo center-align"><%=nombreAsig + " - " + idSeccion%></h4>
                 <form action="ControladorSeccionAlumnos" method="post" >
                     <div class="col s12 m12">
-                        <a class="btn waves-effect waves-light red" href="<%=estado%>.jsp">Atras</a>
-                        <div class="col s12 offset-6">
-                            <input type="checkbox" onclick="marcar(this);" id="c" /><label for="c"> Marcar/Desmarcar Todos</label>
-                            <button 
-                                class="btn color-Azul darken-1" 
-                                type="submit" 
-                                name="opcion" 
-                                value="Justi"> 
-                                Justificar Todos
-                            </button>
-                        </div>                        
+                        <a class="btn waves-effect waves-light red" href="<%=estado%>.jsp">Atras</a>                                               
                     </div>
+                    <div class="col offset-6">
+                        <input type="checkbox" onclick="marcar(this);" id="c" /><label for="c"> Marcar/Desmarcar Todos</label>
+                        <button 
+                            class="btn color-Azul darken-1" 
+                            type="submit" 
+                            name="opcion" 
+                            id="Justi" onclick="validarJusti(this);"
+                            value="Justi"> 
+                            Justificar Rápido
+                        </button>
+                    </div>     
                     <div class="col s12 m12" style="overflow-x:auto;">
                         <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
                             <thead>
