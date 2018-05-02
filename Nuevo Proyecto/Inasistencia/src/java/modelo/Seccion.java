@@ -56,6 +56,14 @@ public class Seccion implements Serializable {
     public Seccion() {
     }
 
+    public Seccion(Integer idSeccion, String codSeccion, int idDocente, Integer semestre, Integer anio) {
+        this.idSeccion = idSeccion;
+        this.codSeccion = codSeccion;
+        this.idDocente = idDocente;
+        this.semestre = semestre;
+        this.anio = anio;
+    }
+
     public Seccion(Integer idSeccion) {
         this.idSeccion = idSeccion;
     }

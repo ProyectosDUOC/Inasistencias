@@ -71,6 +71,17 @@ public class Docente implements Serializable {
     public Docente() {
     }
 
+    public Docente(Integer idDocente, String rutDocente, String pnombre, String snombre, String appaterno, String apmaterno, String email, Integer activo) {
+        this.idDocente = idDocente;
+        this.rutDocente = rutDocente;
+        this.pnombre = pnombre;
+        this.snombre = snombre;
+        this.appaterno = appaterno;
+        this.apmaterno = apmaterno;
+        this.email = email;
+        this.activo = activo;
+    }
+
     public Docente(Integer idDocente) {
         this.idDocente = idDocente;
     }

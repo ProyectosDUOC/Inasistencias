@@ -71,6 +71,17 @@ public class Director implements Serializable {
     public Director() {
     }
 
+    public Director(Integer idDirector, String rutDirector, String pnombre, String snombre, String appaterno, String apmaterno, String email, Integer activo) {
+        this.idDirector = idDirector;
+        this.rutDirector = rutDirector;
+        this.pnombre = pnombre;
+        this.snombre = snombre;
+        this.appaterno = appaterno;
+        this.apmaterno = apmaterno;
+        this.email = email;
+        this.activo = activo;
+    }
+
     public Director(Integer idDirector) {
         this.idDirector = idDirector;
     }

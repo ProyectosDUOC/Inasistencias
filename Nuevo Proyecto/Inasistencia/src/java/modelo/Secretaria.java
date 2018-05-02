@@ -68,6 +68,17 @@ public class Secretaria implements Serializable {
     public Secretaria() {
     }
 
+    public Secretaria(Integer idSecretaria, String rutSecretaria, String pnombre, String snombre, String appaterno, String apmaterno, String email, Integer activo) {
+        this.idSecretaria = idSecretaria;
+        this.rutSecretaria = rutSecretaria;
+        this.pnombre = pnombre;
+        this.snombre = snombre;
+        this.appaterno = appaterno;
+        this.apmaterno = apmaterno;
+        this.email = email;
+        this.activo = activo;
+    }
+
     public Secretaria(Integer idSecretaria) {
         this.idSecretaria = idSecretaria;
     }

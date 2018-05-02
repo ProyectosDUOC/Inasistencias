@@ -58,6 +58,14 @@ public class JustificacionImagen implements Serializable {
     public JustificacionImagen() {
     }
 
+    public JustificacionImagen(Integer idJustificacionImg, int idJustificacion, String nombreImagen, byte[] imagen, String descripcion) {
+        this.idJustificacionImg = idJustificacionImg;
+        this.idJustificacion = idJustificacion;
+        this.nombreImagen = nombreImagen;
+        this.imagen = imagen;
+        this.descripcion = descripcion;
+    }
+
     public JustificacionImagen(Integer idJustificacionImg) {
         this.idJustificacionImg = idJustificacionImg;
     }

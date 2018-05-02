@@ -43,6 +43,11 @@ public class TipoUsuario implements Serializable {
     public TipoUsuario() {
     }
 
+    public TipoUsuario(Integer idTipou, String nombreTipou) {
+        this.idTipou = idTipou;
+        this.nombreTipou = nombreTipou;
+    }
+
     public TipoUsuario(Integer idTipou) {
         this.idTipou = idTipou;
     }

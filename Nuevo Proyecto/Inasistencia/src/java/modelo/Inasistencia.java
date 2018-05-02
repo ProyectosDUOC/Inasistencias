@@ -67,6 +67,15 @@ public class Inasistencia implements Serializable {
     public Inasistencia() {
     }
 
+    public Inasistencia(Integer idInasistencia, Date fechaInasistencia, int idSeccion, int idAlumno, int idEstadoi, int idEstadoc) {
+        this.idInasistencia = idInasistencia;
+        this.fechaInasistencia = fechaInasistencia;
+        this.idSeccion = idSeccion;
+        this.idAlumno = idAlumno;
+        this.idEstadoi = idEstadoi;
+        this.idEstadoc = idEstadoc;
+    }
+
     public Inasistencia(Integer idInasistencia) {
         this.idInasistencia = idInasistencia;
     }
