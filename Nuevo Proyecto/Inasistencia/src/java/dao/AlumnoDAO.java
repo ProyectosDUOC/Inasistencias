@@ -7,7 +7,6 @@ package dao;
 
 import conexion.Conectar;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -78,7 +77,7 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
             Connection connection = conn.getConnection();
             
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM alumno WHERE rut_alumno=" + rut + ";";
+            String query = "SELECT * FROM alumno WHERE rut_alumno='" + rut + "';";
 
             ResultSet results = statement.executeQuery(query);
 
@@ -117,7 +116,7 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
             Connection connection = conn.getConnection();
             
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM alumno WHERE email=" + correo + ";";
+            String query = "SELECT * FROM alumno WHERE email='" + correo + "';";
 
             ResultSet results = statement.executeQuery(query);
 
