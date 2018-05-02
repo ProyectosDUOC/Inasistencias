@@ -6,14 +6,16 @@ CREATE Database instituto;
 use instituto;
 
 CREATE TABLE alumno (
-    rut_alumno   INT NULL,
+	id_alumno 	 INT NOT NULL,
+    rut_alumno   INT NOT NULL,
     dv_alumno    VARCHAR(1),
     pnombre      VARCHAR(30),
     snombre      VARCHAR(30),
     appaterno    VARCHAR(30),
     apmaterno    VARCHAR(30),
     email        VARCHAR(50),
-    id_carrera   VARCHAR(30) NOT NULL
+    id_carrera   VARCHAR(30) NOT NULL,
+    PRIMARY KEY(id_alumno)
 );
 
 ALTER TABLE alumno ADD CONSTRAINT alumno_pk PRIMARY KEY ( rut_alumno );

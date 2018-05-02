@@ -44,7 +44,7 @@
             String estado = " ";
 
             if (session.getAttribute("usuario")==null) {
-                response.sendRedirect("error.jsp");
+                response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 usuario = user.getUsuario();

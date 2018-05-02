@@ -40,7 +40,7 @@
             ArrayList<Seccion> arraySecciones = null;
             ArrayList<Inasistencia> arrayInasistencia = null;
 
-            if (session.getAttribute("usuario") == null) {
+            if (user == null) {
                 response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
@@ -96,7 +96,11 @@
                                 </tr>
                             </thead>
                             <tbody>                                 
-                                <%for (Seccion obj : arraySecciones) {
+                                <%
+                                    if (!arraySecciones.isEmpty()) {
+                                            
+                                    
+                                    for (Seccion obj : arraySecciones) {
                                         nombreAsig = (new ClasesConsultas()).buscarRamos(obj.getIdRamo()).getNombreRamo();
                                 %>
                                 <tr>                                    
@@ -123,7 +127,8 @@
                                         </button>
                                     </td>
                                 </tr>
-                                <% }%>                                
+                                <% }
+}%>                                
                             </tbody>
                         </table>  
                     </div>
