@@ -5,11 +5,18 @@
  */
 package dao;
 
+import java.util.ArrayList;
 import modelo.Docente;
 /**
  *
  * @author carlos
  */
 public interface GeneralDocenteDAO {
-    
+    public abstract ArrayList mostrarDatos();
+    public abstract Docente buscarDatos(String rut) ;
+    public abstract Docente buscarDatos(int idDirector) ;    
+    public abstract Docente buscarDatosCorreo(String email) ;
+    public abstract int agregar(Docente director);
+    public abstract int eliminar(String rut);
+    public abstract int actualizar(Docente cordinador);
 }
