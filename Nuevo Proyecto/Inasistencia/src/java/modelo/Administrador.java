@@ -73,6 +73,10 @@ public class Administrador implements Serializable {
     public Administrador() {
     }
 
+    public Administrador(Integer idAdministrador) {
+        this.idAdministrador = idAdministrador;
+    }
+
     public Administrador(Integer idAdministrador, String rutAdministrador, String pnombre, String snombre, String appaterno, String apmaterno, String email, Integer activo) {
         this.idAdministrador = idAdministrador;
         this.rutAdministrador = rutAdministrador;
@@ -82,10 +86,6 @@ public class Administrador implements Serializable {
         this.apmaterno = apmaterno;
         this.email = email;
         this.activo = activo;
-    }
-
-    public Administrador(Integer idAdministrador) {
-        this.idAdministrador = idAdministrador;
     }
 
     public Administrador(Integer idAdministrador, String rutAdministrador, String email) {

@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Alumno.findAll", query = "SELECT a FROM Alumno a")
     , @NamedQuery(name = "Alumno.findByIdAlumno", query = "SELECT a FROM Alumno a WHERE a.idAlumno = :idAlumno")
-    , @NamedQuery(name = "Alumno.findByRutAlmuno", query = "SELECT a FROM Alumno a WHERE a.rutAlmuno = :rutAlmuno")
+    , @NamedQuery(name = "Alumno.findByRutAlumno", query = "SELECT a FROM Alumno a WHERE a.rutAlumno = :rutAlumno")
     , @NamedQuery(name = "Alumno.findByPnombre", query = "SELECT a FROM Alumno a WHERE a.pnombre = :pnombre")
     , @NamedQuery(name = "Alumno.findBySnombre", query = "SELECT a FROM Alumno a WHERE a.snombre = :snombre")
     , @NamedQuery(name = "Alumno.findByAppaterno", query = "SELECT a FROM Alumno a WHERE a.appaterno = :appaterno")
@@ -48,8 +48,8 @@ public class Alumno implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "rut_almuno")
-    private String rutAlmuno;
+    @Column(name = "rut_alumno")
+    private String rutAlumno;
     @Size(max = 30)
     @Column(name = "pnombre")
     private String pnombre;
@@ -82,9 +82,9 @@ public class Alumno implements Serializable {
         this.idAlumno = idAlumno;
     }
 
-    public Alumno(Integer idAlumno, String rutAlmuno, String pnombre, String snombre, String appaterno, String apmaterno, String email, int idCarrera, Integer activo) {
+    public Alumno(Integer idAlumno, String rutAlumno, String pnombre, String snombre, String appaterno, String apmaterno, String email, int idCarrera, Integer activo) {
         this.idAlumno = idAlumno;
-        this.rutAlmuno = rutAlmuno;
+        this.rutAlumno = rutAlumno;
         this.pnombre = pnombre;
         this.snombre = snombre;
         this.appaterno = appaterno;
@@ -94,9 +94,9 @@ public class Alumno implements Serializable {
         this.activo = activo;
     }
 
-    public Alumno(Integer idAlumno, String rutAlmuno, String email, int idCarrera) {
+    public Alumno(Integer idAlumno, String rutAlumno, String email, int idCarrera) {
         this.idAlumno = idAlumno;
-        this.rutAlmuno = rutAlmuno;
+        this.rutAlumno = rutAlumno;
         this.email = email;
         this.idCarrera = idCarrera;
     }
@@ -109,12 +109,12 @@ public class Alumno implements Serializable {
         this.idAlumno = idAlumno;
     }
 
-    public String getRutAlmuno() {
-        return rutAlmuno;
+    public String getRutAlumno() {
+        return rutAlumno;
     }
 
-    public void setRutAlmuno(String rutAlmuno) {
-        this.rutAlmuno = rutAlmuno;
+    public void setRutAlumno(String rutAlumno) {
+        this.rutAlumno = rutAlumno;
     }
 
     public String getPnombre() {

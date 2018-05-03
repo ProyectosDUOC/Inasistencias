@@ -28,11 +28,12 @@ public class SeccionDAO implements GeneralSeccionDAO{
             Connection connection = conn.getConnection();
 
             /*
-            id_seccion    INT NOT NULL AUTO_INCREMENT,
-            cod_seccion   VARCHAR(30),
-            id_docente    INT NOT NULL,
-            semestre      INT,
-            anio          INT,
+                id_seccion    INT NOT NULL AUTO_INCREMENT,
+                cod_seccion   VARCHAR(30),
+                cod_ramo      VARCHAR(30),
+                id_docente    INT NOT NULL,
+                semestre      INT,
+                anio          INT,
             
             this.idSeccion = idSeccion;
             this.codSeccion = codSeccion;
@@ -46,7 +47,7 @@ public class SeccionDAO implements GeneralSeccionDAO{
             ResultSet results = statement.executeQuery(query);
             
             int idSecc, idDoc, semes, anyo;
-            String codSecc;
+            String codSecc, codRamo;
             
 
             while (results.next()) {
@@ -55,10 +56,10 @@ public class SeccionDAO implements GeneralSeccionDAO{
                 idDoc = results.getInt("id_docente");
                 semes= results.getInt("semestre");
                 anyo= results.getInt("anio");
-                
-                
+                codRamo = results.getString("cod_ramo");
+                                
                 if (idSecc == idSeccion) {                   
-                    obj = new Seccion(idSeccion, codSecc, idDoc, semes, anyo);
+                    obj = new Seccion(idSeccion, codSecc, codRamo, idDoc, semes, anyo);
                    break;
                 }
             }

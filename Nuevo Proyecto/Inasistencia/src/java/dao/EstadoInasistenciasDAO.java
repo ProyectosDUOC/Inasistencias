@@ -18,7 +18,7 @@ import modelo.EstadoInasistencia;
  */
 public class EstadoInasistenciasDAO implements GeneralEstadoInasistenciaDAO{
 
-     Conectar conn;
+    Conectar conn;
     
     @Override
     public EstadoInasistencia buscar(int id_estadoi) {

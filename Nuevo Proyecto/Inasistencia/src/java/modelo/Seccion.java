@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Seccion.findAll", query = "SELECT s FROM Seccion s")
     , @NamedQuery(name = "Seccion.findByIdSeccion", query = "SELECT s FROM Seccion s WHERE s.idSeccion = :idSeccion")
     , @NamedQuery(name = "Seccion.findByCodSeccion", query = "SELECT s FROM Seccion s WHERE s.codSeccion = :codSeccion")
+    , @NamedQuery(name = "Seccion.findByCodRamo", query = "SELECT s FROM Seccion s WHERE s.codRamo = :codRamo")
     , @NamedQuery(name = "Seccion.findByIdDocente", query = "SELECT s FROM Seccion s WHERE s.idDocente = :idDocente")
     , @NamedQuery(name = "Seccion.findBySemestre", query = "SELECT s FROM Seccion s WHERE s.semestre = :semestre")
     , @NamedQuery(name = "Seccion.findByAnio", query = "SELECT s FROM Seccion s WHERE s.anio = :anio")})
@@ -44,6 +45,9 @@ public class Seccion implements Serializable {
     @Size(max = 30)
     @Column(name = "cod_seccion")
     private String codSeccion;
+    @Size(max = 30)
+    @Column(name = "cod_ramo")
+    private String codRamo;
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_docente")
@@ -56,9 +60,10 @@ public class Seccion implements Serializable {
     public Seccion() {
     }
 
-    public Seccion(Integer idSeccion, String codSeccion, int idDocente, Integer semestre, Integer anio) {
+    public Seccion(Integer idSeccion, String codSeccion, String codRamo, int idDocente, Integer semestre, Integer anio) {
         this.idSeccion = idSeccion;
         this.codSeccion = codSeccion;
+        this.codRamo = codRamo;
         this.idDocente = idDocente;
         this.semestre = semestre;
         this.anio = anio;
@@ -87,6 +92,14 @@ public class Seccion implements Serializable {
 
     public void setCodSeccion(String codSeccion) {
         this.codSeccion = codSeccion;
+    }
+
+    public String getCodRamo() {
+        return codRamo;
+    }
+
+    public void setCodRamo(String codRamo) {
+        this.codRamo = codRamo;
     }
 
     public int getIdDocente() {
