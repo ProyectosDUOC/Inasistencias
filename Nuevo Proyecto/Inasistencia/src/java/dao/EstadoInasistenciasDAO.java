@@ -38,7 +38,7 @@ public class EstadoInasistenciasDAO implements GeneralEstadoInasistenciaDAO{
             
             
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM estado_inasistencia WHERE id_estadoi  =" + idEstadoi + ";";
+            String query = "SELECT * FROM estado_inasistencia WHERE id_estadoi  =" + id_estadoi + ";";
 
             ResultSet results = statement.executeQuery(query);
             
@@ -51,7 +51,7 @@ public class EstadoInasistenciasDAO implements GeneralEstadoInasistenciaDAO{
                 idEstad = results.getInt("id_estadoi"); 
                 nomEst = results.getString("nombre_estadoi");               
                 
-                if (idEstad == idEstadoi) {                   
+                if (idEstad == id_estadoi) {                   
                     obj = new EstadoInasistencia(id_estadoi, nomEst);
                    break;
                 }

@@ -12,5 +12,5 @@ import modelo.TipoUsuario;
  * @author carlos
  */
 public interface GeneralTipoUsuarioDAO {
-    public abstract TipoUsuario buscar(int idCarrera) ;
+    public abstract TipoUsuario buscar(int id) ;
 }

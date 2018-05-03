@@ -20,7 +20,7 @@ public class TipoUsuarioDAO implements GeneralTipoUsuarioDAO{
     Conectar conn;
     
     @Override
-    public TipoUsuario buscar(int idCarrera) {
+    public TipoUsuario buscar(int id) {
         
         TipoUsuario obj = null;
         try {
@@ -37,7 +37,7 @@ public class TipoUsuarioDAO implements GeneralTipoUsuarioDAO{
             */
             
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM tipo_usuario WHERE id_tipou  =" + idTipou + ";";
+            String query = "SELECT * FROM tipo_usuario WHERE id_tipou  =" + id + ";";
 
             ResultSet results = statement.executeQuery(query);
             
@@ -51,7 +51,7 @@ public class TipoUsuarioDAO implements GeneralTipoUsuarioDAO{
                 nomTipU = results.getString("nombre_tipou");
                 
                 
-                if (idTipU == idTipou) {                   
+                if (idTipU == id) {                   
                     obj = new TipoUsuario(idTipU, nomTipU);
                    break;
                 }
