@@ -31,7 +31,7 @@
                 response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
-                if (estado.equals("Secretaria")) {
+                if (estado.equals("secretaria")) {
                     rut = user.getRutUsuario();
                     secre = (new SecretariaDAO()).buscarDatos(rut);
                     if (secre == null) {

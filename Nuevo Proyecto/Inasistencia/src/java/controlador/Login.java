@@ -49,23 +49,23 @@ public class Login extends HttpServlet {
 
                     switch (tipousuario) {
                         case 1:
-                            sesion.setAttribute("tipoUsuario", "Alumno");
+                            sesion.setAttribute("tipoUsuario", "alumno");
                             response.sendRedirect("alumno.jsp");
                             break;
                         case 2:
-                            sesion.setAttribute("tipoUsuario", "Docente");
+                            sesion.setAttribute("tipoUsuario", "docente");
                             response.sendRedirect("docente.jsp");
                             break;
                         case 3:
-                            sesion.setAttribute("tipoUsuario", "Director");
+                            sesion.setAttribute("tipoUsuario", "director");
                             response.sendRedirect("director.jsp");
                             break;
                         case 4:
-                            sesion.setAttribute("tipoUsuario", "Administrador");
+                            sesion.setAttribute("tipoUsuario", "administrador");
                             response.sendRedirect("administrador.jsp");
                             break;
                         case 5:
-                            sesion.setAttribute("tipoUsuario", "Secretaria");
+                            sesion.setAttribute("tipoUsuario", "secretaria");
                             response.sendRedirect("secretaria.jsp");
                             break;
                         default:

@@ -45,28 +45,28 @@
                 usuario = user.getUsuario();
                 clave = user.getClave();
                 rut = user.getRutUsuario();
-                if (estado.equals("Alumno")) {
+                if (estado.equals("alumno")) {
                     alum = (new AlumnoDAO()).buscarDatos(rut);
                     nombre = alum.getPnombre() + " " + alum.getSnombre() + " " + alum.getAppaterno() + " " + alum.getApmaterno();
                     correo = alum.getEmail();
                     carrera = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
                 }
-                if (estado.equals("Docente")) {
+                if (estado.equals("docente")) {
                   //  doce = (new DocenteDAO()).buscarDatos(rut);
                     nombre = doce.getPnombre() + " " + doce.getSnombre() + " " + doce.getAppaterno() + " " + doce.getApmaterno();
                     correo = doce.getEmail();
                 }
-                if (estado.equals("Director")) {
+                if (estado.equals("director")) {
                   //  dire = (new DirectorDAO()).buscarDatos(rut);
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();                   
                     correo = dire.getEmail();
                 }
-                if (estado.equals("Administrador")) {
+                if (estado.equals("administrador")) {
                     admin = (new AdministradorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();               
                     correo = admin.getEmail();
                 }
-                if (estado.equals("Secretaria")) {
+                if (estado.equals("secretaria")) {
                     secre = (new SecretariaDAO()).buscarDatos(rut);
                     nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();               
                     correo = secre.getEmail();
