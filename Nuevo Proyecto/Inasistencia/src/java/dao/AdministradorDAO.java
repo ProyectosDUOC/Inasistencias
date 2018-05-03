@@ -134,16 +134,6 @@ public class AdministradorDAO implements GeneralAdminDAO{
             conn = new Conectar();
             Connection connection = conn.getConnection();
 
-            /*
-                id_administrador    INT NOT NULL AUTO_INCREMENT,
-                rut_administrador   VARCHAR(30) NOT NULL,
-                pnombre             VARCHAR(30),
-                snombre             VARCHAR(30),
-                appaterno           VARCHAR(30),
-                apmaterno           VARCHAR(30),
-                email               VARCHAR(50) NOT NULL,
-                activo              INT,
-            */
                         
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM administrador WHERE email='" + correo + "';";
