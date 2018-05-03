@@ -9,6 +9,7 @@ import conexion.Conectar;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import modelo.DetalleSeccion;
 
 /**
@@ -17,6 +18,7 @@ import modelo.DetalleSeccion;
  */
 public class DetalleSeccionDAO implements GeneralDetalleSeccionDAO{
 
+    private ArrayList<DetalleSeccion> arrayDetalleS = new ArrayList<>();    
     Conectar conn;
     
     @Override
@@ -64,4 +66,74 @@ public class DetalleSeccionDAO implements GeneralDetalleSeccionDAO{
         
         
     }  
+
+    @Override
+    public ArrayList mostrarDatosSeccion(int idSeccion) {
+        DetalleSeccion obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM detalle_seccion WHERE id_seccion= "+ idSeccion +";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+          
+            int idDetSec, idSec, activo, idAlu;
+
+            arrayDetalleS.removeAll(arrayDetalleS);
+            
+            while (results.next()) {
+                idDetSec = results.getInt("id_detalle_secc");
+                idSec = results.getInt("id_seccion");                
+                activo = results.getInt("activo");
+                idAlu = results.getInt("id_alumno");
+                
+                obj = new DetalleSeccion(idDetSec, idSeccion, activo, idAlu);
+                arrayDetalleS.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayDetalleS;
+    }
+
+    @Override
+    public ArrayList buscarDetalleAlumno(int idAlumno) {
+        DetalleSeccion obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM detalle_seccion WHERE id_alumno= "+ idAlumno +";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+          
+            int idDetSec, idSec, activo, idAlu;
+
+            arrayDetalleS.removeAll(arrayDetalleS);
+            
+            while (results.next()) {
+                idDetSec = results.getInt("id_detalle_secc");
+                idSec = results.getInt("id_seccion");                
+                activo = results.getInt("activo");
+                idAlu = results.getInt("id_alumno");
+                
+                obj = new DetalleSeccion(idDetSec, idSec , activo, idAlu);
+                arrayDetalleS.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayDetalleS;
+    }
+
+    
 }
