@@ -4,6 +4,9 @@
     Author     : benja
 --%>
 
+<%@page import="dao.CarreraDAO"%>
+<%@page import="dao.AlumnoDAO"%>
+<%@page import="modelo.Alumno"%>
 <%@page import="modelo.GlobalSemestre"%>
 <%@page import="dao.SecretariaDAO"%>
 <%@page import="dao.GlobalSemestreDAO"%>
@@ -25,8 +28,9 @@
         <%
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-            String rut = "", rutA="";
+            String rut = "", rutA="", nombreA="", carreraA="", correoA="";
             Secretaria secre = new Secretaria();
+            Alumno alum = new Alumno();
             String nombre = "";
             String estado = "";
             GlobalSemestre gl = new GlobalSemestre();
@@ -48,7 +52,11 @@
                     
                     if (sesion.getAttribute("rut")!=null) {                            
                       rutA=session.getAttribute("rut").toString();
-                      encontrado=1;
+                      alum = (new AlumnoDAO()).buscarDatos(rutA);
+                      nombreA = alum.getPnombre()+" "+alum.getSnombre()+" "+alum.getAppaterno()+" "+alum.getApmaterno();
+                      carreraA = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
+                      correoA = alum.getEmail();
+                      encontrado=1;  
                       
                     }
                     
@@ -81,18 +89,26 @@
             <div class="row">
                 <h4 class="color-Plomo color-Azul-text center-align" >Justificacion de inasistencia</h4>
                 <div class="col s12 m6 color-Azul-text">
-                    <h4 class="color-Plomo color-Azul-text center-align" >Datos del Alumno</h4> 
-                    <form method="port" action="ControladorSecretaria">
+                    <h4 class="color-Plomo color-Azul-text center-align" >Ingreso de Alumno</h4> 
+                    <form method="post" action="ControladorSecretaria">
                         <p><strong> Rut:</strong> <input type="text" name="txtRut" maxlength="10"/> </p>  
                         <input type="submit" name="opcion" value="Buscar" class="color-AzulClaro waves-effect waves-light btn"/>                                
                         <input type="submit" name="opcion" value="Nuevo" class="color-AzulClaro waves-effect waves-light btn"/>                                
                     </form>
                     <p> <%=semestre %> </p>
+                    <span class="red-text"> ${param.mensaje}</span>
                 </div>
                 <% if (encontrado == 1) { %>
                 <div class="col s12 m6 color-Azul-text">
-                    <h4 class="color-Plomo color-Azul-text center-align" >Cursos</h4>  
-                      <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
+                    <h4 class="color-Plomo color-Azul-text center-align" >Datos Alumno</h4>  
+                    <p><strong> Nombre :</strong> <span><%=nombreA%></span></p>
+                    <p><strong> Rut :</strong> <span><%=rutA%></span></p>
+                    <p><strong> Correo :</strong> <span><%=correoA%></span></p>                    
+                    <p><strong> Carrera :</strong> <span><%=carreraA%></span></p>
+                 </div>
+                <div class="col s12 m12 color-Azul-text">
+                    <h4 class="color-Plomo color-Azul-text center-align" >Cursos del Alumno</h4> 
+                    <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
                             <thead>
                                 <tr class="amber darken-3">
                                     <th>Nombre Asignatura</th>
@@ -104,8 +120,9 @@
                              
                             </tbody>
                         </table>  
-                    
-                 </div>
+                    <p> <%=semestre %> </p>
+                    <span class="red-text"> ${param.mensaje}</span>
+                </div>
                 <% }
                     if (encontrado == 0) { %>
                 <div class="col s12 m6 color-Azul-text">

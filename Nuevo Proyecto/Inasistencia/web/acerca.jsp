@@ -59,14 +59,23 @@
                                 <tr>
                                     <td>Sebastian Orellana</td>
                                 </tr> 
-                            </table>
-                            <div >
-                                <a href="index.jsp" class="red-text btn">Volver</a>                                
-                            </div>   
+                            </table>                           
                             <br>
                             <br>
                         </div>
                     </div>
+                    <div class="col s12 m4">
+                         <h5 class="color-AzulClaro-text"><strong>Profesor</strong></h5>                           
+                            <table>
+                                <tr>
+                                    <td>Profesor Cristian Garcia</td>
+                                </tr> 
+                            </table>
+                            <div >
+                                <a href="index.jsp" class="red-text btn">Volver</a>                                
+                            </div>   
+                    </div>
+                    
                 </div>
             </div>
             <br>
