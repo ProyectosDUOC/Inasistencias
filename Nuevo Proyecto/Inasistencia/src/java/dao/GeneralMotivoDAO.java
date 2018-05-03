@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.ArrayList;
 import modelo.Motivo;
 
 /**
@@ -12,5 +13,6 @@ import modelo.Motivo;
  * @author carlos
  */
 public interface GeneralMotivoDAO {
+    public abstract ArrayList mostrarDatos();
     public abstract Motivo buscar(int idMotivo) ;
 }
