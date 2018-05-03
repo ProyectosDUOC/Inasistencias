@@ -66,7 +66,7 @@ public class Login extends HttpServlet {
                             break;
                         case 5:
                             sesion.setAttribute("tipoUsuario", "Secretaria");
-                            response.sendRedirect("secretaria/secretaria.jsp");
+                            response.sendRedirect("secretaria.jsp");
                             break;
                         default:
                             response.sendRedirect("Error.jsp");
