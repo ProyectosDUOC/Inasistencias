@@ -4,9 +4,17 @@
         <servlet-name>Login</servlet-name>
         <servlet-class>controlador.Login</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorSecretaria</servlet-name>
+        <servlet-class>controlador.ControladorSecretaria</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorSecretaria</servlet-name>
+        <url-pattern>/ControladorSecretaria</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -17,16 +17,17 @@
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link rel="stylesheet" type="text/css" href="css/styleLogin.css">        
+        <link rel="stylesheet" type="text/css" href="css/styleLogin.css">     
         <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css"> 
         <link rel="shortcut icon" href="images/favicon.ico?" type="images/favicon.ico" />
         <%
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-            String rut = "";
+            String rut = "", rutA="";
             Secretaria secre = new Secretaria();
-            String nombre = " ";
-            String estado = " ";
+            String nombre = "";
+            String estado = "";
+            int encontrado = 2;
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
             } else {
@@ -38,9 +39,14 @@
                         response.sendRedirect("error.jsp");
                     }
                     nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();
-
-                }else{
-                 response.sendRedirect("index.jsp");
+                    
+                    if (sesion.getAttribute("rut")!=null) {                            
+                      rutA=session.getAttribute("rut").toString();
+                      encontrado=1;
+                    }
+                    
+                } else {
+                    response.sendRedirect("index.jsp");
                 }
             }
         %>        
@@ -63,34 +69,48 @@
                     </div>
                 </div>
             </div>                   
-        </header>    
+        </header>             
         <div class="container">
             <div class="row">
-                <h4 class="color-Azul-text color-Plomo center-align">Centro de Notificaciones Duoc</h4>
-                <form action="ControladorAlumno" method="post" >
-                    <div class="col s12 m12">
-                        <button class="btn waves-effect waves-light red left" type="submit" name="opcion" value="Salir">
-                            Cerrar Sesion
-                        </button>
-                    </div>
-                    <div class="col s12 m12" style="overflow-x:auto;">
-                        <form>
-                        </form> 
-                    </div>
-                </form> 
+                <h4 class="color-Plomo color-Azul-text center-align" >Justificacion de inasistencia</h4>
+                <div class="col s12 m6 color-Azul-text">
+                    <h4 class="color-Plomo color-Azul-text center-align" >Datos del Alumno</h4> 
+                    <form method="port" action="ControladorSecretaria">
+                        <p><strong> Rut:</strong> <input type="text" name="txtRut" maxlength="10"/> </p>  
+                        <input type="submit" name="opcion" value="Buscar" class="color-AzulClaro waves-effect waves-light btn"/>                                
+                        <input type="submit" name="opcion" value="Nuevo" class="color-AzulClaro waves-effect waves-light btn"/>                                
+                    </form>
+                </div>
+                <% if (encontrado == 1) { %>
+                <div class="col s12 m6 color-Azul-text">
+                    <h4 class="color-Plomo color-Azul-text center-align" >Cursos</h4>  
+                    <p>Se encontro algo</p>  
+                 </div>
+                <% }
+                    if (encontrado == 0) { %>
+                <div class="col s12 m6 color-Azul-text">
+                    <h4 class="color-Plomo color-Azul-text center-align" >Cursos</h4>  
+                    <p><strong>No se registraron cursos</strong></p>  
+                </div>
+                <%
+                    }
+                %>
             </div>
-        </div>  
+        </div>                   
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>  
+        <br>
         <footer class="color-Azul">            
             <div class="container">
                 <br>
-                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>
-                <p class="color-Amarillo-text center-align">Carlos Orellana ★ Sebastian Orrego &#9733;  Benjamin Mora</p>
-                <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
+                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo  <a href="acerca.jsp" class="color-Plomo-text">ver</a></p>                                
                 <br>
             </div>
-        </footer>            
-        <script src="js/jquery.min.js"></script>
-        <script src="js/jquery.dataTables.js"></script>
-        <script src="js/script.js"></script>        
+        </footer>
     </body>
 </html>
