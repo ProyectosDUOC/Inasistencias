@@ -11,6 +11,6 @@ import modelo.EstadoCorreo;
  *
  * @author carlos
  */
-public interface GeneralEstadoCorreo {
+public interface GeneralEstadoCorreoDAO {
     public abstract EstadoCorreo buscar(int estadoc) ;
 }
