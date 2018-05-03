@@ -49,25 +49,23 @@
                     <div class="col s12 m4">     
                         <div class="center-align text-center">
                             <h5 class="color-AzulClaro-text"><strong>Desarrollado</strong></h5>                           
-                                <table>
-                                    <tr>
-                                        <td>Carlos Orellana</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Benjamin Mora</td>
-                                    </tr> 
-                                    <tr>
-                                        <td>Sebastian Orellana</td>
-                                    </tr> 
-                                </table>
-                                <div >
-                                    <input type="submit" name="opcion" value="Volverr" class="red-text btn"/>                                
-                                </div>   
+                            <table>
+                                <tr>
+                                    <td>Carlos Orellana</td>
+                                </tr>
+                                <tr>
+                                    <td>Benjamin Mora</td>
+                                </tr> 
+                                <tr>
+                                    <td>Sebastian Orellana</td>
+                                </tr> 
+                            </table>
+                            <div >
+                                <a href="index.jsp" class="red-text btn">Volver</a>                                
+                            </div>   
                             <br>
-                            <a href="recuperarClave.jsp" class="color-Azul-text right">¿Olvidaste tu contraseña? </a>
                             <br>
                         </div>
-                        <span class="red-text"> ${param.mensaje}</span>
                     </div>
                 </div>
             </div>
