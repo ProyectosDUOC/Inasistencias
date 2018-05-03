@@ -70,6 +70,18 @@
                         </div>
                         <span class="red-text"> ${param.mensaje}</span>
                     </div>
+                    <div class="col s12 m4">     
+                        <div class="center-align main">
+                            <h5 class="color-AzulClaro-text"><strong>Ingresa acá</strong></h5>
+                            <p> Administrador : 3001   1234 </p>
+                            <p> Secretaria: 3001   1234 </p>
+                            <p> Administrador : 3001   1234 </p>
+                            <p> Administrador : 3001   1234 </p>
+                            <br>
+                            <a href="recuperarClave.jsp" class="color-Azul-text right">¿Olvidaste tu contraseña? </a>
+                            <br>
+                        </div>
+                    </div>
                 </div>
             </div>
             <br>
