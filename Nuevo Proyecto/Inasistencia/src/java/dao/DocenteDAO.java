@@ -34,16 +34,32 @@ public class DocenteDAO implements GeneralDocenteDAO{
             Connection connection = conn.getConnection();
 
             /*
-                
+                id_docente    INT NOT NULL AUTO_INCREMENT,
+                rut_docente   VARCHAR(30) NOT NULL,
+                pnombre       VARCHAR(30),
+                snombre       VARCHAR(30),
+                appaterno     VARCHAR(30),
+                apmaterno     VARCHAR(30),
+                email         VARCHAR(50),
+                activo        INT,
+            
+                this.idDocente = idDocente;
+                this.rutDocente = rutDocente;
+                this.pnombre = pnombre;
+                this.snombre = snombre;
+                this.appaterno = appaterno;
+                this.apmaterno = apmaterno;
+                this.email = email;
+                this.activo = activo;
             */
                         
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM administrador WHERE rut_administrador='" + rut + "';";
+            String query = "SELECT * FROM docente WHERE rut_docente='" + rutDocente + "';";
 
             ResultSet results = statement.executeQuery(query);
             
             int id, activo;
-            String rut1, pnombre, snombre, appaterno, apmaterno, email;
+            String rut, pNom;
             
             //int idDetSecc, idSecc, activo, idAlumno ;
 
