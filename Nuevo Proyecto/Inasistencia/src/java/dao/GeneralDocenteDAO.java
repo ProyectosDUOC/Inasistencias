@@ -14,9 +14,9 @@ import modelo.Docente;
 public interface GeneralDocenteDAO {
     public abstract ArrayList mostrarDatos();
     public abstract Docente buscarDatos(String rut) ;
-    public abstract Docente buscarDatos(int idDirector) ;    
+    public abstract Docente buscarDatos(int idDocente) ;    
     public abstract Docente buscarDatosCorreo(String email) ;
-    public abstract int agregar(Docente director);
+    public abstract int agregar(Docente docente);
     public abstract int eliminar(String rut);
     public abstract int actualizar(Docente cordinador);
 }
