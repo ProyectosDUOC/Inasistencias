@@ -58,7 +58,7 @@ public class DocenteDAO implements GeneralDocenteDAO{
                 activo = results.getInt("activo");               
                 
                 if (rut1.equals(rut)) {                   
-                    obj = new Administrador(id, rut1,pnombre, snombre, appaterno, apmaterno, email, activo);
+                    obj = new Docente(id, rut1,pnombre, snombre, appaterno, apmaterno, email, activo);
                    break;
                 }
             }
