@@ -23,7 +23,7 @@
                 <div class="row">                    
                     <div class="center-align">
                         <br>
-                        <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
+                        <h5 class="white-text"><strong>Control de Inasistencias</strong></h5>
                         <br>
                     </div>
                 </div>
