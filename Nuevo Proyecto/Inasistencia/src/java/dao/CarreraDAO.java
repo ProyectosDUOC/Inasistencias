@@ -9,42 +9,43 @@ import conexion.Conectar;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import modelo.EstadoCorreo;
+import modelo.Carrera;
 
 /**
  *
  * @author carlos
  */
-public class  EstadoCorreoDAO implements GeneralEstadoCorreoDAO{
+public class CarreraDAO implements GeneralCarreraDAO{
 
     Conectar conn;
     
     @Override
-    public EstadoCorreo buscar(int estadoc) {
-        /*
-            id_estadoc       INT NOT NULL,
-            nombre_estadoc   VARCHAR(30)
-        */
+    public Carrera buscar(int idCarrera) {
         
-        EstadoCorreo obj = null;
+        Carrera obj = null;
         try {
             conn = new Conectar();
             Connection connection = conn.getConnection();
-            
+
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM estado_correo WHERE id_estadoc =" + estadoc + ";";
+            String query = "SELECT * FROM carrera WHERE id_carrera  =" + idCarrera+ ";";
 
             ResultSet results = statement.executeQuery(query);
-
-            int id;
-            String nombre;
+            
+            int id, director;
+            String codCar, nombCar;
+            
+            //int idDetSecc, idSecc, activo, idAlumno ;
 
             while (results.next()) {
-                id = results.getInt("id_estadoc");    
-                nombre = results.getString("nombre_estadoc");
+                id = results.getInt("id_carrera"); 
+                codCar = results.getString("cod_Carrera");
+                nombCar = results.getString("nombre_carrera");
+                director = results.getInt("id_director");
                 
-                if (id == estadoc) {
-                    obj = new EstadoCorreo(estadoc, nombre);
+                
+                if (id == idCarrera) {                   
+                    obj = new Carrera(idCarrera, codCar, nombCar, director);
                    break;
                 }
             }
@@ -54,7 +55,6 @@ public class  EstadoCorreoDAO implements GeneralEstadoCorreoDAO{
             System.out.println("Error: " + ex);
         }
         return obj;
-        
     }
     
 }

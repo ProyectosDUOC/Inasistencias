@@ -5,46 +5,54 @@
  */
 package dao;
 
+import modelo.TipoUsuario;
 import conexion.Conectar;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import modelo.EstadoCorreo;
 
 /**
  *
  * @author carlos
  */
-public class  EstadoCorreoDAO implements GeneralEstadoCorreoDAO{
+public class TipoUsuarioDAO implements GeneralTipoUsuarioDAO{
 
     Conectar conn;
     
     @Override
-    public EstadoCorreo buscar(int estadoc) {
-        /*
-            id_estadoc       INT NOT NULL,
-            nombre_estadoc   VARCHAR(30)
-        */
+    public TipoUsuario buscar(int idCarrera) {
         
-        EstadoCorreo obj = null;
+        TipoUsuario obj = null;
         try {
             conn = new Conectar();
             Connection connection = conn.getConnection();
+
+            /*
+                id_tipou       INT NOT NULL,
+                nombre_tipou   VARCHAR(30)
+            
+                this.idTipou = idTipou;
+                this.nombreTipou = nombreTipou;
+            
+            */
             
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM estado_correo WHERE id_estadoc =" + estadoc + ";";
+            String query = "SELECT * FROM tipo_usuario WHERE id_tipou  =" + idTipou + ";";
 
             ResultSet results = statement.executeQuery(query);
-
-            int id;
-            String nombre;
+            
+            int idTipU;
+            String nomTipU;
+            
+            //int idDetSecc, idSecc, activo, idAlumno ;
 
             while (results.next()) {
-                id = results.getInt("id_estadoc");    
-                nombre = results.getString("nombre_estadoc");
+                idTipU = results.getInt("id_tipou"); 
+                nomTipU = results.getString("nombre_tipou");
                 
-                if (id == estadoc) {
-                    obj = new EstadoCorreo(estadoc, nombre);
+                
+                if (idTipU == idTipou) {                   
+                    obj = new TipoUsuario(idTipU, nomTipU);
                    break;
                 }
             }
@@ -54,7 +62,6 @@ public class  EstadoCorreoDAO implements GeneralEstadoCorreoDAO{
             System.out.println("Error: " + ex);
         }
         return obj;
-        
     }
     
 }

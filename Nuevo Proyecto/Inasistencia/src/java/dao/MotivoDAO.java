@@ -9,42 +9,51 @@ import conexion.Conectar;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import modelo.EstadoCorreo;
+import modelo.Motivo;
 
 /**
  *
  * @author carlos
  */
-public class  EstadoCorreoDAO implements GeneralEstadoCorreoDAO{
+public class MotivoDAO implements GeneralMotivoDAO{
 
     Conectar conn;
     
     @Override
-    public EstadoCorreo buscar(int estadoc) {
-        /*
-            id_estadoc       INT NOT NULL,
-            nombre_estadoc   VARCHAR(30)
-        */
+    public Motivo buscar(int idMotivo) {
         
-        EstadoCorreo obj = null;
+        Motivo obj = null;
         try {
             conn = new Conectar();
             Connection connection = conn.getConnection();
+
+            /*
+                id_motivo       INT NOT NULL,
+                nombre_motivo   VARCHAR(30)
+            
+                this.idMotivo = idMotivo;
+                this.nombreMotivo = nombreMotivo;
+            
+            */
+            
             
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM estado_correo WHERE id_estadoc =" + estadoc + ";";
+            String query = "SELECT * FROM motivo WHERE id_motivo  =" + idMotivo + ";";
 
             ResultSet results = statement.executeQuery(query);
-
-            int id;
-            String nombre;
+            
+            int idMot;
+            String nomMot;
+            
+            //int idDetSecc, idSecc, activo, idAlumno ;
 
             while (results.next()) {
-                id = results.getInt("id_estadoc");    
-                nombre = results.getString("nombre_estadoc");
+                idMot = results.getInt("id_motivo"); 
+                nomMot = results.getString("nombre_motivo");
                 
-                if (id == estadoc) {
-                    obj = new EstadoCorreo(estadoc, nombre);
+                
+                if (idMot == idMotivo) {                   
+                    obj = new Motivo(idMotivo, nomMot);
                    break;
                 }
             }
