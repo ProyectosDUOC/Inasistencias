@@ -17,9 +17,10 @@ CREATE TABLE administrador (
     PRIMARY KEY(id_administrador)
 );
 
+
 CREATE TABLE alumno (
     id_alumno    INT NOT NULL AUTO_INCREMENT,
-    rut_almuno   VARCHAR(30) NOT NULL,
+    rut_alumno   VARCHAR(30) NOT NULL,
     pnombre      VARCHAR(30),
     snombre      VARCHAR(30),
     appaterno    VARCHAR(30),
@@ -133,6 +134,7 @@ ALTER TABLE motivo ADD CONSTRAINT motivo_pk PRIMARY KEY ( id_motivo );
 CREATE TABLE seccion (
     id_seccion    INT NOT NULL AUTO_INCREMENT,
     cod_seccion   VARCHAR(30),
+    cod_ramo      VARCHAR(30),
     id_docente    INT NOT NULL,
     semestre      INT,
     anio          INT,
@@ -158,6 +160,12 @@ CREATE TABLE tipo_usuario (
 );
 
 ALTER TABLE tipo_usuario ADD CONSTRAINT tipo_usuario_pk PRIMARY KEY ( id_tipou );
+
+CREATE TABLE ramo (
+    cod_ramo      VARCHAR(30) NOT NULL,
+    nombre_ramo   VARCHAR(100) NOT NULL,
+    PRIMARY KEY(cod_ramo)
+);
 
 ALTER TABLE alumno
     ADD CONSTRAINT alum_carr_fk FOREIGN KEY ( id_carrera )
@@ -210,4 +218,100 @@ ALTER TABLE justificacion
 ALTER TABLE seccion
     ADD CONSTRAINT secc_doce_fk FOREIGN KEY ( id_docente )
         REFERENCES docente ( id_docente );
+
+ALTER TABLE seccion
+    ADD CONSTRAINT secc_ramo_fk FOREIGN KEY ( cod_ramo )
+        REFERENCES ramo ( cod_ramo );
+
+
+
+-- director
+INSERT INTO director(rut_director,pnombre,snombre,appaterno,apmaterno,email,activo) VALUES('3000','Carlos','Alberto','Orellana','Aguayo','controlinasistencia@gmail.com',1);
+-- Carreras -- necesitan tener un director
+INSERT INTO carrera(cod_carrera,nombre_carrera,id_director) VALUES('14460-03','ANALISTA PROGRAMADOR COMPUTACIONAL',1);
+-- docente
+INSERT INTO docente(rut_docente,pnombre,snombre,appaterno,apmaterno,email,activo) VALUES('2001','Gabriel','Alonso ','Parra ','Ovalle ','gabparraprofesor@gmail.com',1);
+INSERT INTO docente(rut_docente,pnombre,snombre,appaterno,apmaterno,email,activo) VALUES('2002','Cristian','Orlando','Garcia','Guitierrez','cris.garciaguprofesor@gmail.com',1);
+INSERT INTO docente(rut_docente,pnombre,snombre,appaterno,apmaterno,email,activo) VALUES('2003','Juan','Esteban','Harrys','Moure','j.harrysprofesor@gmail.com',1);
+-- coordinador ADMINISTRADOR
+INSERT INTO administrador(rut_administrador,pnombre,snombre,appaterno,apmaterno,email,activo) VALUES('4001','Sebastian','','Orrego','Aguayo','controlinasistencia@gmail.com',1);
+INSERT INTO administrador(rut_administrador,pnombre,snombre,appaterno,apmaterno,email,activo) VALUES('4002','Benjamin','Elias','Mora','Torres','controlinasistencia@gmail.com',1);
+-- secretaria
+INSERT INTO secretaria(rut_secretaria,pnombre,snombre,appaterno,apmaterno,email,activo) VALUES('1001','Carla','Anai','Moya','Torres','controlinasistencia@gmail.com',1);
+-- alumnos de 10 - 28 (Acorde al excel)
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('10','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('11','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('12','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('13','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('14','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('15','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('16','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('17','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('18','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('19','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('20','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('21','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('22','Jack','Johnny','Sparow','Deep','car.orellanaa@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('23','Steve','John','Rogers','Storm','s.orregoa@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('24','Carlos','Alberto','Orellana','Aguayo','car.orellanaa@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('25','Sebastian','Isaac','Orrego','Aguayo','s.orregoa@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('26','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('27','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('28','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('29','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('30','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+
+-- uSUARIO Y CLAVE DE LOS USUARIOS 
+-- control de usuario login (RF3)
+INSERT INTO tipo_usuario VALUES(1,'alumno');
+INSERT INTO tipo_usuario VALUES(2,'docente');
+INSERT INTO tipo_usuario VALUES(3,'director');
+INSERT INTO tipo_usuario VALUES(4,'administrador');
+INSERT INTO tipo_usuario VALUES(5,'secretaria');
+-- ACCESO secretaria
+INSERT INTO control_usuario (usuario,clave,rut_usuario,id_tipou,activo) VALUES('1001','1234','1001',5,1);
+-- ACCESO coordinador
+INSERT INTO control_usuario (usuario,clave,rut_usuario,id_tipou,activo) VALUES('4002','1234','4002',4,1);
+-- ACCESO Docente
+INSERT INTO control_usuario (usuario,clave,rut_usuario,id_tipou,activo) VALUES('2001','1234','2001',2,1);
+INSERT INTO control_usuario (usuario,clave,rut_usuario,id_tipou,activo) VALUES('2002','1234','2002',2,1);
+INSERT INTO control_usuario (usuario,clave,rut_usuario,id_tipou,activo) VALUES('2003','1234','2003',2,1);
+-- ACCESO director
+INSERT INTO control_usuario (usuario,clave,rut_usuario,id_tipou,activo) VALUES('3001','1234','3001',3,1);
+-- ACCESO alumno
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('10','1234','10',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('11','1234','11',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('12','1234','12',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('13','1234','13',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('14','1234','14',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('15','1234','15',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('16','1234','16',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('17','1234','17',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('18','1234','18',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('19','1234','19',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('20','1234','20',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('21','1234','21',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('22','1234','22',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('23','1234','23',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('24','1234','24',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('25','1234','25',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('26','1234','26',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('27','1234','27',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('28','1234','28',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('29','1234','29',1,1);
+INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('30','1234','30',1,1);
+-- Ramos asignaturas que imparten
+INSERT INTO ramo VALUES('ASO4461','ADMINISTRACION DE SISTEMAS OPERATIVOS');
+INSERT INTO ramo VALUES('DEJ4501','DESARROLLO EN JAVA');
+INSERT INTO ramo VALUES('DEN4501','DESARROLLO EN .NET');
+INSERT INTO ramo VALUES('INU411','INGLES INTERMEDIO II');
+INSERT INTO ramo VALUES('PEI110','EMPRENDIMIENTO E INNOVACION');
+INSERT INTO ramo VALUES('PFC040','DOCTRINA SOCIAL DE LA IGLESIA');
+
+INSERT INTO seccion VALUES('ASO4461-002D','ASO4461',2001);
+INSERT INTO seccion VALUES('DEJ4501-001','DEJ4501',2002);
+INSERT INTO seccion VALUES('DEJ4501-002','DEJ4501',2002);
+INSERT INTO seccion VALUES('DEJ4501-003','DEJ4501',2002);
+INSERT INTO seccion VALUES('PEI110-030D','PEI110',2001);
+INSERT INTO seccion VALUES('ASO4461-001D','ASO4461',2003);
 
