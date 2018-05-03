@@ -122,7 +122,7 @@ public class ControlUsuarioDAO implements GeneralControlUsuarioDAO{
 
     @Override
     public int actualizarClave(ControlUsuario control) {
-         int results = 0;
+        int results = 0;
 
         try {
             conn = new Conectar();

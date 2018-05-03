@@ -21,7 +21,7 @@ public class JustificacionDAO implements GeneralJustificacionDAO{
     Conectar conn;
     
     @Override
-    public Justificacion buscar(int idCarrera) {
+    public Justificacion buscar(int idJustificacion) {
      
         Justificacion obj = null;
         try {

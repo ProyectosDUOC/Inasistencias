@@ -5,12 +5,14 @@
  */
 package dao;
 
-import modelo.Justificacion;
+import modelo.GlobalSemestre;
 
 /**
  *
- * @author carlos
+ * @author benja
  */
-public interface GeneralJustificacionDAO {
-    public abstract Justificacion buscar(int idJustificacion) ;
+public interface GeneralGlobalSemestreDAO {
+    public abstract GlobalSemestre buscar();
+    public abstract int actualizar(GlobalSemestre globalSemestre);
+     
 }
