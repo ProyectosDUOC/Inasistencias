@@ -126,7 +126,7 @@ CREATE TABLE justificacion_imagen (
 
 CREATE TABLE motivo (
     id_motivo       INT NOT NULL,
-    nombre_motivo   VARCHAR(30)
+    nombre_motivo   VARCHAR(50)
 );
 
 ALTER TABLE motivo ADD CONSTRAINT motivo_pk PRIMARY KEY ( id_motivo );
@@ -308,10 +308,22 @@ INSERT INTO ramo VALUES('INU411','INGLES INTERMEDIO II');
 INSERT INTO ramo VALUES('PEI110','EMPRENDIMIENTO E INNOVACION');
 INSERT INTO ramo VALUES('PFC040','DOCTRINA SOCIAL DE LA IGLESIA');
 
-INSERT INTO seccion VALUES('ASO4461-002D','ASO4461',2001);
-INSERT INTO seccion VALUES('DEJ4501-001','DEJ4501',2002);
-INSERT INTO seccion VALUES('DEJ4501-002','DEJ4501',2002);
-INSERT INTO seccion VALUES('DEJ4501-003','DEJ4501',2002);
-INSERT INTO seccion VALUES('PEI110-030D','PEI110',2001);
-INSERT INTO seccion VALUES('ASO4461-001D','ASO4461',2003);
+INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('ASO4461-002D','ASO4461',2001,1,2018);
+INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('DEJ4501-001','DEJ4501',2002,1,2018);
+INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('DEJ4501-002','DEJ4501',2002,1,2018);
+INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('DEJ4501-003','DEJ4501',2002,1,2018);
+INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('PEI110-030D','PEI110',2001,1,2018);
+INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('ASO4461-001D','ASO4461',2003,1,2018);
 
+INSERT INTO motivo VALUES (0,'');
+INSERT INTO motivo VALUES (1,'Economicos');
+INSERT INTO motivo VALUES (2,'Salud');
+INSERT INTO motivo VALUES (3,'Laboral');
+INSERT INTO motivo VALUES (4,'Tramite');
+INSERT INTO motivo VALUES (5,'No entiendo la materia');
+INSERT INTO motivo VALUES (6,'No le entiendo al profesor');
+INSERT INTO motivo VALUES (7,'Me quede dormido');
+INSERT INTO motivo VALUES (8,'Problemas familiares varios');
+INSERT INTO motivo VALUES (9,'Problemas con el transporte');
+INSERT INTO motivo VALUES (10,'Actividad extra-programatica del instituto');
+INSERT INTO motivo VALUES (11,'Otros');
