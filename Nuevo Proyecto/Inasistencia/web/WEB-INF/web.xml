@@ -8,6 +8,10 @@
         <servlet-name>ControladorSecretaria</servlet-name>
         <servlet-class>controlador.ControladorSecretaria</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorAdministrador</servlet-name>
+        <servlet-class>controlador.ControladorAdministrador</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>ControladorSecretaria</servlet-name>
         <url-pattern>/ControladorSecretaria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorAdministrador</servlet-name>
+        <url-pattern>/ControladorAdministrador</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -82,6 +82,30 @@ public class Login extends HttpServlet {
                 response.sendRedirect("index.jsp?mensaje=usuario no existe");
             }
         }
+          if (opcion.equals("Guardar")) {
+
+            ControlUsuario user1 = sesion.getAttribute("usuario") == null ? new ControlUsuario() : (ControlUsuario) sesion.getAttribute("usuario");
+
+            String passAnterior = request.getParameter("txtPassAnterior");
+            String pass1 = request.getParameter("txtPassNueva1");
+            String pass2 = request.getParameter("txtPassNueva2");
+
+            if (pass1.equals(pass2)) {
+                if (passAnterior.equals(user1.getClave())) {
+                    if (!passAnterior.equals(pass1)) {
+                        user1.setClave(pass1);
+                        int x = (new ControlUsuarioDAO()).actualizarClave(user1);
+                        response.sendRedirect("cambiarContra.jsp?mensaje=Se ha actualizado la clave");
+                    } else {
+                        response.sendRedirect("cambiarContra.jsp?mensaje=La clave nueva es la misma que la anterior");
+                    }
+                } else {
+                    response.sendRedirect("cambiarContra.jsp?mensaje=Clave anterior incorrecta");
+                }
+            } else {
+                response.sendRedirect("cambiarContra.jsp?mensaje=las claves nuevas no coinciden");
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -12,11 +12,11 @@ import modelo.ControlUsuario;
  *
  * @author benja
  */
-public interface GeneralControlADAO {    
+public interface GeneralControlUsuarioDAO {    
     public abstract ArrayList mostrarDatos();
     public abstract ControlUsuario buscarDatos(String rut) ;     
     public abstract ControlUsuario buscarDatosLogin(String username) ;
     public abstract int agregar(ControlUsuario control);
     public abstract int eliminar(String rut);
-    public abstract int actualizar(ControlUsuario control); 
+    public abstract int actualizarClave(ControlUsuario control); 
 }
