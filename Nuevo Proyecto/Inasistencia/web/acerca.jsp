@@ -48,22 +48,21 @@
                 <div class="row">
                     <div class="col s12 m4">     
                         <div class="center-align text-center">
-                            <h5 class="color-AzulClaro-text"><strong>Desarrollado</strong></h5>
-                            <form action="Login" method="post">
+                            <h5 class="color-AzulClaro-text"><strong>Desarrollado</strong></h5>                           
                                 <table>
                                     <tr>
-                                        <td>Usuario:</td>
-                                        <td><input type="text" name="txtUser" required="" maxlength="10"/></td>
+                                        <td>Carlos Orellana</td>
                                     </tr>
                                     <tr>
-                                        <td>Contraseña:</td>
-                                        <td><input type="password" name="txtPass" required="" maxlength="10"/></td>
-                                    </tr>                                    
+                                        <td>Benjamin Mora</td>
+                                    </tr> 
+                                    <tr>
+                                        <td>Sebastian Orellana</td>
+                                    </tr> 
                                 </table>
                                 <div >
-                                    <input type="submit" name="opcion" value="Entrar" class="color-Azul-text"/>                                
-                                </div>                            
-                            </form>
+                                    <input type="submit" name="opcion" value="Volverr" class="red-text btn"/>                                
+                                </div>   
                             <br>
                             <a href="recuperarClave.jsp" class="color-Azul-text right">¿Olvidaste tu contraseña? </a>
                             <br>
