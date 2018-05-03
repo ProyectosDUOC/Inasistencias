@@ -28,62 +28,7 @@ public class DocenteDAO implements GeneralDocenteDAO{
 
     @Override
     public Docente buscarDatos(String rut) {
-       Docente obj = null;
-        try {
-            conn = new Conectar();
-            Connection connection = conn.getConnection();
-
-            /*
-                id_docente    INT NOT NULL AUTO_INCREMENT,
-                rut_docente   VARCHAR(30) NOT NULL,
-                pnombre       VARCHAR(30),
-                snombre       VARCHAR(30),
-                appaterno     VARCHAR(30),
-                apmaterno     VARCHAR(30),
-                email         VARCHAR(50),
-                activo        INT,
-            
-                this.idDocente = idDocente;
-                this.rutDocente = rutDocente;
-                this.pnombre = pnombre;
-                this.snombre = snombre;
-                this.appaterno = appaterno;
-                this.apmaterno = apmaterno;
-                this.email = email;
-                this.activo = activo;
-            */
-                        
-            Statement statement = connection.createStatement();
-            String query = "SELECT * FROM docente WHERE rut_docente='" + rutDocente + "';";
-
-            ResultSet results = statement.executeQuery(query);
-            
-            int id, activo;
-            String rut, pNom;
-            
-            //int idDetSecc, idSecc, activo, idAlumno ;
-
-            while (results.next()) {
-                id = results.getInt("id_docente");
-                rut1 = results.getString("rut_docente");
-                pnombre = results.getString("pnombre");
-                snombre = results.getString("snombre");
-                appaterno = results.getString("appaterno");
-                apmaterno = results.getString("apmaterno");
-                email = results.getString("email");              
-                activo = results.getInt("activo");               
-                
-                if (rut1.equals(rut)) {                   
-                    obj = new Docente(id, rut1,pnombre, snombre, appaterno, apmaterno, email, activo);
-                   break;
-                }
-            }
-            connection.close();
-            conn.desconectar();
-        } catch (java.lang.Exception ex) {
-            System.out.println("Error: " + ex);
-        }
-        return obj;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     
