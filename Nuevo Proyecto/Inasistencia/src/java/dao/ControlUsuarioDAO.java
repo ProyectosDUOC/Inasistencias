@@ -16,7 +16,7 @@ import modelo.ControlUsuario;
  *
  * @author benja
  */
-public class ControlUsuarioDAO implements GeneralControlADAO{
+public class ControlUsuarioDAO implements GeneralControlUsuarioDAO{
     Conectar conn;
     
     @Override
@@ -121,8 +121,8 @@ public class ControlUsuarioDAO implements GeneralControlADAO{
     }
 
     @Override
-    public int actualizar(ControlUsuario control) {
-         int results = 0;
+    public int actualizarClave(ControlUsuario control) {
+        int results = 0;
 
         try {
             conn = new Conectar();

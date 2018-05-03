@@ -5,14 +5,14 @@
  */
 package dao;
 
-import java.util.ArrayList;
-import modelo.Motivo;
+import modelo.GlobalSemestre;
 
 /**
  *
- * @author carlos
+ * @author benja
  */
-public interface GeneralMotivoDAO {
-    public abstract ArrayList mostrarDatos();
-    public abstract Motivo buscar(int idMotivo) ;
+public interface GeneralGlobalSemestreDAO {
+    public abstract GlobalSemestre buscar();
+    public abstract int actualizar(GlobalSemestre globalSemestre);
+     
 }

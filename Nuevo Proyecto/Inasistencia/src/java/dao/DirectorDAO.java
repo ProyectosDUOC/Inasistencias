@@ -36,7 +36,7 @@ public class DirectorDAO implements GeneralDirectorDAO{
             Connection connection = conn.getConnection();
                         
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM director WHERE id_director ='" + rutDirector + "';";
+            String query = "SELECT * FROM director WHERE id_director ='" + rut + "';";
 
             ResultSet results = statement.executeQuery(query);
 
@@ -92,7 +92,7 @@ public class DirectorDAO implements GeneralDirectorDAO{
                 mail = results.getString("email");              
                 activo = results.getInt("activo");               
                 
-                if (rutDir.equals(rutDirector)) {                   
+                if (idDir == idDirector) {                   
                     obj = new Director(idDir, rutDir, pNom, sNom, aPat, aMat, mail, activo);
                    break;
                 }
@@ -150,8 +150,8 @@ public class DirectorDAO implements GeneralDirectorDAO{
             Connection connection = conn.getConnection();
             Statement statement = connection.createStatement();
           
-            String agregarSQL = "INSERT INTO director (id_director, rut_director, pnombre, snombre, appaterno, apmaterno, email, activo)"+
-                                " VALUES('"+director.idDirector()+"','"+director.rutDirector()+"','"+director.getPnombre()+"','"+director.getSnombre()+"','"+director.getAppaterno()+"' , '"+director.getApmaterno()+"',"+director.getEmail()+","+director.getActivo()+");";
+            String agregarSQL = "INSERT INTO director (rut_director, pnombre, snombre, appaterno, apmaterno, email, activo)"+
+                                " VALUES('"+director.getRutDirector()+"','"+director.getPnombre()+"','"+director.getSnombre()+"','"+director.getAppaterno()+"' , '"+director.getApmaterno()+"','"+director.getEmail()+"',"+director.getActivo()+");";
             
             int results = statement.executeUpdate(agregarSQL);
             connection.close();

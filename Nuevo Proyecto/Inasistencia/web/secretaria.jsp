@@ -4,7 +4,9 @@
     Author     : benja
 --%>
 
+<%@page import="modelo.GlobalSemestre"%>
 <%@page import="dao.SecretariaDAO"%>
+<%@page import="dao.GlobalSemestreDAO"%>
 <%@page import="modelo.Secretaria"%>
 <%@page import="modelo.ControlUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -27,6 +29,8 @@
             Secretaria secre = new Secretaria();
             String nombre = "";
             String estado = "";
+            GlobalSemestre gl = new GlobalSemestre();
+            String semestre = "";
             int encontrado = 2;
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
@@ -34,6 +38,8 @@
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 if (estado.equals("secretaria")) {
                     rut = user.getRutUsuario();
+                    gl = (new GlobalSemestreDAO()).buscar();
+                    semestre = "Semestre "+gl.getSemestre() + " año " +gl.getAnio();
                     secre = (new SecretariaDAO()).buscarDatos(rut);
                     if (secre == null) {
                         response.sendRedirect("error.jsp");
@@ -43,6 +49,7 @@
                     if (sesion.getAttribute("rut")!=null) {                            
                       rutA=session.getAttribute("rut").toString();
                       encontrado=1;
+                      
                     }
                     
                 } else {
@@ -80,11 +87,24 @@
                         <input type="submit" name="opcion" value="Buscar" class="color-AzulClaro waves-effect waves-light btn"/>                                
                         <input type="submit" name="opcion" value="Nuevo" class="color-AzulClaro waves-effect waves-light btn"/>                                
                     </form>
+                    <p> <%=semestre %> </p>
                 </div>
                 <% if (encontrado == 1) { %>
                 <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo color-Azul-text center-align" >Cursos</h4>  
-                    <p>Se encontro algo</p>  
+                      <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
+                            <thead>
+                                <tr class="amber darken-3">
+                                    <th>Nombre Asignatura</th>
+                                    <th>Asignatura/sección</th>   
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                             
+                            </tbody>
+                        </table>  
+                    
                  </div>
                 <% }
                     if (encontrado == 0) { %>

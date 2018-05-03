@@ -159,6 +159,16 @@ CREATE TABLE tipo_usuario (
     nombre_tipou   VARCHAR(30)
 );
 
+
+CREATE TABLE global_semestre (
+    id_global      INT NOT NULL,
+    semestre       INT NOT NULL,
+    anio           INT NOT NULL,
+    fecha_inicio   DATE,
+    fecha_termino  DATE,
+    PRIMARY KEY(id_global)
+);
+
 ALTER TABLE tipo_usuario ADD CONSTRAINT tipo_usuario_pk PRIMARY KEY ( id_tipou );
 
 CREATE TABLE ramo (
@@ -327,3 +337,24 @@ INSERT INTO motivo VALUES (8,'Problemas familiares varios');
 INSERT INTO motivo VALUES (9,'Problemas con el transporte');
 INSERT INTO motivo VALUES (10,'Actividad extra-programatica del instituto');
 INSERT INTO motivo VALUES (11,'Otros');
+
+INSERT INTO estado_correo VALUES(1,'ENVIADO 1 VEZ');
+INSERT INTO estado_correo VALUES(2,'ENVIADO 2 VEZ');
+
+INSERT INTO estado_inasistencia VALUES(0,'Subido');
+INSERT INTO estado_inasistencia VALUES(1,'Enviado al correo');
+INSERT INTO estado_inasistencia VALUES(2,'Justificado por Alumno');
+INSERT INTO estado_inasistencia VALUES(3,'Justificado por secretaria');
+INSERT INTO estado_inasistencia VALUES(4,'Aprobado por Docente');
+INSERT INTO estado_inasistencia VALUES(5,'No Aprobado por Docente');
+INSERT INTO estado_inasistencia VALUES(6,'Aprobado por Director');
+INSERT INTO estado_inasistencia VALUES(7,'No Aprobado por Director');
+INSERT INTO estado_inasistencia VALUES(8,'Apelado por alumno');
+
+
+INSERT INTO inasistencia (rut_alumno,id_seccion, fecha, id_estadoi) VALUES (11,'DEJ4501-001','2017-09-12',2);
+INSERT Into justificacion values (1,'2017-11-18',7,'no dormi bien y me quede dormido',1,2);
+
+
+INSERT INTO global_semestre VALUES(1,1,2018,'2018-03-05','2018-06-30');
+

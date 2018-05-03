@@ -12,5 +12,5 @@ import modelo.Justificacion;
  * @author carlos
  */
 public interface GeneralJustificacionDAO {
-    public abstract Justificacion buscar(int idCarrera) ;
+    public abstract Justificacion buscar(int idJustificacion) ;
 }

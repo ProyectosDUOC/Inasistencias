@@ -56,15 +56,15 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
             //int idDetSecc, idSecc, activo, idAlumno ;
 
             while (results.next()) {
-                idIna = results.getInt("idInasistencia"); 
-                fechI = results.getDate("fechaInasistencia");
+                idIna = results.getInt("id_inasistencia"); 
+                fechI = results.getDate("fecha_inasistencia");
                 idSec= results.getInt("id_seccion");
                 idAl = results.getInt("id_alumno");
                 idEstI = results.getInt("id_estadoi");
                 idEstC = results.getInt("id_estadoc");
                 
                 if (idIna == idInasistencia) {                   
-                    obj = new Inasistencia(idInasistencia, fechaInasistencia, idSec, idAl, idEstI, idEstC);
+                    obj = new Inasistencia(idInasistencia, fechI, idSec, idAl, idEstI, idEstC);
                    break;
                 }
             }

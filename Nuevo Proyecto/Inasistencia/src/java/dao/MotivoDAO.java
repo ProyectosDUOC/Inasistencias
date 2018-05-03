@@ -9,6 +9,7 @@ import conexion.Conectar;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import modelo.Motivo;
 
 /**
@@ -16,7 +17,7 @@ import modelo.Motivo;
  * @author carlos
  */
 public class MotivoDAO implements GeneralMotivoDAO{
-
+    
     Conectar conn;
     
     @Override
@@ -35,7 +36,6 @@ public class MotivoDAO implements GeneralMotivoDAO{
                 this.nombreMotivo = nombreMotivo;
             
             */
-            
             
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM motivo WHERE id_motivo  =" + idMotivo + ";";
@@ -64,6 +64,47 @@ public class MotivoDAO implements GeneralMotivoDAO{
         }
         return obj;
         
+    }
+     private ArrayList<Motivo> arrayMotivos = new ArrayList<>();
+    @Override
+    public ArrayList mostrarDatos() {
+        Motivo obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM motivo;";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+
+            int idMot;
+            String nomMot;
+            
+
+            /*
+                id_motivo       INT NOT NULL,
+                nombre_motivo   VARCHAR(30)
+            
+                this.idMotivo = idMotivo;
+                this.nombreMotivo = nombreMotivo;
+            
+            */
+            arrayMotivos.removeAll(arrayMotivos);
+            while (results.next()) {
+                idMot = results.getInt("id_motivo"); 
+                nomMot = results.getString("nombre_motivo");
+                
+                obj = new Motivo(idMot, nomMot);
+                arrayMotivos.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayMotivos;
     }
     
 }

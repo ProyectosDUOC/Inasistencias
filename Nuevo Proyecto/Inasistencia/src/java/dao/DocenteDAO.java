@@ -64,8 +64,8 @@ public class DocenteDAO implements GeneralDocenteDAO{
             //int idDetSecc, idSecc, activo, idAlumno ;
 
             while (results.next()) {
-                id = results.getInt("id_administrador");
-                rut1 = results.getString("rut_administrador");
+                id = results.getInt("id_docente");
+                rut1 = results.getString("rut_docente");
                 pnombre = results.getString("pnombre");
                 snombre = results.getString("snombre");
                 appaterno = results.getString("appaterno");
@@ -74,7 +74,7 @@ public class DocenteDAO implements GeneralDocenteDAO{
                 activo = results.getInt("activo");               
                 
                 if (rut1.equals(rut)) {                   
-                    obj = new Administrador(id, rut1,pnombre, snombre, appaterno, apmaterno, email, activo);
+                    obj = new Docente(id, rut1,pnombre, snombre, appaterno, apmaterno, email, activo);
                    break;
                 }
             }
