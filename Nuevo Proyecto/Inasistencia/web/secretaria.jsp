@@ -115,12 +115,17 @@
                 </div>
                 <div class="col s12 m12 color-Azul-text">
                     <h4 class="color-Plomo color-Azul-text center-align" >Cursos del Alumno</h4> 
+                    <% if(arrayCursos.isEmpty()) { %>
+                        <p class="text-center">No tiene registro de cursos</p>
+                    <%
+                    }  else{
+                       %>
                     <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
                         <thead>
                             <tr class="amber darken-3">
                                 <th>Nombre Asignatura</th>
                                 <th>Seccion</th>   
-                                <th>Nombre Prfesor</th>
+                                <th>Nombre Profesor</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -148,8 +153,10 @@
                         </tbody>
                     </table>  
                 </div>
-                <% }
-                    if (encontrado == 0) { %>
+                        
+                        <%}   
+                }
+                if (encontrado == 0) { %>
                 <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo color-Azul-text center-align" >Cursos</h4>  
                     <p><strong>No se registraron cursos</strong></p>  
