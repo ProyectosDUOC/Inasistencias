@@ -4,6 +4,9 @@
     Author     : benja
 --%>
 
+<%@page import="modelo.Docente"%>
+<%@page import="modelo.DetalleSeccion"%>
+<%@page import="dao.DetalleSeccionDAO"%>
 <%@page import="dao.DocenteDAO"%>
 <%@page import="dao.RamoDAO"%>
 <%@page import="dao.SeccionDAO"%>
@@ -33,15 +36,12 @@
         <%
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-            String rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "";
+            String rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre="", estado="",semestre="", nombreProfe="", nombreAsig="", nombreCod="";
             Secretaria secre = new Secretaria();
             Alumno alum = new Alumno();
-            String nombre = "";
-            String estado = "";
-            ArrayList<Seccion> arrayCursos = null;
-          
+            Docente doce = new Docente();
+            ArrayList<DetalleSeccion> arrayCursos = new ArrayList<DetalleSeccion>();
             GlobalSemestre gl = new GlobalSemestre();
-            String semestre = "";
             int encontrado = 2;
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
@@ -64,7 +64,9 @@
                         carreraA = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
                         correoA = alum.getEmail();
                         encontrado = 1;
-                        arrayCursos =(new SeccionDAO()).seccionesAlumnoAnyoSemestre(alum.getIdAlumno() , gl.getSemestre(), gl.getAnio());
+                        arrayCursos =(new DetalleSeccionDAO()).buscarDetalleAlumno(alum.getIdAlumno());
+                        
+                        
                     }
 
                 } else {
@@ -130,11 +132,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% for (Seccion xx : arrayCursos) {%>
+                            <% for (DetalleSeccion xx : arrayCursos) {
+                                nombreAsig = (new RamoDAO()).buscar((new SeccionDAO()).buscar(xx.getIdSeccion()).getCodRamo()).getNombreRamo();
+                                nombreCod = (new SeccionDAO()).buscar(xx.getIdSeccion()).getCodSeccion();
+                                doce = (new DocenteDAO()).buscarDatos((new SeccionDAO()).buscar(xx.getIdSeccion()).getIdDocente());
+                                nombreProfe = doce.getPnombre() +" "+ doce.getAppaterno();
+                            %>
                             <tr>
-                                <td><%= (new RamoDAO()).buscar(xx.getCodRamo()).getNombreRamo() %></td>
-                                <td><%= xx.getCodSeccion() %></td>
-                                <td><%= (new DocenteDAO()).buscarDatos(xx.getIdDocente()).getPnombre() %></td>
+                                <td><%=nombreAsig%></td>
+                                <td><%=nombreCod%></td>
+                                <td><%=nombreProfe%></td>
                                 <td>
                                     <button 
                                         class="btn indigo darken-1" 

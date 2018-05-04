@@ -144,7 +144,7 @@ public class DetalleSeccionDAO implements GeneralDetalleSeccionDAO{
 
             Statement statement = connection.createStatement();
 
-            String consultaSQL = "SELECT * FROM detalle_seccion JOIN seccion USING(id_seccion) WHERE id_alumno= "+ idAlumno +" and semestre="+semestre+" and anio="+year+";";
+            String consultaSQL = "SELECT * FROM detalle_seccion as deta JOIN seccion AS secc ON deta.id_seccion=secc.id_seccion WHERE deta.id_alumno= "+ idAlumno +" and secc.semestre="+ semestre+" and secc.anio="+year+";";
 
             ResultSet results = statement.executeQuery(consultaSQL);
           

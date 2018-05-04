@@ -82,8 +82,6 @@ public class DocenteDAO implements GeneralDocenteDAO{
             int id, activo;
             String rut1, pnombre, snombre, appaterno, apmaterno, email;
             
-            //int idDetSecc, idSecc, activo, idAlumno ;
-
             while (results.next()) {
                 id = results.getInt("id_docente");
                 rut1 = results.getString("rut_docente");
