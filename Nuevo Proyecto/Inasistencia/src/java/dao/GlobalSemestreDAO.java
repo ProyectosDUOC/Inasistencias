@@ -47,7 +47,7 @@ public class GlobalSemestreDAO implements GeneralGlobalSemestreDAO{
                 fecha_inicio = results.getDate("fecha_inicio");
                 fecha_termino = results.getDate("fecha_termino");
                 
-                obj = new GlobalSemestre(semestre, anio, fecha_inicio, fecha_termino);
+                obj = new GlobalSemestre(id,semestre, anio, fecha_inicio, fecha_termino);
                 break;
             }
             connection.close();
