@@ -191,13 +191,13 @@ public class SeccionDAO implements GeneralSeccionDAO{
 
             Statement statement = connection.createStatement();
 
-            String consultaSQL = "SELECT * FROM seccion JOIN detalle_seccion WHERE anio = "+ 2018 +" and semestre="+ 1 +" and id_alumno="+idAlumno+";";
+            String consultaSQL = "SELECT * FROM seccion as sec JOIN detalle_seccion as deta  WHERE sec.anio = "+ anio +" and sec.semestre="+ semestre +" and deta.id_alumno="+idAlumno+";";
 
             ResultSet results = statement.executeQuery(consultaSQL);
           
             int idSec,idDoce, semes, anyo;
             String codSec, codRamo;
-            System.out.println("SIIII :3");
+            System.out.println("SIIII :3   -- " + idAlumno);
             arraySeccion.removeAll(arraySeccion);
             
             while (results.next()) {
