@@ -325,6 +325,12 @@ INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('DEJ45
 INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('PEI110-030D','PEI110',1,1,2018);
 INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('ASO4461-001D','ASO4461',3,1,2018);
 
+
+INSERT INTO detalle_seccion(id_seccion,activo,id_alumno) VALUES(2,1,1);
+INSERT INTO detalle_seccion(id_seccion,activo,id_alumno) VALUES(2,1,2);
+INSERT INTO detalle_seccion(id_seccion,activo,id_alumno) VALUES(2,1,3);
+
+
 INSERT INTO motivo VALUES (0,'');
 INSERT INTO motivo VALUES (1,'Economicos');
 INSERT INTO motivo VALUES (2,'Salud');
@@ -352,11 +358,11 @@ INSERT INTO estado_inasistencia VALUES(7,'No Aprobado por Director');
 INSERT INTO estado_inasistencia VALUES(8,'Apelado por alumno');
 
 
-INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-12',1,1,1,1);
-INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-10',1,1,1,1);
-INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-09',1,1,1,1);
-INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-12',1,1,1,1);
-INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-04-10',1,1,2,1);
+INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-12',2,1,1,1);
+INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-10',2,2,1,1);
+INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-09',2,3,1,1);
+INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-12',2,1,1,1);
+INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-04-10',2,2,2,1);
 INSERT INTO justificacion(id_inasistencia,fecha_justificacion,id_motivo,glosa) VALUES (5,'2018-05-02',5,'El profesor explico muy rapido y me puse al dia');
 
 INSERT INTO global_semestre VALUES(1,1,2018,'2018-03-05','2018-06-30');

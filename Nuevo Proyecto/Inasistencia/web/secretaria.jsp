@@ -38,7 +38,7 @@
             Alumno alum = new Alumno();
             String nombre = "";
             String estado = "";
-            ArrayList<Seccion> arrayCursos = new ArrayList<Seccion>();
+            ArrayList<Seccion> arrayCursos = null;
           
             GlobalSemestre gl = new GlobalSemestre();
             String semestre = "";
