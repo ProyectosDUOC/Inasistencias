@@ -90,11 +90,9 @@
         <footer class="color-Azul">            
             <div class="container">
                 <br>
-                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>
-                <p class="color-Amarillo-text center-align">Carlos Orellana ★ Sebastian Orrego &#9733;  Benjamin Mora</p>
-                <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
+                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>                                
                 <br>
             </div>
-        </footer>
+        </footer> 
     </body>
 </html>

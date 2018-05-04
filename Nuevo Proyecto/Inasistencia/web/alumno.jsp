@@ -4,10 +4,12 @@
     Author     : benja
 --%>
 
-<%@page import="dao.DetalleSeccionDAO"%>
-<%@page import="modelo.Alumno_.rutAlumno"%>
-<%@page import="modelo.Seccion"%>
-<%@page import="modelo.DetalleSeccion"%>
+<%@page import="dao.DocenteDAO"%>
+<%@page import="dao.RamoDAO"%>
+<%@page import="dao.SeccionDAO"%>
+<%@page import="modelo.Ramo"%>
+<%@page import="modelo.GlobalSemestre"%>
+<%@page import="modelo.Seccion"%>   
 <%@page import="dao.AlumnoDAO"%>
 <%@page import="modelo.Alumno"%>
 <%@page import="modelo.ControlUsuario"%>
@@ -30,8 +32,10 @@
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             Alumno alu = new Alumno();
             String nombre = "", estado = "", rut = "";
-            ArrayList<DetalleSeccion> arrayCursos = new ArrayList<DetalleSeccion>();
+            int semestre = 0, year = 0;
+            ArrayList<Seccion> arrayCursos = new ArrayList<Seccion>();
             Seccion seccion = new Seccion();
+            Ramo ramo = new Ramo();
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
             } else {
@@ -40,9 +44,10 @@
                     rut = user.getRutUsuario();
                     alu = (new AlumnoDAO()).buscarDatos(rut);
                     if (alu != null) {
-                        //   arrayCursos = (new DetalleSeccionDAO()).buscar(alu.getIdAlumno());
                         nombre = alu.getPnombre() + " " + alu.getSnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno();
-
+                        semestre = (new GlobalSemestre()).getSemestre();
+                        year = (new GlobalSemestre()).getAnio();
+                        arrayCursos = (new SeccionDAO()).seccionesAlumnoAnyoSemestre(alu.getIdAlumno(), semestre, year);
                     } else {
                         response.sendRedirect("index.jsp");
                     }
@@ -75,7 +80,7 @@
         <div class="container">
             <div class="row">
                 <h4 class="color-Azul-text color-Plomo center-align">Centro de Notificaciones Duoc</h4>
-                <form action="ControladorAlumno" method="post" >
+                <form action="index.jsp" method="post" >
                     <div class="col s12 m12">
                         <button class="btn waves-effect waves-light red left" type="submit" name="opcion" value="Salir">
                             Cerrar Sesion
@@ -94,43 +99,23 @@
                             <tbody>
                                 <% if (arrayCursos.isEmpty()) {  %>
                                 <tr><td>No tienes cursos registrados<td></tr>
-                                <%   }else{
-                                        
-                                    
-
-
+                                <%   } else {
+                                    for (Seccion xx : arrayCursos) {%>
+                            <td><%=(new RamoDAO()).buscar(xx.getCodRamo()).getNombreRamo()%></td> 
+                            <td><%=xx.getCodRamo()%></td> 
+                            <td><%=(new DocenteDAO()).buscarDatos(xx.getIdDocente())%></td>
+                            <td>0</td>
+                            <button 
+                                class="btn  color-Azul amber-text" 
+                                type="submit" 
+                                name="opcion" 
+                                value="j<%=xx.getIdSeccion()%>"> 
+                                Justificar 
+                            </button>
+                            <%
                                     }
- %>
-                                <tr>  
-                                   
-                                    <td><%=%></td>                                    
-                                    <td><input type="date" name="fecha" value="<%=%>" readonly=""></td>
-                                    <td>
-                                        <% // if (falta.getIdEstadoi() == 1) 
-                                            {%>
-                                        <button 
-                                            class="btn  color-Azul amber-text" 
-                                            type="submit" 
-                                            name="opcion" 
-                                            value="j<%=%>"> 
-                                            Justificar 
-                                        </button>
-                                        <% }
-                                            //if (falta.getIdEstadoi() > 1) {%>
-                                        <button 
-                                            class="btn indigo darken-1" 
-                                            type="submit" 
-                                            name="opcion" 
-                                            value="v<%=%>"> 
-                                            ver 
-                                        </button>
-                                        <%
-                                            }
-                                        %>
-                                    </td>   
-                                    <% } %>
-                                </tr>
-                                <% }%>
+                                }
+                            %>
                             </tbody>
                         </table>  
                     </div>
@@ -140,12 +125,10 @@
         <footer class="color-Azul">            
             <div class="container">
                 <br>
-                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>
-                <p class="color-Amarillo-text center-align">Carlos Orellana ★ Sebastian Orrego &#9733;  Benjamin Mora</p>
-                <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
+                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>                                
                 <br>
             </div>
-        </footer>            
+        </footer>        
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery.dataTables.js"></script>
         <script src="js/script.js"></script>        

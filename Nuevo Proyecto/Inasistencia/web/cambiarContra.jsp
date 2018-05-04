@@ -38,11 +38,11 @@
             Docente doce = new Docente();
             Alumno alum = new Alumno();
             Secretaria secre = new Secretaria();
-            
-            String nombre = "", correo = "", usuario = "", clave = " ", carrera = "", rut="";
+
+            String nombre = "", correo = "", usuario = "", clave = " ", carrera = "", rut = "";
             String estado = "";
 
-            if (session.getAttribute("usuario")==null) {
+            if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
@@ -56,17 +56,17 @@
                     carrera = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
                 }
                 if (estado.equals("docente")) {
-                   // doce = (new DocenteDAO()).buscarDatos(rut);
+                    // doce = (new DocenteDAO()).buscarDatos(rut);
                     nombre = doce.getPnombre() + " " + doce.getSnombre() + " " + doce.getAppaterno() + " " + doce.getApmaterno();
                     correo = doce.getEmail();
                 }
                 if (estado.equals("director")) {
-                   // dire = (new DirectorDAO()).buscarDatos(rut);
+                    // dire = (new DirectorDAO()).buscarDatos(rut);
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
                     correo = dire.getEmail();
                 }
                 if (estado.equals("administrador")) {
-                  //  admin = (new CoordinadorDAO()).buscarDatos(rut);
+                    //  admin = (new CoordinadorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     correo = admin.getEmail();
                 }
@@ -133,11 +133,9 @@
         <footer class="color-Azul">            
             <div class="container">
                 <br>
-                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>
-                <p class="color-Amarillo-text center-align">Carlos Orellana ★ Sebastian Orrego &#9733;  Benjamin Mora</p>
-                <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
+                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>                                
                 <br>
             </div>
-        </footer>
+        </footer> 
     </body>
 </html>

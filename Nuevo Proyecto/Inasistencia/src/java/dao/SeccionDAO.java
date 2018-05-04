@@ -181,5 +181,41 @@ public class SeccionDAO implements GeneralSeccionDAO{
         }
         return arraySeccion;
     }
+
+    @Override
+    public ArrayList seccionesAlumnoAnyoSemestre(int idAlumno, int semestre, int anio) {
+        Seccion obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM seccion JOIN detalle_seccion WHERE anio = "+ anio +" and semestre="+semestre +" and id_alumno="+idAlumno+";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+          
+            int idSec,idDoce, semes, anyo;
+            String codSec;
+
+            arraySeccion.removeAll(arraySeccion);
+            
+            while (results.next()) {
+                idSec = results.getInt("id_seccion");
+                codSec = results.getString("cod_seccion");                
+                idDoce = results.getInt("id_docente");
+                semes = results.getInt("semestre");
+                anyo = results.getInt("anio");
+                
+                obj = new Seccion(idSec, codSec, codSec, idDoce, semes, anio);
+                arraySeccion.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arraySeccion;
+    }
     
 }

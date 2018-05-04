@@ -98,7 +98,7 @@ ALTER TABLE estado_inasistencia ADD CONSTRAINT estado_inasistencia_pk PRIMARY KE
 
 CREATE TABLE inasistencia (
     id_inasistencia      INT NOT NULL AUTO_INCREMENT,
-    fecha_inasistencia   DATE,
+    fecha_inasistencia   DATE, 
     id_seccion           INT NOT NULL,
     id_alumno            INT NOT NULL,
     id_estadoi           INT NOT NULL,
@@ -318,12 +318,12 @@ INSERT INTO ramo VALUES('INU411','INGLES INTERMEDIO II');
 INSERT INTO ramo VALUES('PEI110','EMPRENDIMIENTO E INNOVACION');
 INSERT INTO ramo VALUES('PFC040','DOCTRINA SOCIAL DE LA IGLESIA');
 
-INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('ASO4461-002D','ASO4461',2001,1,2018);
-INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('DEJ4501-001','DEJ4501',2002,1,2018);
-INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('DEJ4501-002','DEJ4501',2002,1,2018);
-INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('DEJ4501-003','DEJ4501',2002,1,2018);
-INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('PEI110-030D','PEI110',2001,1,2018);
-INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('ASO4461-001D','ASO4461',2003,1,2018);
+INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('ASO4461-002D','ASO4461',2,1,2018);
+INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('DEJ4501-001','DEJ4501',2,1,2018);
+INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('DEJ4501-002','DEJ4501',2,1,2018);
+INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('DEJ4501-003','DEJ4501',2,1,2018);
+INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('PEI110-030D','PEI110',1,1,2018);
+INSERT INTO seccion(cod_seccion,cod_ramo,id_docente,semestre,anio) VALUES('ASO4461-001D','ASO4461',3,1,2018);
 
 INSERT INTO motivo VALUES (0,'');
 INSERT INTO motivo VALUES (1,'Economicos');
@@ -344,7 +344,7 @@ INSERT INTO estado_correo VALUES(2,'ENVIADO 2 VEZ');
 INSERT INTO estado_inasistencia VALUES(0,'Subido');
 INSERT INTO estado_inasistencia VALUES(1,'Enviado al correo');
 INSERT INTO estado_inasistencia VALUES(2,'Justificado por Alumno');
-INSERT INTO estado_inasistencia VALUES(3,'Justificado por secretaria');
+INSERT INTO estado_inasistencia VALUES(3,'Justificado por Secretaria');
 INSERT INTO estado_inasistencia VALUES(4,'Aprobado por Docente');
 INSERT INTO estado_inasistencia VALUES(5,'No Aprobado por Docente');
 INSERT INTO estado_inasistencia VALUES(6,'Aprobado por Director');
@@ -352,9 +352,13 @@ INSERT INTO estado_inasistencia VALUES(7,'No Aprobado por Director');
 INSERT INTO estado_inasistencia VALUES(8,'Apelado por alumno');
 
 
-INSERT INTO inasistencia (rut_alumno,id_seccion, fecha, id_estadoi) VALUES (11,'DEJ4501-001','2017-09-12',2);
-INSERT Into justificacion values (1,'2017-11-18',7,'no dormi bien y me quede dormido',1,2);
-
+INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-12',1,1,1,1);
+INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-10',1,1,1,1);
+INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-09',1,1,1,1);
+INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-12',1,1,1,1);
+INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-04-10',1,1,2,1);
+INSERT INTO justificacion(id_inasistencia,fecha_justificacion,id_motivo,glosa) VALUES (5,'2018-05-02',5,'El profesor explico muy rapido y me puse al dia');
 
 INSERT INTO global_semestre VALUES(1,1,2018,'2018-03-05','2018-06-30');
 
+-- UPDATE global_semestre SET semestre=1 where id_global=1;
