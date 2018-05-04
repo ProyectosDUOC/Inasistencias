@@ -196,8 +196,8 @@ public class SeccionDAO implements GeneralSeccionDAO{
             ResultSet results = statement.executeQuery(consultaSQL);
           
             int idSec,idDoce, semes, anyo;
-            String codSec;
-
+            String codSec, codRamo;
+            System.out.println("SIIII :3");
             arraySeccion.removeAll(arraySeccion);
             
             while (results.next()) {
@@ -206,8 +206,9 @@ public class SeccionDAO implements GeneralSeccionDAO{
                 idDoce = results.getInt("id_docente");
                 semes = results.getInt("semestre");
                 anyo = results.getInt("anio");
+                codRamo = results.getString("cod_ramo");
                 
-                obj = new Seccion(idSec, codSec, codSec, idDoce, semes, anio);
+                obj = new Seccion(idSec, codSec, codRamo, idDoce, semestre, anio);
                 arraySeccion.add(obj);
             }
             connection.close();

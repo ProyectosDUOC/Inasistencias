@@ -4,6 +4,11 @@
     Author     : benja
 --%>
 
+<%@page import="dao.DocenteDAO"%>
+<%@page import="dao.RamoDAO"%>
+<%@page import="dao.SeccionDAO"%>
+<%@page import="modelo.Seccion"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="dao.CarreraDAO"%>
 <%@page import="dao.AlumnoDAO"%>
 <%@page import="modelo.Alumno"%>
@@ -33,6 +38,8 @@
             Alumno alum = new Alumno();
             String nombre = "";
             String estado = "";
+            ArrayList<Seccion> arrayCursos = new ArrayList<Seccion>();
+          
             GlobalSemestre gl = new GlobalSemestre();
             String semestre = "";
             int encontrado = 2;
@@ -57,7 +64,7 @@
                         carreraA = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
                         correoA = alum.getEmail();
                         encontrado = 1;
-
+                        arrayCursos =(new SeccionDAO()).seccionesAlumnoAnyoSemestre(alum.getIdAlumno() , gl.getSemestre(), gl.getAnio());
                     }
 
                 } else {
@@ -112,16 +119,34 @@
                         <thead>
                             <tr class="amber darken-3">
                                 <th>Nombre Asignatura</th>
-                                <th>Asignatura/sección</th>   
+                                <th>Seccion</th>   
+                                <th>Nombre Prfesor</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-
+                            <% for (Seccion xx : arrayCursos) {%>
+                            <tr>
+                                <td><%= (new RamoDAO()).buscar(xx.getCodRamo()).getNombreRamo() %></td>
+                                <td><%= xx.getCodSeccion() %></td>
+                                <td><%= (new DocenteDAO()).buscarDatos(xx.getIdDocente()).getPnombre() %></td>
+                                <td>
+                                    <button 
+                                        class="btn indigo darken-1" 
+                                        type="submit" 
+                                        name="opcion" 
+                                        value="s<%=xx.getIdSeccion()%>"> 
+                                        Seleccionar 
+                                    </button>
+                                </td>                                
+                            </tr>                                
+                            <%    }
+                              
+                              
+                              
+                              %>     
                         </tbody>
                     </table>  
-                    <p> <%=semestre%> </p>
-                    <span class="red-text"> ${param.mensaje}</span>
                 </div>
                 <% }
                     if (encontrado == 0) { %>
