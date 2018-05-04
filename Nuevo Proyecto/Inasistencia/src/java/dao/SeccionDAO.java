@@ -9,6 +9,7 @@ import conexion.Conectar;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import modelo.Seccion;
 
 /**
@@ -17,6 +18,7 @@ import modelo.Seccion;
  */
 public class SeccionDAO implements GeneralSeccionDAO{
 
+    private ArrayList<Seccion> arraySeccion = new ArrayList<>(); 
     Conectar conn;
     
     @Override
@@ -70,6 +72,114 @@ public class SeccionDAO implements GeneralSeccionDAO{
         }
         return obj;
         
+    }
+
+    @Override
+    public ArrayList seccionesDocente(int idDocente) {
+        Seccion obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM seccion WHERE id_docente = "+ idDocente +";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+          
+            int idSec,idDoce, semes, anyo;
+            String codSec;
+
+            arraySeccion.removeAll(arraySeccion);
+            
+            while (results.next()) {
+                idSec = results.getInt("id_seccion");
+                codSec = results.getString("cod_seccion");                
+                idDoce = results.getInt("id_docente");
+                semes = results.getInt("semestre");
+                anyo = results.getInt("anio");
+                
+                obj = new Seccion(idSec, codSec, codSec, idDocente, semes, anyo);
+                arraySeccion.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arraySeccion;
+    }
+
+    @Override
+    public ArrayList seccionesAnyoSemestre(int semestre, int anio) {
+        Seccion obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM seccion WHERE semestre = "+ semestre + " and  anio ="+ anio +";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+          
+            int idSec,idDoce, semes, anyo;
+            String codSec;
+
+            arraySeccion.removeAll(arraySeccion);
+            
+            while (results.next()) {
+                idSec = results.getInt("id_seccion");
+                codSec = results.getString("cod_seccion");                
+                idDoce = results.getInt("id_docente");
+                semes = results.getInt("semestre");
+                anyo = results.getInt("anio");
+                
+                obj = new Seccion(idSec, codSec, codSec, idDoce, semestre, anio);
+                arraySeccion.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arraySeccion;
+    }
+
+    @Override
+    public ArrayList seccionesAnuales(int anio) {
+        Seccion obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM seccion WHERE anio = "+ anio +";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+          
+            int idSec,idDoce, semes, anyo;
+            String codSec;
+
+            arraySeccion.removeAll(arraySeccion);
+            
+            while (results.next()) {
+                idSec = results.getInt("id_seccion");
+                codSec = results.getString("cod_seccion");                
+                idDoce = results.getInt("id_docente");
+                semes = results.getInt("semestre");
+                anyo = results.getInt("anio");
+                
+                obj = new Seccion(idSec, codSec, codSec, idDoce, semes, anio);
+                arraySeccion.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arraySeccion;
     }
     
 }
