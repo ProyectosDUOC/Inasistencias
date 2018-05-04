@@ -211,5 +211,32 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
         
         
     }
+
+    @Override
+    public int contadorInasistencias(int idEstadoi, int idSeccion, int idAlumno) {
+         //5.- un contador de todas las inasistencias de un alumno de una seccion x (estadoi pueda cambiar, recuerda)
+        int contador = 0;
+         
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM inasistencia WHERE id_estadoi = "+ idEstadoi +" and  id_seccion = "+idSeccion+ "and id_alumno = "+idAlumno +";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+            
+            while (results.next()) {
+                contador++;
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return contador;
+         
+    }
     
 }
