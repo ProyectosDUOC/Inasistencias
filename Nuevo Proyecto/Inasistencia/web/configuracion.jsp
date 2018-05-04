@@ -70,6 +70,7 @@
                     secre = (new SecretariaDAO()).buscarDatos(rut);
                     nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();               
                     correo = secre.getEmail();
+                    sesion.setAttribute("rut",null );
                 }
             }
         %>
