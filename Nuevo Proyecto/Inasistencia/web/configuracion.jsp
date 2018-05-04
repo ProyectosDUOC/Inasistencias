@@ -57,7 +57,7 @@
                     correo = doce.getEmail();
                 }
                 if (estado.equals("director")) {
-                  //  dire = (new DirectorDAO()).buscarDatos(rut);
+                    dire = (new DirectorDAO()).buscarDatos(rut);
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();                   
                     correo = dire.getEmail();
                 }
@@ -102,7 +102,7 @@
                     <p><strong> Nombre :</strong> <span><%=nombre%></span></p>
                     <p><strong> Rut :</strong> <span><%=rut%></span></p>
                     <p><strong> Correo :</strong> <span><%=correo%></span></p>                    
-                    <%if (estado.equals("Alumno")) {%>
+                    <%if (estado.equals("alumno")) {%>
                     <p><strong> Carrera :</strong> <span><%=carrera%></span></p>
                     <%
                         }
