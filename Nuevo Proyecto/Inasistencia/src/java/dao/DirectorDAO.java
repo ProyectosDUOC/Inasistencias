@@ -36,7 +36,7 @@ public class DirectorDAO implements GeneralDirectorDAO{
             Connection connection = conn.getConnection();
                         
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM director WHERE id_director ='" + rut + "';";
+            String query = "SELECT * FROM director WHERE rut_director ='" + rut + "';";
 
             ResultSet results = statement.executeQuery(query);
 
@@ -55,6 +55,7 @@ public class DirectorDAO implements GeneralDirectorDAO{
                 
                 if (rutDir.equals(rut)) {                   
                     obj = new Director(idDir, rutDir, pNom, sNom, aPat, aMat, mail, activo);
+                    System.out.println(obj.getPnombre());
                    break;
                 }
             }
