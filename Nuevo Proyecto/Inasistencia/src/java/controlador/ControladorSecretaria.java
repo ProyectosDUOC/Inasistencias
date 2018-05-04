@@ -46,10 +46,13 @@ public class ControladorSecretaria extends HttpServlet {
                     sesion.setAttribute("rut",rut );
                     response.sendRedirect("secretaria.jsp");
                 }else{
+                    
+                    sesion.setAttribute("rut",null );
                     response.sendRedirect("secretaria.jsp?mensaje=Alumno no encontrado"); 
                 }             
-            }else{
-                 response.sendRedirect("secretaria.jsp?mensaje=Alumno no encontrado");
+            }else{                
+                sesion.setAttribute("rut",null );
+                response.sendRedirect("secretaria.jsp?mensaje=Alumno no encontrado");
             }            
         }
         if (opcion.equals("Nuevo")) {    
