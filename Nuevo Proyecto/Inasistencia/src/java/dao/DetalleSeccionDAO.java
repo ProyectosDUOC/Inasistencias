@@ -135,16 +135,51 @@ public class DetalleSeccionDAO implements GeneralDetalleSeccionDAO{
         return arrayDetalleS;
     }
 
+  
     @Override
-    public ArrayList buscarDetalleAlumnoYearSemestre(int idAlumno, int year, int semestre) {
-         DetalleSeccion obj =null;
+    public ArrayList mostrar(int year, int semestre) {
+        DetalleSeccion obj =null;
         try {
             conn = new Conectar();
             Connection connection = conn.getConnection();
 
             Statement statement = connection.createStatement();
 
-            String consultaSQL = "SELECT * FROM detalle_seccion as deta JOIN seccion AS secc ON deta.id_seccion=secc.id_seccion WHERE deta.id_alumno= "+ idAlumno +" and secc.semestre="+ semestre+" and secc.anio="+year+";";
+            String consultaSQL = "SELECT * FROM detalle_seccion as deta JOIN seccion AS secc ON deta.id_seccion=secc.id_seccion WHERE secc.semestre="+ semestre+" and secc.anio="+year+";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+          
+            int idDetSec, idSec, activo, idAlu;
+
+            arrayDetalleS.removeAll(arrayDetalleS);
+            
+            while (results.next()) {
+                idDetSec = results.getInt("id_detalle_secc");
+                idSec = results.getInt("id_seccion");                
+                activo = results.getInt("activo");
+                idAlu = results.getInt("id_alumno");
+                
+                obj = new DetalleSeccion(idDetSec, idSec , activo, idAlu);
+                arrayDetalleS.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayDetalleS;
+    }
+
+    @Override
+    public ArrayList mostrarAlumno(int idAlumno, int year, int semestre) {
+        DetalleSeccion obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM detalle_seccion as deta JOIN seccion AS secc ON deta.id_seccion=secc.id_seccion WHERE deta.id_alumno="+idAlumno+" and secc.semestre="+ semestre+" and secc.anio="+year+";";
 
             ResultSet results = statement.executeQuery(consultaSQL);
           

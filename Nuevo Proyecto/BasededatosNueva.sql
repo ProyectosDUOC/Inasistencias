@@ -344,8 +344,11 @@ INSERT INTO motivo VALUES (9,'Problemas con el transporte');
 INSERT INTO motivo VALUES (10,'Actividad extra-programatica del instituto');
 INSERT INTO motivo VALUES (11,'Otros');
 
+INSERT INTO estado_correo VALUES(0,'ENVIADO 0 VEZ');
 INSERT INTO estado_correo VALUES(1,'ENVIADO 1 VEZ');
 INSERT INTO estado_correo VALUES(2,'ENVIADO 2 VEZ');
+INSERT INTO estado_correo VALUES(3,'ENVIADO 3 VEZ');
+INSERT INTO estado_correo VALUES(7,'Busqueda de ID');
 
 INSERT INTO estado_inasistencia VALUES(0,'Subido');
 INSERT INTO estado_inasistencia VALUES(1,'Enviado al correo');

@@ -19,4 +19,11 @@ public interface GeneralInasistenciasDAO {
     public abstract ArrayList inasistenciaAlumnoSeccion(int idAlumno ,int idSeccion);//4.- todas las incistencias de un alumno de una seccion x 
     public abstract int contadorInasistencias(int idEstadoi, int idSeccion, int idAlumno);
     //5.- un contador de todas las inasistencias de un alumno de una seccion x (estadoi pueda cambiar, recuerda)
+    public abstract int agregar(Inasistencia inasistencia);
+    public abstract Inasistencia buscarIdCorreo(int idCorreo) ;
+    
+    public abstract int actualizar(Inasistencia inasistencia); 
+    
+    
+   
 }

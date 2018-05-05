@@ -33,7 +33,7 @@ public class RamoDAO implements GeneralRamoDAO{
             
             
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM ramo WHERE cod_ramo  ='" + codRamo + "';";
+            String query = "SELECT * FROM ramo WHERE cod_ramo ='"+codRamo+"';";
 
             ResultSet results = statement.executeQuery(query);
             

@@ -53,7 +53,7 @@ public class JustificacionDAO implements GeneralJustificacionDAO{
             Date fechaJ;
 
             while (results.next()) {
-                id = results.getInt("id_jutificacion"); 
+                id = results.getInt("id_justificacion"); 
                 idIna = results.getInt("id_inasistencia"); 
                 fechaJ = results.getDate("fecha_justificacion"); 
                 idMot = results.getInt("id_motivo"); 
@@ -72,6 +72,24 @@ public class JustificacionDAO implements GeneralJustificacionDAO{
         }
         return obj;
         
+    }
+
+    @Override
+    public int agregar(Justificacion justificacion) {
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+            Statement statement = connection.createStatement();
+            String agregarSQL = "INSERT INTO justificacion(id_inasistencia,fecha_justificacion,id_motivo,glosa)"
+                    + " VALUES("+justificacion.getIdInasistencia()+",'"+justificacion.getFechaHoy()
+                    +"',"+justificacion.getIdMotivo()+", '"+justificacion.getGlosa()+"')";
+            int results = statement.executeUpdate(agregarSQL);
+            connection.close();
+            conn.desconectar();
+            return results;
+        } catch (java.lang.Exception ex) {
+            return 0;
+        }
     }
     
 }

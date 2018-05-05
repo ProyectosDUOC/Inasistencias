@@ -4,6 +4,9 @@
     Author     : benja
 --%>
 
+<%@page import="dao.AdministradorDAO"%>
+<%@page import="dao.DirectorDAO"%>
+<%@page import="dao.DocenteDAO"%>
 <%@page import="dao.SecretariaDAO"%>
 <%@page import="dao.CarreraDAO"%>
 <%@page import="modelo.Secretaria"%>
@@ -56,17 +59,17 @@
                     carrera = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
                 }
                 if (estado.equals("docente")) {
-                    // doce = (new DocenteDAO()).buscarDatos(rut);
+                    doce = (new DocenteDAO()).buscarDatos(rut);
                     nombre = doce.getPnombre() + " " + doce.getSnombre() + " " + doce.getAppaterno() + " " + doce.getApmaterno();
                     correo = doce.getEmail();
                 }
                 if (estado.equals("director")) {
-                    // dire = (new DirectorDAO()).buscarDatos(rut);
+                    dire = (new DirectorDAO()).buscarDatos(rut);
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
                     correo = dire.getEmail();
                 }
                 if (estado.equals("administrador")) {
-                    //  admin = (new CoordinadorDAO()).buscarDatos(rut);
+                    admin = (new AdministradorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     correo = admin.getEmail();
                 }
@@ -74,6 +77,7 @@
                     secre = (new SecretariaDAO()).buscarDatos(rut);
                     nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();
                     correo = secre.getEmail();
+                    sesion.setAttribute("rut",null);
                 }
             }
         %>

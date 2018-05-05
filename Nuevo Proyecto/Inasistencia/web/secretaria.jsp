@@ -36,14 +36,24 @@
         <%
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-            String rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreProfe = "", nombreAsig = "", nombreCod = "";
+
             Secretaria secre = new Secretaria();
             Alumno alum = new Alumno();
             Docente doce = new Docente();
-            ArrayList<DetalleSeccion> arrayCursos = new ArrayList<DetalleSeccion>();
-            ArrayList<Seccion> arraySeccion = new ArrayList<Seccion>();
-            GlobalSemestre gl = new GlobalSemestre();
-            int encontrado = 2;
+
+            GlobalSemestre semestreActual = new GlobalSemestre();
+            //variables de secretaria
+            String estado = "", rut = "", nombre = "", semestre = "";
+            //variables alumno
+            String rutA = "", nombreA = "", carreraA = "", correoA = "";
+            ArrayList<DetalleSeccion> arrayDetalleSeccionAlumno = new ArrayList<DetalleSeccion>();
+            ArrayList<Seccion> arraySeccionesAlumno = new ArrayList<Seccion>();
+            int alumnoEncontrado = 0; //0 no encontrado, 1 se encontro, 2 no tiene ramos
+            int cursosEncontrado = 0;
+            
+            //Variables de cursos
+            String nombreAsig="", nombreCod="", nombreProfe="";
+            
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
             } else {
@@ -51,27 +61,34 @@
                 if (estado.equals("secretaria")) {
                     rut = user.getRutUsuario(); //Usuario de secretaria
                     secre = (new SecretariaDAO()).buscarDatos(rut);
-
-                    gl = (new GlobalSemestreDAO()).buscar();
-                    semestre = "Semestre " + gl.getSemestre() + " año " + gl.getAnio();
-
+                    semestreActual = (GlobalSemestre) session.getAttribute("semestreActual");
+                    semestre = "Semestre " + semestreActual.getSemestre() + " año " + semestreActual.getAnio();
                     nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();
+
+                    // si encuentra a un alumno con el rut
                     if (sesion.getAttribute("rut") != null) {
-                        arraySeccion = (new SeccionDAO()).buscar
                         rutA = session.getAttribute("rut").toString();
                         alum = (new AlumnoDAO()).buscarDatos(rutA);
                         nombreA = alum.getPnombre() + " " + alum.getSnombre() + " " + alum.getAppaterno() + " " + alum.getApmaterno();
                         carreraA = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
                         correoA = alum.getEmail();
-                        encontrado = 1;
-                        arrayCursos = (new DetalleSeccionDAO()).buscarDetalleAlumno(alum.getIdAlumno());
-                        for (DetalleSeccion xx : arrayCursos) {
-                            arraySeccion.add((new SeccionDAO()).buscarSemestreAnio(xx.getIdSeccion(), gl.getSemestre(), gl.getAnio()));
-                        }
-                        if (session.getAttribute("idSeccion") != null) {
-                            sesion.setAttribute("idSeccion", null);
-                        }
+                        alumnoEncontrado = 1;
 
+                        //todos los detalle cursos que esta
+                        arrayDetalleSeccionAlumno = (new DetalleSeccionDAO()).mostrarAlumno(alum.getIdAlumno(), semestreActual.getAnio(), semestreActual.getSemestre());
+                        if (arrayDetalleSeccionAlumno.isEmpty()) {
+                            //en caso que no tenga cursos
+                            cursosEncontrado = 0;
+                        } else {
+                            arraySeccionesAlumno = (new SeccionDAO()).mostrarAlumno(alum.getIdAlumno(), semestreActual.getAnio(), semestreActual.getSemestre());
+                            if (arraySeccionesAlumno.isEmpty()) {
+                                cursosEncontrado = 0;
+                            } else {
+                                cursosEncontrado = 1;
+                            }
+                        }
+                    } else {
+                        alumnoEncontrado = 0;
                     }
 
                 } else {
@@ -112,7 +129,7 @@
                     <p> <%=semestre%> </p>
                     <span class="red-text"> ${param.mensaje}</span>
                 </div>
-                <% if (encontrado == 1) {%>
+                <% if (alumnoEncontrado == 1) {%>
                 <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo color-Azul-text center-align" >Datos Alumno</h4>  
                     <p><strong> Nombre :</strong> <span><%=nombreA%></span></p>
@@ -122,10 +139,9 @@
                 </div>
                 <div class="col s12 m12 color-Azul-text">
                     <h4 class="color-Plomo color-Azul-text center-align" >Cursos del Alumno</h4> 
-                    <% if (arrayCursos.isEmpty()) { %>
-                    <p class="text-center">No tiene registro de cursos</p> </div>
-                    <%} else {
-                    %>
+                    <% if (cursosEncontrado == 0) { %>
+                    <p class="text-center">No tiene registro de cursos</p> 
+                    <% } else { %>
                     <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
                         <thead>
                             <tr class="amber darken-3">
@@ -136,44 +152,34 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <%  if (!arraySeccion.isEmpty()) {
-                            for (Seccion ss : arraySeccion) {
-                                nombreAsig = (new RamoDAO()).buscar(ss.getCodRamo()).getNombreRamo();
-                                nombreCod = ss.getCodSeccion();
-                                doce = (new DocenteDAO()).buscarDatos(ss.getIdDocente());
-                                nombreProfe = doce.getPnombre() + " " + doce.getAppaterno();
-                        %>
-                        <tr>
-                            <td><%=nombreAsig%></td>
-                            <td><%=nombreCod%></td>
-                            <td><%=nombreProfe%></td>
-                            <td>
-                                <form action="ControladorSecretaria" method="post">
-                                    <button 
-                                        class="btn indigo darken-1" 
-                                        type="submit" 
-                                        name="opcion" 
-                                        value="s<%=ss.getIdSeccion()%>"> 
-                                        Seleccionar 
-                                    </button>
-                                </form>                                  
-                            </td>                                
-                        </tr>                                
-                        <% }
-                           }
-                        %>     
+                            <% for (Seccion sec : arraySeccionesAlumno) {
+                                    nombreAsig = (new RamoDAO()).buscar(sec.getCodRamo()).getNombreRamo();
+                                    nombreCod = sec.getCodSeccion();
+                                    doce = (new DocenteDAO()).buscarDatos(sec.getIdDocente());
+                                    nombreProfe = doce.getPnombre() + " " + doce.getAppaterno();
+                            %>
+                            <tr>
+                                <td><%=nombreAsig%></td>
+                                <td><%=nombreCod%></td>
+                                <td><%=nombreProfe%></td>
+                                <td>
+                                    <form action="ControladorSecretaria" method="post">
+                                        <button 
+                                            class="btn indigo darken-1" 
+                                            type="submit" 
+                                            name="opcion" 
+                                            value="s<%=sec.getIdSeccion()%>"> 
+                                            Seleccionar 
+                                        </button>
+                                    </form>                                  
+                                </td>                                
+                            </tr>                                
+                            <%}%>     
                         </tbody>
-                    </table>  
+                    </table> 
+                    <% }
+                }%>                    
                 </div>
-                <%
-                    }
-                    if (encontrado == 0) { %>
-                <div class="col s12 m6 color-Azul-text">
-                    <h4 class="color-Plomo color-Azul-text center-align" >Cursos</h4>  
-                    <p><strong>No se registraron cursos</strong></p>  
-                </div>  
-                <% }
-                 } %>
             </div>
         </div>                   
         <br>

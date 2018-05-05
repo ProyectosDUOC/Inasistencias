@@ -18,6 +18,6 @@ public interface GeneralSeccionDAO {
     public abstract ArrayList seccionesDocente(int idDocente);//2.- arreglo con el id de un docente(todas sus secciones)
     public abstract ArrayList seccionesAnyoSemestre(int semestre, int anio);//3.- todas las secciones que ocurren en un semestre y año especifico
     public abstract ArrayList seccionesAnuales(int anio);//4.- todas las secciones de un año especifico   
-    public abstract ArrayList seccionesAlumnoAnyoSemestre(int idAlumno,int semestre, int anio);
+    public abstract ArrayList mostrarAlumno(int idAlumno,int year, int semestre);
 }
     

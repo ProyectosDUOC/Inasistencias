@@ -238,5 +238,115 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
         return contador;
          
     }
+
+    @Override
+    public int agregar(Inasistencia inasistencia) {
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+            Statement statement = connection.createStatement();
+            String agregarSQL = "INSERT INTO inasistencia(fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc)"
+                    + " VALUES('"+inasistencia.getFechaInaString()+"',"+inasistencia.getIdSeccion()+","+inasistencia.getIdAlumno()+","+inasistencia.getIdEstadoi()+","+inasistencia.getIdEstadoc()+");";
+            int results = statement.executeUpdate(agregarSQL);
+            connection.close();
+            conn.desconectar();
+            return results;
+        } catch (java.lang.Exception ex) {
+            return 0;
+        }
+    }
+        /*
+           CREATE TABLE inasistencia (
+           id_inasistencia      INT NOT NULL AUTO_INCREMENT,
+           fecha_inasistencia   DATE, 
+           id_seccion           INT NOT NULL,
+           id_alumno            INT NOT NULL,
+           id_estadoi           INT NOT NULL,
+           id_estadoc           INT NOT NULL,
+           PRIMARY KEY(id_inasistencia)
+       );
+
+           */
+    @Override
+    public Inasistencia buscarIdCorreo(int idCorreo) {
+         Inasistencia obj = null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            /*
+                id_inasistencia      INT NOT NULL AUTO_INCREMENT,
+                fecha_inasistencia   DATE,
+                id_seccion           INT NOT NULL,
+                id_alumno            INT NOT NULL,
+                id_estadoi           INT NOT NULL,
+                id_estadoc           INT NOT NULL,
+            
+                this.idInasistencia = idInasistencia;
+                this.fechaInasistencia = fechaInasistencia;
+                this.idSeccion = idSeccion;
+                this.idAlumno = idAlumno;
+                this.idEstadoi = idEstadoi;
+                this.idEstadoc = idEstadoc;
+            */
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM inasistencia WHERE id_estadoc="+idCorreo+";";
+
+            ResultSet results = statement.executeQuery(query);
+            
+            int idIna, idSec, idAl, idEstI, idEstC ;
+            Date fechI;
+            
+            //int idDetSecc, idSecc, activo, idAlumno ;
+
+            while (results.next()) {
+                idIna = results.getInt("id_inasistencia"); 
+                fechI = results.getDate("fecha_inasistencia");
+                idSec= results.getInt("id_seccion");
+                idAl = results.getInt("id_alumno");
+                idEstI = results.getInt("id_estadoi");
+                idEstC = results.getInt("id_estadoc");
+                
+                if (idEstC == idCorreo) {                   
+                    obj = new Inasistencia(idIna, fechI, idSec, idAl, idEstI, idEstC);
+                   break;
+                }
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return obj;
+    }
+
+    @Override
+    public int actualizar(Inasistencia inasistencia) {
+        int results = 0;
+
+        try {
+
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+            Statement statement = connection.createStatement();
+
+            String agregarSQL = "UPDATE inasistencia SET  " + 
+                    ", fecha_inasistencia='" +inasistencia.getFechaInaString()+ 
+                    "', id_seccion="+ inasistencia.getIdSeccion()  +
+                    ", id_alumno=" + inasistencia.getIdAlumno()+
+                    ", id_estadoi=" + inasistencia.getIdEstadoi() +
+                    ", id_estadoc="+ inasistencia.getIdEstadoc()+
+                    " where id_inasistencia = " + inasistencia.getIdInasistencia() + ";"; 
+            results = statement.executeUpdate(agregarSQL);
+            connection.close();
+            conn.desconectar();
+
+        } //catching excepcion
+        catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return results;
+    }
     
 }

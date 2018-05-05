@@ -60,10 +60,25 @@ public class Justificacion implements Serializable {
     @Size(max = 300)
     @Column(name = "glosa")
     private String glosa;
+    private String fechaHoy;
 
-    public Justificacion() {
+    public String getFechaHoy() {
+        return fechaHoy;
     }
 
+    public void setFechaHoy(String fechaHoy) {
+        this.fechaHoy = fechaHoy;
+    }
+    
+    public Justificacion() {
+    }
+    public Justificacion(Integer idJustificacion, int idInasistencia, String fechaHoy, int idMotivo, String glosa) {
+        this.idJustificacion = idJustificacion;
+        this.idInasistencia = idInasistencia;
+        this.fechaHoy= fechaHoy;
+        this.idMotivo = idMotivo;
+        this.glosa = glosa;
+    }
     public Justificacion(Integer idJustificacion, int idInasistencia, Date fechaJustificacion, int idMotivo, String glosa) {
         this.idJustificacion = idJustificacion;
         this.idInasistencia = idInasistencia;

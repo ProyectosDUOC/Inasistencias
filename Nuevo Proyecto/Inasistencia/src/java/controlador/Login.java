@@ -5,10 +5,17 @@
  */
 package controlador;
 
+import dao.AdministradorDAO;
 import dao.AlumnoDAO;
 import dao.ControlUsuarioDAO;
+import dao.DetalleSeccionDAO;
+import dao.DirectorDAO;
+import dao.DocenteDAO;
+import dao.GlobalSemestreDAO;
+import dao.SeccionDAO;
 import dao.SecretariaDAO;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +23,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Administrador;
 import modelo.Alumno;
+import modelo.Carrera;
 import modelo.ControlUsuario;
+import modelo.DetalleSeccion;
 import modelo.Director;
 import modelo.Docente;
+import modelo.GlobalSemestre;
+import modelo.Seccion;
 import modelo.Secretaria;
 
 /**
@@ -51,41 +62,63 @@ public class Login extends HttpServlet {
         Secretaria secre = new Secretaria();
         Director dire = new Director();
         Administrador admin = new Administrador();
+        ArrayList<Seccion> arraySecciones = new ArrayList<Seccion>();
+        ArrayList<Carrera> arrayCarreras = new ArrayList<Carrera>();
+        ArrayList<DetalleSeccion> arrayDetalleSeccion = new ArrayList<DetalleSeccion>();        
+        GlobalSemestre semestreActual = new GlobalSemestre();
         
         if (opcion.equals("Entrar")) {
             ControlUsuario ingreso = (new ControlUsuarioDAO()).buscarDatosLogin(user);
             if (ingreso != null) {
                 if (ingreso.getClave().equals(pass)) {
-
                     sesion.setAttribute("usuario", ingreso);                    
                     int tipousuario = ingreso.getIdTipou();
+                    //global tiempo
+                    semestreActual = (new GlobalSemestreDAO()).buscar();
+                    sesion.setAttribute("semestreActual", semestreActual);
                     switch (tipousuario) {
                         case 1:
                             sesion.setAttribute("tipoUsuario", "alumno");
                             alum = (new AlumnoDAO()).buscarDatos(ingreso.getRutUsuario());
-                            sesion.setAttribute("Login",alum);
-                            sesion.setAttribute("Acceso",ingreso);
+                            sesion.setAttribute("login",alum);
                             response.sendRedirect("alumno.jsp");
                             break;
                         case 2:
                             sesion.setAttribute("tipoUsuario", "docente");
+                            doce = (new DocenteDAO()).buscarDatos(ingreso.getRutUsuario());
+                            sesion.setAttribute("login",doce);
                             response.sendRedirect("docente.jsp");
                             break;
                         case 3:
                             sesion.setAttribute("tipoUsuario", "director");
+                            dire = (new DirectorDAO()).buscarDatos(ingreso.getRutUsuario());
+                            sesion.setAttribute("login",dire);
                             response.sendRedirect("director.jsp");
                             break;
                         case 4:
                             sesion.setAttribute("tipoUsuario", "administrador");
-                            response.sendRedirect("administrador.jsp");
+                            admin= (new AdministradorDAO()).buscarDatos(ingreso.getRutUsuario());
+                            sesion.setAttribute("login",admin);
+                            response.sendRedirect("administrador.jsp");                            
                             break;
                         case 5:
                             sesion.setAttribute("tipoUsuario", "secretaria");
-                            secre = (new SecretariaDAO()).buscarDatos(ingreso.getRutUsuario());
-                            sesion.setAttribute("Login",secre);
-                            sesion.setAttribute("Acceso",ingreso);
-                            response.sendRedirect("secretaria.jsp");
-                            break;
+                            secre = (new SecretariaDAO()).buscarDatos(ingreso.getRutUsuario()); 
+                            arraySecciones = (new SeccionDAO()).seccionesAnyoSemestre(semestreActual.getSemestre(), semestreActual.getAnio());
+                            if (arraySecciones.isEmpty()) {
+                                response.sendRedirect("index.jsp?mensaje=Sistema no disponible para este semestre");
+                                break;
+                            }else{
+                                arrayDetalleSeccion = (new DetalleSeccionDAO()).mostrar(semestreActual.getAnio(), semestreActual.getSemestre());
+                                if (arrayDetalleSeccion.isEmpty()) {
+                                    response.sendRedirect("index.jsp?mensaje=No hay cursos disponible para este semestre");
+                                    break;
+                                }else{
+                                    sesion.setAttribute("login",secre);
+                                    response.sendRedirect("secretaria.jsp");
+                                    break;
+                                }                               
+                            }                            
                         default:
                             response.sendRedirect("Error.jsp");
                             break;
@@ -93,11 +126,11 @@ public class Login extends HttpServlet {
 
                 } else {
                     //clave incorrecta
-                    response.sendRedirect("index.jsp?mensaje=clave incorrecta");
+                    response.sendRedirect("index.jsp?mensaje=Clave Incorrecta");
                 }
             } else {
                 // Usuario no existe
-                response.sendRedirect("index.jsp?mensaje=usuario no existe");
+                response.sendRedirect("index.jsp?mensaje=Usuario No Existe");
             }
         }
           if (opcion.equals("Guardar")) {
@@ -121,7 +154,7 @@ public class Login extends HttpServlet {
                     response.sendRedirect("cambiarContra.jsp?mensaje=Clave anterior incorrecta");
                 }
             } else {
-                response.sendRedirect("cambiarContra.jsp?mensaje=las claves nuevas no coinciden");
+                response.sendRedirect("cambiarContra.jsp?mensaje=Las claves nuevas no coinciden");
             }
         }
     }

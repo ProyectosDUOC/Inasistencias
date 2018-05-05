@@ -7,7 +7,6 @@ package controlador;
 
 import dao.AlumnoDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +31,7 @@ public class ControladorSecretaria extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=ISO-8859-1");
        
         HttpSession sesion = request.getSession(true);
         String rut = request.getParameter("txtRut");
@@ -45,8 +44,7 @@ public class ControladorSecretaria extends HttpServlet {
                 if (alum!=null) {
                     sesion.setAttribute("rut",rut );
                     response.sendRedirect("secretaria.jsp");
-                }else{
-                    
+                }else{                    
                     sesion.setAttribute("rut",null );
                     response.sendRedirect("secretaria.jsp?mensaje=Alumno no encontrado"); 
                 }             

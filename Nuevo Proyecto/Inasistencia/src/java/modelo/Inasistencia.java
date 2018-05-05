@@ -63,10 +63,27 @@ public class Inasistencia implements Serializable {
     @NotNull
     @Column(name = "id_estadoc")
     private int idEstadoc;
+    
+    private String fechaInaString;
 
-    public Inasistencia() {
+    public String getFechaInaString() {
+        return fechaInaString;
     }
 
+    public void setFechaInaString(String fechaInaString) {
+        this.fechaInaString = fechaInaString;
+    }
+    
+    public Inasistencia() {
+    }
+    public Inasistencia(Integer idInasistencia, String fechaInaString, int idSeccion, int idAlumno, int idEstadoi, int idEstadoc) {
+        this.idInasistencia = idInasistencia;
+        this.fechaInaString = fechaInaString;
+        this.idSeccion = idSeccion;
+        this.idAlumno = idAlumno;
+        this.idEstadoi = idEstadoi;
+        this.idEstadoc = idEstadoc;
+    }
     public Inasistencia(Integer idInasistencia, Date fechaInasistencia, int idSeccion, int idAlumno, int idEstadoi, int idEstadoc) {
         this.idInasistencia = idInasistencia;
         this.fechaInasistencia = fechaInasistencia;

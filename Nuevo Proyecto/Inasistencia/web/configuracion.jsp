@@ -4,6 +4,7 @@
     Author     : benja
 --%>
 
+<%@page import="dao.DocenteDAO"%>
 <%@page import="dao.DirectorDAO"%>
 <%@page import="dao.AdministradorDAO"%>
 <%@page import="dao.CarreraDAO"%>
@@ -53,7 +54,7 @@
                     carrera = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
                 }
                 if (estado.equals("docente")) {
-                  //  doce = (new DocenteDAO()).buscarDatos(rut);
+                    doce = (new DocenteDAO()).buscarDatos(rut);
                     nombre = doce.getPnombre() + " " + doce.getSnombre() + " " + doce.getAppaterno() + " " + doce.getApmaterno();
                     correo = doce.getEmail();
                 }
@@ -71,7 +72,7 @@
                     secre = (new SecretariaDAO()).buscarDatos(rut);
                     nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();               
                     correo = secre.getEmail();
-                    sesion.setAttribute("rut",null );
+                    sesion.setAttribute("rut",null);
                 }
             }
         %>

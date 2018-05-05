@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.ArrayList;
 import modelo.Carrera;
 
 /**
@@ -12,5 +13,6 @@ import modelo.Carrera;
  * @author carlos
  */
 public interface GeneralCarreraDAO {
+    public abstract ArrayList mostrarDatos();
     public abstract Carrera buscar(int idCarrera) ;
 }
