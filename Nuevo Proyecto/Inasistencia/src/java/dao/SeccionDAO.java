@@ -218,5 +218,57 @@ public class SeccionDAO implements GeneralSeccionDAO{
         }
         return arraySeccion;
     }
+
+    @Override
+    public Seccion buscarSemestreAnio(int idSeccion, int semestre, int anio) {
+          Seccion obj = null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            /*
+                id_seccion    INT NOT NULL AUTO_INCREMENT,
+                cod_seccion   VARCHAR(30),
+                cod_ramo      VARCHAR(30),
+                id_docente    INT NOT NULL,
+                semestre      INT,
+                anio          INT,
+            
+            this.idSeccion = idSeccion;
+            this.codSeccion = codSeccion;
+            this.idDocente = idDocente;
+            this.semestre = semestre;
+            this.anio = anio;
+            */
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM seccion WHERE id_seccion=" + idSeccion + " and anio="+anio+" and semestre="+semestre+";";
+
+            ResultSet results = statement.executeQuery(query);
+            
+            int idSecc, idDoc, semes, anyo;
+            String codSecc, codRamo;
+            
+
+            while (results.next()) {
+                idSecc = results.getInt("id_seccion"); 
+                codSecc = results.getString("cod_seccion");
+                idDoc = results.getInt("id_docente");
+                semes= results.getInt("semestre");
+                anyo= results.getInt("anio");
+                codRamo = results.getString("cod_ramo");
+                                
+                if (idSecc == idSeccion) {                   
+                    obj = new Seccion(idSeccion, codSecc, codRamo, idDoc, semes, anyo);
+                   break;
+                }
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return obj;
+        
+    }
     
 }

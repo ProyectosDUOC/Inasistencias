@@ -5,14 +5,21 @@
  */
 package controlador;
 
+import dao.AlumnoDAO;
 import dao.ControlUsuarioDAO;
+import dao.SecretariaDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modelo.Administrador;
+import modelo.Alumno;
 import modelo.ControlUsuario;
+import modelo.Director;
+import modelo.Docente;
+import modelo.Secretaria;
 
 /**
  *
@@ -38,18 +45,26 @@ public class Login extends HttpServlet {
         String pass = request.getParameter("txtPass");
         String correo = request.getParameter("txtCorreo");
         String opcion = request.getParameter("opcion");
-
+        
+        Alumno alum = new Alumno();
+        Docente doce = new Docente();
+        Secretaria secre = new Secretaria();
+        Director dire = new Director();
+        Administrador admin = new Administrador();
+        
         if (opcion.equals("Entrar")) {
             ControlUsuario ingreso = (new ControlUsuarioDAO()).buscarDatosLogin(user);
             if (ingreso != null) {
                 if (ingreso.getClave().equals(pass)) {
 
-                    sesion.setAttribute("usuario", ingreso);
+                    sesion.setAttribute("usuario", ingreso);                    
                     int tipousuario = ingreso.getIdTipou();
-
                     switch (tipousuario) {
                         case 1:
                             sesion.setAttribute("tipoUsuario", "alumno");
+                            alum = (new AlumnoDAO()).buscarDatos(ingreso.getRutUsuario());
+                            sesion.setAttribute("Login",alum);
+                            sesion.setAttribute("Acceso",ingreso);
                             response.sendRedirect("alumno.jsp");
                             break;
                         case 2:
@@ -66,6 +81,9 @@ public class Login extends HttpServlet {
                             break;
                         case 5:
                             sesion.setAttribute("tipoUsuario", "secretaria");
+                            secre = (new SecretariaDAO()).buscarDatos(ingreso.getRutUsuario());
+                            sesion.setAttribute("Login",secre);
+                            sesion.setAttribute("Acceso",ingreso);
                             response.sendRedirect("secretaria.jsp");
                             break;
                         default:

@@ -23,6 +23,8 @@ public class Conectar   {
     private static final String puerto = "3306";   
     private static final String nombre_bd = "inasistencia";
     
+    public static int cont = 0;
+    
     private static final String url = "jdbc:mysql://"+host+":"+puerto+"/"+nombre_bd;
     
     public Conectar(){
@@ -31,7 +33,9 @@ public class Conectar   {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, password); 
             if (conn != null) {
-                System.out.println("Conexion Establecida... ");
+                cont++;
+                System.out.println("Conexion Establecida...  contador " + cont);
+                
             }
         } catch (ClassNotFoundException | SQLException e) {
              System.out.println("Error al conectar "+ e);

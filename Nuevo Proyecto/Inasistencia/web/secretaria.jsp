@@ -36,11 +36,12 @@
         <%
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-            String rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre="", estado="",semestre="", nombreProfe="", nombreAsig="", nombreCod="";
+            String rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreProfe = "", nombreAsig = "", nombreCod = "";
             Secretaria secre = new Secretaria();
             Alumno alum = new Alumno();
             Docente doce = new Docente();
             ArrayList<DetalleSeccion> arrayCursos = new ArrayList<DetalleSeccion>();
+            ArrayList<Seccion> arraySeccion = new ArrayList<Seccion>();
             GlobalSemestre gl = new GlobalSemestre();
             int encontrado = 2;
             if (session.getAttribute("usuario") == null) {
@@ -48,25 +49,29 @@
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 if (estado.equals("secretaria")) {
-                    rut = user.getRutUsuario();
+                    rut = user.getRutUsuario(); //Usuario de secretaria
+                    secre = (new SecretariaDAO()).buscarDatos(rut);
+
                     gl = (new GlobalSemestreDAO()).buscar();
                     semestre = "Semestre " + gl.getSemestre() + " año " + gl.getAnio();
-                    secre = (new SecretariaDAO()).buscarDatos(rut);
-                    if (secre == null) {
-                        response.sendRedirect("error.jsp");
-                    }
-                    nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();
 
+                    nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();
                     if (sesion.getAttribute("rut") != null) {
+                        arraySeccion = (new SeccionDAO()).buscar
                         rutA = session.getAttribute("rut").toString();
                         alum = (new AlumnoDAO()).buscarDatos(rutA);
                         nombreA = alum.getPnombre() + " " + alum.getSnombre() + " " + alum.getAppaterno() + " " + alum.getApmaterno();
                         carreraA = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
                         correoA = alum.getEmail();
                         encontrado = 1;
-                        arrayCursos =(new DetalleSeccionDAO()).buscarDetalleAlumno(alum.getIdAlumno());
-                        
-                        
+                        arrayCursos = (new DetalleSeccionDAO()).buscarDetalleAlumno(alum.getIdAlumno());
+                        for (DetalleSeccion xx : arrayCursos) {
+                            arraySeccion.add((new SeccionDAO()).buscarSemestreAnio(xx.getIdSeccion(), gl.getSemestre(), gl.getAnio()));
+                        }
+                        if (session.getAttribute("idSeccion") != null) {
+                            sesion.setAttribute("idSeccion", null);
+                        }
+
                     }
 
                 } else {
@@ -117,11 +122,10 @@
                 </div>
                 <div class="col s12 m12 color-Azul-text">
                     <h4 class="color-Plomo color-Azul-text center-align" >Cursos del Alumno</h4> 
-                    <% if(arrayCursos.isEmpty()) { %>
-                        <p class="text-center">No tiene registro de cursos</p>
-                    <%
-                    }  else{
-                       %>
+                    <% if (arrayCursos.isEmpty()) { %>
+                    <p class="text-center">No tiene registro de cursos</p> </div>
+                    <%} else {
+                    %>
                     <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
                         <thead>
                             <tr class="amber darken-3">
@@ -132,45 +136,44 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% for (DetalleSeccion xx : arrayCursos) {
-                                nombreAsig = (new RamoDAO()).buscar((new SeccionDAO()).buscar(xx.getIdSeccion()).getCodRamo()).getNombreRamo();
-                                nombreCod = (new SeccionDAO()).buscar(xx.getIdSeccion()).getCodSeccion();
-                                doce = (new DocenteDAO()).buscarDatos((new SeccionDAO()).buscar(xx.getIdSeccion()).getIdDocente());
-                                nombreProfe = doce.getPnombre() +" "+ doce.getAppaterno();
-                            %>
-                            <tr>
-                                <td><%=nombreAsig%></td>
-                                <td><%=nombreCod%></td>
-                                <td><%=nombreProfe%></td>
-                                <td>
+                        <%  if (!arraySeccion.isEmpty()) {
+                            for (Seccion ss : arraySeccion) {
+                                nombreAsig = (new RamoDAO()).buscar(ss.getCodRamo()).getNombreRamo();
+                                nombreCod = ss.getCodSeccion();
+                                doce = (new DocenteDAO()).buscarDatos(ss.getIdDocente());
+                                nombreProfe = doce.getPnombre() + " " + doce.getAppaterno();
+                        %>
+                        <tr>
+                            <td><%=nombreAsig%></td>
+                            <td><%=nombreCod%></td>
+                            <td><%=nombreProfe%></td>
+                            <td>
+                                <form action="ControladorSecretaria" method="post">
                                     <button 
                                         class="btn indigo darken-1" 
                                         type="submit" 
                                         name="opcion" 
-                                        value="s<%=xx.getIdSeccion()%>"> 
+                                        value="s<%=ss.getIdSeccion()%>"> 
                                         Seleccionar 
                                     </button>
-                                </td>                                
-                            </tr>                                
-                            <%    }
-                              
-                              
-                              
-                              %>     
+                                </form>                                  
+                            </td>                                
+                        </tr>                                
+                        <% }
+                           }
+                        %>     
                         </tbody>
                     </table>  
                 </div>
-                        
-                        <%}   
-                }
-                if (encontrado == 0) { %>
+                <%
+                    }
+                    if (encontrado == 0) { %>
                 <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo color-Azul-text center-align" >Cursos</h4>  
                     <p><strong>No se registraron cursos</strong></p>  
-                </div>
-                <%
-                    }
-                %>
+                </div>  
+                <% }
+                 } %>
             </div>
         </div>                   
         <br>

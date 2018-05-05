@@ -250,11 +250,11 @@ INSERT INTO administrador(rut_administrador,pnombre,snombre,appaterno,apmaterno,
 INSERT INTO secretaria(rut_secretaria,pnombre,snombre,appaterno,apmaterno,email,activo) VALUES('1001','Carla','Anai','Moya','Torres','controlinasistencia@gmail.com',1);
 -- alumnos de 10 - 28 (Acorde al excel)
 INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('10','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
-INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('11','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
-INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('12','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
-INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('13','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
-INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('14','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
-INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('15','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('11','Sebastian','Isaac','Orrego','Aguayo','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('12','Carlos','Esteban','huentz','la Paz','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('13','Joseph','El','a','Torres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('14','Cristian','','ra','rres','b.morat@alumnos.duoc.cl',1,1);
+INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('15','Harrys','','ora','orres','b.morat@alumnos.duoc.cl',1,1);
 INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('16','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
 INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('17','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);
 INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo) VALUES('18','Benjamin','Elias','Mora','Torres','b.morat@alumnos.duoc.cl',1,1);

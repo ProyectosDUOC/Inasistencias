@@ -37,7 +37,7 @@ public class ControladorSecretaria extends HttpServlet {
         HttpSession sesion = request.getSession(true);
         String rut = request.getParameter("txtRut");
         String opcion = request.getParameter("opcion");
-        
+        String idSeccion = "";
         
         if (opcion.equals("Buscar")) { 
             if (rut.length()>0) {
@@ -59,6 +59,12 @@ public class ControladorSecretaria extends HttpServlet {
             sesion.setAttribute("rut",null );
             response.sendRedirect("secretaria.jsp");
         }
+        if(opcion.charAt(0)=='s'){ 
+            idSeccion = opcion.substring(1);            
+            sesion.setAttribute("idSeccion",idSeccion);
+            response.sendRedirect("justificarSecretaria.jsp");
+        }
+
         
         
     }

@@ -70,7 +70,7 @@
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     correo = admin.getEmail();
                 }
-                if (estado.equals("administrador")) {
+                if (estado.equals("secretaria")) {
                     secre = (new SecretariaDAO()).buscarDatos(rut);
                     nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();
                     correo = secre.getEmail();

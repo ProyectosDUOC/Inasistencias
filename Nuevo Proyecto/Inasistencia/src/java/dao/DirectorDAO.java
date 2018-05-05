@@ -54,8 +54,7 @@ public class DirectorDAO implements GeneralDirectorDAO{
                 activo = results.getInt("activo");               
                 
                 if (rutDir.equals(rut)) {                   
-                    obj = new Director(idDir, rutDir, pNom, sNom, aPat, aMat, mail, activo);
-                    System.out.println(obj.getPnombre());
+                    obj = new Director(idDir, rutDir, pNom, sNom, aPat, aMat, mail, activo);                   
                    break;
                 }
             }

@@ -4,6 +4,7 @@
     Author     : benja
 --%>
 
+<%@page import="dao.DirectorDAO"%>
 <%@page import="dao.AdministradorDAO"%>
 <%@page import="dao.CarreraDAO"%>
 <%@page import="modelo.Secretaria"%>
