@@ -348,5 +348,29 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
 
         return results;
     }
+
+    @Override
+    public int actualizarCorreoSecretaria(int idIna,int estadoC) {
+        int results = 0;
+
+        try {
+
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+            Statement statement = connection.createStatement();
+
+            String agregarSQL = "UPDATE inasistencia SET "
+                    + "id_estadoc="+estadoC+" where id_inasistencia ="+idIna+";"; 
+            results = statement.executeUpdate(agregarSQL);
+            connection.close();
+            conn.desconectar();
+
+        } //catching excepcion
+        catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return results;
+    }
     
 }

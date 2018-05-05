@@ -24,6 +24,6 @@ public interface GeneralInasistenciasDAO {
     
     public abstract int actualizar(Inasistencia inasistencia); 
     
-    
+    public abstract int actualizarCorreoSecretaria(int ina, int estadoC); 
    
 }

@@ -40,18 +40,18 @@ public class ControladorJustiS extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {       
+            throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=ISO-8859-1");
-        
+
         HttpSession session = request.getSession(true);
-        
+
         String fechaInasistencia = request.getParameter("fecha");
-        String[] miselect;        
+        String[] miselect;
         String opcion = request.getParameter("opcion");
         miselect = request.getParameterValues("motivo");
         String glosa = request.getParameter("glosa");
-        String motivo="", rutA="", fechaActual="", idSeccion="";
-        
+        String motivo = "", rutA = "", fechaActual = "", idSeccion = "";
+
         SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String fechaHoy = parseador.format(date);
@@ -59,41 +59,25 @@ public class ControladorJustiS extends HttpServlet {
         Alumno alum = new Alumno();
         Justificacion justicacion = new Justificacion();
         Inasistencia inasistencia = new Inasistencia();
-        
-         if (opcion.charAt(0)=='G') {
-            idSeccion = opcion.substring(1);       
-            try{
-                rutA = session.getAttribute("rut").toString();;
-                for (int i = 0; i < miselect.length; i++) {
-                    motivo = miselect[i];                
-                }                
-                alum = (new AlumnoDAO()).buscarDatos(rutA);
-                
-                inasistencia = new Inasistencia(0, fechaInasistencia, Integer.parseInt(idSeccion),alum.getIdAlumno() , 0, 7);
-                x = (new InasistenciaDAO()).agregar(inasistencia);
-                inasistencia = (new InasistenciaDAO()).buscarIdCorreo(7);            
-                justicacion = new Justificacion(0,inasistencia.getIdInasistencia(),fechaHoy,Integer.parseInt(motivo), glosa);
-                inasistencia.setIdEstadoc(0);
-                x=(new InasistenciaDAO()).actualizar(inasistencia);
-                x = (new JustificacionDAO()).agregar(justicacion);                System.out.println("D 4444444444444 estado = "+x );
-                response.sendRedirect("secretaria.jsp?mensaje=Justificacion Enviada");
-            }finally{    
-                response.sendRedirect("secretaria.jsp?mensaje=Error");
-            }           
-        }
-        /*         
-            CREATE TABLE justificacion (
-           id_justificacion      INT NOT NULL AUTO_INCREMENT,
-           id_inasistencia       INT NOT NULL,
-           fecha_justificacion   DATE NOT NULL,
-           id_motivo             INT NOT NULL,
-           glosa                 VARCHAR(300),
-           PRIMARY KEY(id_justificacion)
-       );
 
-         */
-        
-        
+        if (opcion.charAt(0) == 'G') {
+            idSeccion = opcion.substring(1);
+
+            rutA = session.getAttribute("rut").toString();;
+            for (int i = 0; i < miselect.length; i++) {
+                motivo = miselect[i];
+            }
+            alum = (new AlumnoDAO()).buscarDatos(rutA);
+
+            inasistencia = new Inasistencia(0, fechaInasistencia, Integer.parseInt(idSeccion), alum.getIdAlumno(), 0, 7);
+            x = (new InasistenciaDAO()).agregar(inasistencia);
+            inasistencia = (new InasistenciaDAO()).buscarIdCorreo(7);
+            justicacion = new Justificacion(0, inasistencia.getIdInasistencia(), fechaHoy, Integer.parseInt(motivo), glosa);
+            x = (new InasistenciaDAO()).actualizarCorreoSecretaria(inasistencia.getIdInasistencia(), 0);
+            x = (new JustificacionDAO()).agregar(justicacion);
+            session.setAttribute("rut", null);
+            response.sendRedirect("secretaria.jsp?mensaje=Se ha enviado la solicitud"); 
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
