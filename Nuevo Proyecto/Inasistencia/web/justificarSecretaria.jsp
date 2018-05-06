@@ -133,7 +133,7 @@
                 </div>
                 <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo center-align">Justificación</h4>
-                    <form action="ControladorJustiS" method="post" >
+                    <form action="ControladorJustiS" method="post" enctype="multipart/form-data">
                         <table class="color-Plomo color-Azul-text">
                             <tr>
                                 <td><p><strong>Fecha Inasistencia:</strong></td>
