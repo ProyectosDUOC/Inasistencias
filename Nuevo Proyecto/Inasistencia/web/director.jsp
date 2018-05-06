@@ -23,8 +23,8 @@
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             Director dire = new Director();
-            
-            String nombre="",estado="",rut="";
+
+            String nombre = "", estado = "", rut = "";
             if (user == null) {
                 response.sendRedirect("index.jsp");
             } else {
@@ -36,8 +36,8 @@
                 } else {
                     response.sendRedirect("index.jsp");
                 }
-                
-            }            
+
+            }
         %>
     </head>
     <body>
@@ -61,49 +61,48 @@
         </header>  
         <div class="container">
             <div class="row">            
-                <h4 class="color-Plomo color-Azul-text center-align" >Menu Director de Carrera</h4>  
-                <form method="POST" action="ControladorDirector">
-                    <table border="1" class="center-align">   
-                        <tr>
-                            <td>
-                                <button class="btn-large waves-effect waves-light color-AzulClaro" type="submit" name="Opcion" value="Acceder">
-                                    Inasistencias Justificadas
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="btn-large waves-effect waves-light color-AzulClaro" type="submit" name="Opcion" value="Checkeado por docente">
-                                    Checkeado por docente 
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="btn waves-effect waves-light color-AzulClaro" type="submit" name="Opcion" value="Reporte por Semestre">
-                                    Reporte por Semestre
-                                </button>
-                            </td>
-                        </tr> 
-                        <tr>
-                            <td>
-                                <button class="btn waves-effect red waves-light " type="submit" name="Opcion" value="Salir">
-                                    Salir <i class="material-icons right">exit_to_app</i>
-                                </button> 
-                            </td>
-                        </tr> 
-                    </table>
-                </form>
+                <h4 class="color-Plomo color-Azul-text center-align" >Menu Director de Carrera</h4>                  
+                <table border="1" class="center-align">   
+                    <tr>
+                        <td>
+                            <a class="btn-large waves-effect waves-light color-AzulClaro" href="">
+                                Inasistencias Justificadas
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a class="btn-large waves-effect waves-light color-AzulClaro" href="">
+                                Checkeado por docente 
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a class="btn-large waves-effect waves-light color-AzulClaro" href="">
+                                Reporte por Semestre
+                            </a>
+                        </td>
+                    </tr>
+                    <a class="btn-large waves-effect waves-light color-AzulClaro" href="justificarDirector.jsp">
+                        Justificar
+                    </a>
+                    <tr>
+                        <td>
+                            <a class="btn-large waves-effect waves-light color-AzulClaro" href="index.jsp">
+                                Salir
+                            </a>
+                        </td>
+                    </tr> 
+                </table>
             </div>
         </div>
         <footer class="color-Azul">            
             <div class="container">
                 <br>
-                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>
-                <p class="color-Amarillo-text center-align">Carlos Orellana ★ Sebastian Orrego &#9733;  Benjamin Mora</p>
-                <p class="color-Amarillo-text center-align"> &#9733; 2018 &#9733; </p>
+                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>                                
                 <br>
             </div>
-        </footer>
+        </footer>   
     </body>
 </html>
