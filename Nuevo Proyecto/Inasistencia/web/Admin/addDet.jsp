@@ -27,7 +27,8 @@
             Administrador admin = new Administrador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = "", estado = "", xCrud = "";
-
+            String nomAlu ="";
+            
             //Detalle Seccion
             ArrayList<Seccion> secciones = new ArrayList<Seccion>();
             ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
@@ -75,11 +76,45 @@
                     <h4 class="color-Plomo color-Azul-text center-align" >Mi Cuenta</h4>
 
                     <h4 class="color-Plomo color-Azul-text center-align" >Datos Personales</h4>  
-                        <p><strong> Activo :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                       
-                    
-                    
-                    
+                    <p><strong> Activo :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
+
+                    <!--Seccion -->
+                    <%if (xCrud.equals("1") && !secciones.isEmpty()) {%>
+                    <div class="col s12 m6 color-Azul-text">
+                        <h4 class="color-Plomo center-align">Ramo</h4>     
+                        <div class="input-field">                                   
+                            <p><strong> Carrera :</strong> 
+                                <select name="carreras" class="color-Azul color-Amarillo-text browser-default" required="">
+                                    <option value="" disabled selected>Seleccione Ramo</option>                    
+                                    <% for (Seccion secc : secciones) {
+
+                                    %>
+                                    <option value="<%=secc.getIdSeccion()%>" >
+                                        <%= secc.getCodRamo()%>
+                                    </option>
+                                    <%
+                                        }
+                                    %>
+                                </select>
+                            </p>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
                     <!--Editar -->
