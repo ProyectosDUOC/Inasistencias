@@ -1,11 +1,13 @@
 <%-- 
-    Document   : addUser
-    Created on : 06-05-2018, 0:27:21
+    Document   : addSecc
+    Created on : 06-05-2018, 2:41:10
     Author     : carlos
 --%>
 
-<%@page import="dao.CarreraDAO"%>
-<%@page import="modelo.Carrera"%>
+<%@page import="modelo.Alumno"%>
+<%@page import="modelo.Seccion"%>
+<%@page import="modelo.Docente"%>
+<%@page import="modelo.Ramo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dao.AdministradorDAO"%>
 <%@page import="modelo.ControlUsuario"%>
@@ -27,7 +29,11 @@
             Administrador admin = new Administrador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = "", estado = "", xCrud = "";
-            ArrayList<Carrera> carreras = new ArrayList<Carrera>();
+            String nomDoce = "";
+
+            //Seccion
+            ArrayList<Ramo> ramos = new ArrayList<Ramo>();
+            ArrayList<Docente> docentes = new ArrayList<Docente>();
 
             if (user == null) {
                 response.sendRedirect("../index.jsp");
@@ -38,7 +44,7 @@
                     admin = (new AdministradorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     xCrud = sesion.getAttribute("xCrud").toString();
-                    carreras = (new CarreraDAO()).mostrarDatos();
+                    // directores = (new DirectorDAO()).mostrarDatos();
                 } else {
                     response.sendRedirect("index.jsp");
                 }
@@ -65,54 +71,67 @@
                 </div>
             </div>                   
         </header>  
-        <div class="container">
-            <div class="row">
-                <form method="" action="">
+        <div class="row">
+            <h4 class="color-Plomo color-Azul-text center-align" >Mi Cuenta</h4>
 
+            <div class="col s12 m6 color-Azul-text">
 
-                    <h4 class="color-Plomo color-Azul-text center-align" >Mi Cuenta</h4>
+                <p><strong> Semestre :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
+                <p><strong> Anio :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
 
-                    <div class="col s12 m6 color-Azul-text">
-                        <h4 class="color-Plomo color-Azul-text center-align" >Datos Personales</h4>  
-                        <p><strong> Rut :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Primer Nombre :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Segundo Nombre :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Apellido Paterno :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Apellido Materno :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Correo Eléctronico :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>                   
+                <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
+                <!--Editar -->
+                <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Agregar</a>
 
-                        <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
-                        <!-- Editar -->
-                        <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Agregar</a>
-                    </div>
-                    <%if (xCrud.equals("1") && !carreras.isEmpty()) {%>
-                    <div class="col s12 m6 color-Azul-text">
-                        <h4 class="color-Plomo center-align">Carrera</h4>     
-                        <div class="input-field">                                
-                            
-                            <p><strong> Carrera :</strong> 
-                                <select name="carreras" class="color-Azul color-Amarillo-text browser-default" required="">
-                                    <option value="" disabled selected>Seleccione Carrera</option>                    
-                                    <% for (Carrera car : carreras) {
+            </div>    
+            <!--Ramo -->
+            <%if (xCrud.equals("1") && !ramos.isEmpty()) {%>
+            <div class="col s12 m6 color-Azul-text">
+                <h4 class="color-Plomo center-align">Ramo</h4>     
+                <div class="input-field">                                   
+                    <p><strong> Carrera :</strong> 
+                        <select name="carreras" class="color-Azul color-Amarillo-text browser-default" required="">
+                            <option value="" disabled selected>Seleccione Ramo</option>                    
+                            <% for (Ramo ram : ramos) {
 
-                                    %>
-                                    <option value="<%=car.getIdCarrera()%>" >
-                                        <%= car.getNombreCarrera()%>
-                                    </option>
-                                    <%
-                                        }
-                                    %>
-                                </select>
-                            </p>
-
-
-                        </div>
-                    </div>
-                    <%
-                        }
-                    %>
-                </form>
+                            %>
+                            <option value="<%=ram.getCodRamo()%>" >
+                                <%= ram.getNombreRamo()%>
+                            </option>
+                            <%
+                                }
+                            %>
+                        </select>
+                    </p>
+                </div>
             </div>
+            <%
+                }
+            %>
+            <!--Docente -->
+            <%if (xCrud.equals("1") && !docentes.isEmpty()) {%>
+            <div class="col s12 m6 color-Azul-text">
+                <h4 class="color-Plomo center-align">Docente</h4>     
+                <div class="input-field">                                   
+                    <p><strong> Docente :</strong> 
+                        <select name="carreras" class="color-Azul color-Amarillo-text browser-default" required="">
+                            <option value="" disabled selected>Seleccione Docente</option>                    
+                            <% for (Docente doce : docentes) {
+                                    nomDoce = doce.getPnombre() + " " + doce.getAppaterno();
+                            %>
+                            <option value="<%=doce.getIdDocente()%>" >
+                                <%= nomDoce%>
+                            </option>
+                            <%
+                                }
+                            %>
+                        </select>
+                    </p>
+                </div>
+            </div>
+            <%
+                }
+            %>   
         </div>
         <footer class="color-Azul">            
             <div class="container">
@@ -120,6 +139,6 @@
                 <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>                                
                 <br>
             </div>
-        </footer> 
+        </footer>                            
     </body>
 </html>

@@ -1,11 +1,11 @@
 <%-- 
-    Document   : addUser
-    Created on : 06-05-2018, 0:27:21
+    Document   : addDet
+    Created on : 06-05-2018, 17:35:18
     Author     : carlos
 --%>
 
-<%@page import="dao.CarreraDAO"%>
-<%@page import="modelo.Carrera"%>
+<%@page import="modelo.Alumno"%>
+<%@page import="modelo.Seccion"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dao.AdministradorDAO"%>
 <%@page import="modelo.ControlUsuario"%>
@@ -27,7 +27,10 @@
             Administrador admin = new Administrador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = "", estado = "", xCrud = "";
-            ArrayList<Carrera> carreras = new ArrayList<Carrera>();
+
+            //Detalle Seccion
+            ArrayList<Seccion> secciones = new ArrayList<Seccion>();
+            ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
 
             if (user == null) {
                 response.sendRedirect("../index.jsp");
@@ -38,7 +41,7 @@
                     admin = (new AdministradorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     xCrud = sesion.getAttribute("xCrud").toString();
-                    carreras = (new CarreraDAO()).mostrarDatos();
+                    // directores = (new DirectorDAO()).mostrarDatos();
                 } else {
                     response.sendRedirect("index.jsp");
                 }
@@ -65,52 +68,22 @@
                 </div>
             </div>                   
         </header>  
+
         <div class="container">
             <div class="row">
                 <form method="" action="">
-
-
                     <h4 class="color-Plomo color-Azul-text center-align" >Mi Cuenta</h4>
 
-                    <div class="col s12 m6 color-Azul-text">
-                        <h4 class="color-Plomo color-Azul-text center-align" >Datos Personales</h4>  
-                        <p><strong> Rut :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Primer Nombre :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Segundo Nombre :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Apellido Paterno :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Apellido Materno :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Correo Eléctronico :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>                   
+                    <h4 class="color-Plomo color-Azul-text center-align" >Datos Personales</h4>  
+                        <p><strong> Activo :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
+                       
+                    
+                    
+                    
 
-                        <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
-                        <!-- Editar -->
-                        <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Agregar</a>
-                    </div>
-                    <%if (xCrud.equals("1") && !carreras.isEmpty()) {%>
-                    <div class="col s12 m6 color-Azul-text">
-                        <h4 class="color-Plomo center-align">Carrera</h4>     
-                        <div class="input-field">                                
-                            
-                            <p><strong> Carrera :</strong> 
-                                <select name="carreras" class="color-Azul color-Amarillo-text browser-default" required="">
-                                    <option value="" disabled selected>Seleccione Carrera</option>                    
-                                    <% for (Carrera car : carreras) {
-
-                                    %>
-                                    <option value="<%=car.getIdCarrera()%>" >
-                                        <%= car.getNombreCarrera()%>
-                                    </option>
-                                    <%
-                                        }
-                                    %>
-                                </select>
-                            </p>
-
-
-                        </div>
-                    </div>
-                    <%
-                        }
-                    %>
+                    <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
+                    <!--Editar -->
+                    <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Agregar Detalle</a>
                 </form>
             </div>
         </div>
@@ -120,6 +93,6 @@
                 <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>                                
                 <br>
             </div>
-        </footer> 
+        </footer>          
     </body>
 </html>

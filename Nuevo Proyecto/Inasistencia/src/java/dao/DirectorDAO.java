@@ -18,11 +18,56 @@ import java.sql.Statement;
  */
 public class DirectorDAO implements GeneralDirectorDAO{
 
+    private ArrayList<Director> arrayDirectores = new ArrayList<>();    
     Conectar conn;
     
     @Override
     public ArrayList mostrarDatos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Director obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM director ;";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+
+            /*
+                id_director    INT NOT NULL AUTO_INCREMENT,
+                rut_director   VARCHAR(30) NOT NULL,
+                pnombre        VARCHAR(30),
+                snombre        VARCHAR(30),
+                appaterno      VARCHAR(30),
+                apmaterno      VARCHAR(30),
+                email          VARCHAR(50),
+                activo         INT,
+            */
+            
+            int id, activo;
+            String rut, pnom, snom, appat, apmat, mail;
+
+            arrayDirectores.removeAll(arrayDirectores);
+            while (results.next()) {
+                id = results.getInt("id_director");
+                rut = results.getString("rut_director");
+                pnom = results.getString("pnombre");
+                snom = results.getString("snombre");
+                appat = results.getString("appaterno");
+                apmat = results.getString("apmaterno");
+                mail = results.getString("email");               
+                activo = results.getInt("activo");
+                
+                obj = new Director(activo, rut, pnom, snom, appat, apmat, mail, activo);
+                arrayDirectores.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayDirectores;
     }
     
     

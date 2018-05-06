@@ -41,20 +41,20 @@ public class ControladorPanel extends HttpServlet {
             session.setAttribute("xCrud", "1");
             response.sendRedirect("Admin/addUser.jsp");
         }
-        if (opcion.equals("Asignatura")) {
+        if (opcion.equals("Ramo")) {
             
-            session.setAttribute("xCrud", "2");
-            
+            session.setAttribute("xCrud", "1");
+            response.sendRedirect("Admin/addCurso.jsp");
         }
         if (opcion.equals("Carrera")) {
          
-            session.setAttribute("xCrud", "3");
-            
+            session.setAttribute("xCrud", "2");
+            response.sendRedirect("Admin/addCurso.jsp");
         }
-        if (opcion.equals("Curso")) {
+        if (opcion.equals("Detalle")) {
             
-            session.setAttribute("xCrud", "4");
-            
+            session.setAttribute("xCrud", "1");
+            response.sendRedirect("Admin/addDet.jsp");
         }
         if (opcion.equals("Docente")) {
             
@@ -68,8 +68,8 @@ public class ControladorPanel extends HttpServlet {
         }
         if (opcion.equals("Seccion")) {
             
-            session.setAttribute("xCrud", "7");
-
+            session.setAttribute("xCrud", "1");
+            response.sendRedirect("Admin/addSecc.jsp");
         }
         if (opcion.equals("Secretaria")) {
             

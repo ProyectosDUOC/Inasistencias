@@ -70,7 +70,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <button type="submit" value="Asignatura" name="opcion"  class="btn-large waves-effect waves-light color-AzulClaro" >Asignatura</button>
+                                <button type="submit" value="Ramo" name="opcion"  class="btn-large waves-effect waves-light color-AzulClaro" >Ramo</button>
                             </td>
                         </tr>
                         <tr>
@@ -80,7 +80,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <button type="submit" value="Curso" name="opcion"  class="btn-large waves-effect waves-light color-AzulClaro" >Curso</button>
+                                <button type="submit" value="Detalle" name="opcion"  class="btn-large waves-effect waves-light color-AzulClaro" >Detalle de Sección</button>
                             </td>
                         </tr>
                         <tr>
