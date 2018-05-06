@@ -6,6 +6,7 @@
 package controlador;
 
 import dao.AlumnoDAO;
+import dao.ImagenDAO;
 import dao.InasistenciaDAO;
 import dao.JustificacionDAO;
 import java.io.File;
@@ -28,6 +29,7 @@ import javax.servlet.http.Part;
 import modelo.Alumno;
 import modelo.Inasistencia;
 import modelo.Justificacion;
+import modelo.JustificacionImagen;
 
 /**
  *
@@ -56,16 +58,17 @@ public class ControladorJustiS extends HttpServlet {
         String opcion = request.getParameter("opcion");
         miselect = request.getParameterValues("motivo");
         String glosa = request.getParameter("glosa");
-        String motivo = "", rutA = "", fechaActual = "", idSeccion = "";
+        String motivo = "", rutA = "", fechaActual = "", idSeccion = "", descripcion="";
 
         SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String fechaHoy = parseador.format(date);
         int x = 0;
         Alumno alum = new Alumno();
-        Justificacion justicacion = new Justificacion();
+        Justificacion justificacion = new Justificacion();
         Inasistencia inasistencia = new Inasistencia();
-
+        JustificacionImagen img = new JustificacionImagen();
+                
         Part filePart = request.getPart("file");
 
         if (opcion.charAt(0) == 'G') {
@@ -80,17 +83,22 @@ public class ControladorJustiS extends HttpServlet {
             inasistencia = new Inasistencia(0, fechaInasistencia, Integer.parseInt(idSeccion), alum.getIdAlumno(), 0, 7);
             x = (new InasistenciaDAO()).agregar(inasistencia);
             inasistencia = (new InasistenciaDAO()).buscarIdCorreo(7);
-            justicacion = new Justificacion(0, inasistencia.getIdInasistencia(), fechaHoy, Integer.parseInt(motivo), glosa);
+            justificacion = new Justificacion(0, inasistencia.getIdInasistencia(), fechaHoy, Integer.parseInt(motivo), glosa);
             x = (new InasistenciaDAO()).actualizarCorreoSecretaria(inasistencia.getIdInasistencia(), 0);
-            x = (new JustificacionDAO()).agregar(justicacion);
-
+            x = (new JustificacionDAO()).agregar(justificacion);
+            justificacion = (new JustificacionDAO()).buscarEspecifica(justificacion);
+            
+            
             File file = File.createTempFile("foto-", ".jpg");
             File file2 = new File(System.getenv("UPLOADS"), file.getName());
             try (InputStream input = filePart.getInputStream()) {
                 Files.copy(input, file2.toPath());
             }            
             String nombreFile = file2.getName();
-
+            descripcion="idIna:"+inasistencia.getIdInasistencia()+" rut:"+rutA+" fecha:"+fechaInasistencia;
+            img = new JustificacionImagen(0, justificacion.getIdJustificacion(), nombreFile, "");
+            x = (new ImagenDAO()).agregar(img);
+            System.out.println("todo "+ x + "descripcion :"+descripcion);
             session.setAttribute("rut", null);
             response.sendRedirect("enviado.jsp?file="+nombreFile);
         }

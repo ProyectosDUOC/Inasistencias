@@ -14,4 +14,5 @@ import modelo.Justificacion;
 public interface GeneralJustificacionDAO {
     public abstract Justificacion buscar(int idJustificacion) ;
     public abstract int agregar(Justificacion justificacion);
+    public abstract Justificacion buscarEspecifica(Justificacion jus) ;
 }

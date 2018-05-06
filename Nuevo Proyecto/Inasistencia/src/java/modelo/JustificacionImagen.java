@@ -12,7 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -45,12 +44,9 @@ public class JustificacionImagen implements Serializable {
     @NotNull
     @Column(name = "id_justificacion")
     private int idJustificacion;
-    @Size(max = 30)
+    @Size(max = 50)
     @Column(name = "nombre_imagen")
     private String nombreImagen;
-    @Lob
-    @Column(name = "imagen")
-    private byte[] imagen;
     @Size(max = 100)
     @Column(name = "descripcion")
     private String descripcion;
@@ -58,11 +54,10 @@ public class JustificacionImagen implements Serializable {
     public JustificacionImagen() {
     }
 
-    public JustificacionImagen(Integer idJustificacionImg, int idJustificacion, String nombreImagen, byte[] imagen, String descripcion) {
+    public JustificacionImagen(Integer idJustificacionImg, int idJustificacion, String nombreImagen, String descripcion) {
         this.idJustificacionImg = idJustificacionImg;
         this.idJustificacion = idJustificacion;
         this.nombreImagen = nombreImagen;
-        this.imagen = imagen;
         this.descripcion = descripcion;
     }
 
@@ -97,14 +92,6 @@ public class JustificacionImagen implements Serializable {
 
     public void setNombreImagen(String nombreImagen) {
         this.nombreImagen = nombreImagen;
-    }
-
-    public byte[] getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
     }
 
     public String getDescripcion() {

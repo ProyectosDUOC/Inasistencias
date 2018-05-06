@@ -118,8 +118,7 @@ CREATE TABLE justificacion (
 CREATE TABLE justificacion_imagen (
     id_justificacion_img   INT NOT NULL AUTO_INCREMENT,
     id_justificacion       INT NOT NULL,
-    nombre_imagen          VARCHAR(30),
-    imagen                 MEDIUMBLOB,
+    nombre_imagen          VARCHAR(50),
     descripcion            VARCHAR(100),
     PRIMARY KEY(id_justificacion_img)
 );

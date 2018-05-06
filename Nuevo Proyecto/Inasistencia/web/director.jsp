@@ -84,7 +84,7 @@
                             </a>
                         </td>
                     </tr>
-                    <a class="btn-large waves-effect waves-light color-AzulClaro" href="justificarDirector.jsp">
+                    <a class="btn-large waves-effect waves-light color-AzulClaro" href="mensajeEntrante.jsp">
                         Justificar
                     </a>
                     <tr>
