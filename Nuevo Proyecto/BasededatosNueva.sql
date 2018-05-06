@@ -352,7 +352,7 @@ INSERT INTO estado_correo VALUES(7,'Busqueda de ID');
 INSERT INTO estado_inasistencia VALUES(0,'Subido');
 INSERT INTO estado_inasistencia VALUES(1,'Enviado al correo');
 INSERT INTO estado_inasistencia VALUES(2,'Justificado por Alumno');
-INSERT INTO estado_inasistencia VALUES(3,'Justificado por Secretaria');
+INSERT INTO estado_inasistencia VALUES(3,'Recibido por Secretaria');
 INSERT INTO estado_inasistencia VALUES(4,'Aprobado por Docente');
 INSERT INTO estado_inasistencia VALUES(5,'No Aprobado por Docente');
 INSERT INTO estado_inasistencia VALUES(6,'Aprobado por Director');
