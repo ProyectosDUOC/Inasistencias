@@ -77,7 +77,7 @@
                             <p> <strong>Administrador:</strong> 4002   1234 </p>
                             <p> <strong>Secretaria:</strong>     1001   1234   ok </p>
                             <p> <strong>Docente:</strong>       2002   1234 </p>
-                            <p> <strong>Director:</strong>       3001   1234 </p>
+                            <p> <strong>Director:</strong>       3000   1234 </p>
                             <p> <strong>Alumno:</strong>         10-30     1234 </p>
                             <br>
                         </div>

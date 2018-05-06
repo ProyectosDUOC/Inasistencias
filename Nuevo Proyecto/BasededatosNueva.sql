@@ -286,7 +286,7 @@ INSERT INTO control_usuario (usuario,clave,rut_usuario,id_tipou,activo) VALUES('
 INSERT INTO control_usuario (usuario,clave,rut_usuario,id_tipou,activo) VALUES('2002','1234','2002',2,1);
 INSERT INTO control_usuario (usuario,clave,rut_usuario,id_tipou,activo) VALUES('2003','1234','2003',2,1);
 -- ACCESO director
-INSERT INTO control_usuario (usuario,clave,rut_usuario,id_tipou,activo) VALUES('3001','1234','3001',3,1);
+INSERT INTO control_usuario (usuario,clave,rut_usuario,id_tipou,activo) VALUES('3000','1234','3000',3,1);
 -- ACCESO alumno
 INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('10','1234','10',1,1);
 INSERT INTO control_usuario(usuario,clave,rut_usuario,id_tipou,activo) VALUES('11','1234','11',1,1);
