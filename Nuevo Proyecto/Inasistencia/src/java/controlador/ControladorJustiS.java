@@ -8,18 +8,23 @@ package controlador;
 import dao.AlumnoDAO;
 import dao.InasistenciaDAO;
 import dao.JustificacionDAO;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import modelo.Alumno;
 import modelo.Inasistencia;
 import modelo.Justificacion;
@@ -28,6 +33,7 @@ import modelo.Justificacion;
  *
  * @author benja
  */
+@MultipartConfig
 public class ControladorJustiS extends HttpServlet {
 
     /**
@@ -60,10 +66,12 @@ public class ControladorJustiS extends HttpServlet {
         Justificacion justicacion = new Justificacion();
         Inasistencia inasistencia = new Inasistencia();
 
+        Part filePart = request.getPart("file");
+
         if (opcion.charAt(0) == 'G') {
             idSeccion = opcion.substring(1);
 
-            rutA = session.getAttribute("rut").toString();;
+            rutA = session.getAttribute("rut").toString();
             for (int i = 0; i < miselect.length; i++) {
                 motivo = miselect[i];
             }
@@ -75,8 +83,16 @@ public class ControladorJustiS extends HttpServlet {
             justicacion = new Justificacion(0, inasistencia.getIdInasistencia(), fechaHoy, Integer.parseInt(motivo), glosa);
             x = (new InasistenciaDAO()).actualizarCorreoSecretaria(inasistencia.getIdInasistencia(), 0);
             x = (new JustificacionDAO()).agregar(justicacion);
+
+            File file = File.createTempFile("foto-", ".jpg");
+            File file2 = new File(System.getenv("UPLOADS"), file.getName());
+            try (InputStream input = filePart.getInputStream()) {
+                Files.copy(input, file2.toPath());
+            }            
+            String nombreFile = file2.getName();
+
             session.setAttribute("rut", null);
-            response.sendRedirect("secretaria.jsp?mensaje=Se ha enviado la solicitud"); 
+            response.sendRedirect("enviado.jsp?file="+nombreFile);
         }
     }
 
