@@ -73,11 +73,11 @@
                     <div class="col s12 m6">     
                         <div>
                             <h5 class="color-AzulClaro-text"><strong>Datos</strong></h5>
-                            <p> Administrador : 3001   1234 </p>
-                            <p> Secretaria:     1001   1234 </p>
-                            <p> Docente :       2002   1234 </p>
-                            <p> Director:       3001   1234 </p>
-                            <p> Alumno:         10     1234 </p>
+                            <p> <strong>Administrador:</strong> 4002   1234 </p>
+                            <p> <strong>Secretaria:</strong>     1001   1234   ok </p>
+                            <p> <strong>Docente:</strong>       2002   1234 </p>
+                            <p> <strong>Director:</strong>       3001   1234 </p>
+                            <p> <strong>Alumno:</strong>         10-30     1234 </p>
                             <br>
                         </div>
                     </div>

@@ -21,7 +21,7 @@
         <title>Menu Principal Coordinador</title>
         <%
             HttpSession sesion = request.getSession(true);
-            Administrador coor = new Administrador();
+            Administrador admin = new Administrador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = "", estado = "";
             if (user == null) {
@@ -30,8 +30,8 @@
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 if (estado.equals("administrador")) {
                     String rut = user.getRutUsuario();
-                    coor = (new AdministradorDAO()).buscarDatos(rut);
-                    nombre = coor.getPnombre() + " " + coor.getSnombre() + " " + coor.getAppaterno() + " " + coor.getApmaterno();
+                    admin = (new AdministradorDAO()).buscarDatos(rut);
+                    nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                 } else {
                     response.sendRedirect("index.jsp");
                 }
