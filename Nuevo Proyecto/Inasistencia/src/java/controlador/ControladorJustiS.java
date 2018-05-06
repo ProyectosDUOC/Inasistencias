@@ -96,11 +96,11 @@ public class ControladorJustiS extends HttpServlet {
             }            
             String nombreFile = file2.getName();
             descripcion="idIna:"+inasistencia.getIdInasistencia()+" rut:"+rutA+" fecha:"+fechaInasistencia;
-            img = new JustificacionImagen(0, justificacion.getIdJustificacion(), nombreFile, "");
+            img = new JustificacionImagen(0, justificacion.getIdJustificacion(), nombreFile, descripcion);
             x = (new ImagenDAO()).agregar(img);
             System.out.println("todo "+ x + "descripcion :"+descripcion);
             session.setAttribute("rut", null);
-            response.sendRedirect("enviado.jsp?file="+nombreFile);
+            response.sendRedirect("secretaria.jsp?mensaje=Se ha enviado exitosamente");
         }
     }
 
