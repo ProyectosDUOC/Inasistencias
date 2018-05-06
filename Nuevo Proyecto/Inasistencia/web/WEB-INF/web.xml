@@ -20,6 +20,10 @@
         <servlet-name>ControladorImagenes</servlet-name>
         <servlet-class>controlador.ControladorImagenes</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorPanel</servlet-name>
+        <servlet-class>controlador.ControladorPanel</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>ControladorImagenes</servlet-name>
         <url-pattern>/ControladorImagenes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorPanel</servlet-name>
+        <url-pattern>/ControladorPanel</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

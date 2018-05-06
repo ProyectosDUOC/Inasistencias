@@ -61,30 +61,28 @@
         <div class="container">
             <div class="row">
                 <h4 class="color-Plomo color-Azul-text center-align" >Menu Coordinador</h4>
-                <form action="MenuCoordinador" method="post" >
-                    <table border="1">
-                        <tr>
-                            <td>
-                                <button class="btn-large waves-effect waves-light color-AzulClaro" type="submit" name="opcion" value="Subir Inasistencias">Subir Inasistencias</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="btn-large waves-effect waves-light color-AzulClaro" type="submit" name="opcion" value="Enviar Correos">Enviar Correos</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="btn-large color-AzulClaro" type="submit" name="opcion" value="Ver datos">Ver datos</button> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="btn-large waves-effect  red waves-light " type="submit" name="opcion" value="Salir">Salir</button>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
+                <table border="1">
+                    <tr>
+                        <td>
+                            <a class="btn-large waves-effect waves-light color-AzulClaro" >Subir Inasistencias</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a class="btn-large waves-effect waves-light color-AzulClaro">Enviar Correos</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="Admin/panelControl.jsp" class="btn-large color-AzulClaro" >Configuración</a> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="index.jsp" class="btn-large waves-effect  red waves-light ">Salir</a>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <footer class="color-Azul">            
