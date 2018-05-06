@@ -52,8 +52,6 @@ public class AdministradorDAO implements GeneralAdminDAO{
             int id, activo;
             String rut1, pnombre, snombre, appaterno, apmaterno, email;
             
-            //int idDetSecc, idSecc, activo, idAlumno ;
-
             while (results.next()) {
                 id = results.getInt("id_administrador");
                 rut1 = results.getString("rut_administrador");
