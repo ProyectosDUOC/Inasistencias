@@ -38,6 +38,7 @@
                     admin = (new AdministradorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     xCrud = sesion.getAttribute("xCrud").toString();
+                    sesion.setAttribute("respU",null);
                     if (xCrud.equals("1")) {
                         mensaje = "Alumno";
                     }
