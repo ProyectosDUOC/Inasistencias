@@ -124,11 +124,10 @@
                     <p><strong>Profesor : </strong><span><%=nombreDocente%></span></p>
                     <h4 class="color-Plomo center-align">Alumno</h4>  
                     <p><strong>Nombre Alumno :</strong> <span><%=nombreA%></span></p>
-                    <p><strong>Carrera :</strong> <span><%=seccion.getCodRamo()%></span></p>
+                    <p><strong>Carrera :</strong> <span><%=carreraA%></span></p>
                     <p><strong>Correo :</strong><span><%=alum.getEmail()%></span></p>
                     <h4 class="color-Plomo center-align">Director de Carrera</h4>  
                     <p><strong>Nombre Director :</strong> <span><%=nombreDirector %></span></p>
-                    <p><strong>Carrera :</strong> <span><%=seccion.getCodRamo()%></span></p>
                     <br>
                 </div>
                 <div class="col s12 m6 color-Azul-text">
