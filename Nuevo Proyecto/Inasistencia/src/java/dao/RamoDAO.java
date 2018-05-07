@@ -35,11 +35,8 @@ public class RamoDAO implements GeneralRamoDAO{
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM ramo WHERE cod_ramo ='"+codRamo+"';";
 
-            ResultSet results = statement.executeQuery(query);
-            
+            ResultSet results = statement.executeQuery(query);            
             String cod, nomMot;
-            
-            //int idDetSecc, idSecc, activo, idAlumno ;
 
             while (results.next()) {
                 cod = results.getString("cod_ramo"); 

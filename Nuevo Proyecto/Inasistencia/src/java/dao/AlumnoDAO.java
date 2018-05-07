@@ -149,7 +149,19 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
 
     @Override
     public int agregar(Alumno alumno) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+            Statement statement = connection.createStatement();
+            String agregarSQL = "INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,appmaterno,email,id_carrera,activo)"
+                    + " VALUES('"+alumno.getRutAlumno()+"','"+alumno.getPnombre()+"','"+alumno.getSnombre()+"','"+alumno.getAppaterno()+"','"+alumno.getApmaterno()+"','"+alumno.getEmail()+"',"+alumno.getIdCarrera()+","+alumno.getActivo()+");";
+            int results = statement.executeUpdate(agregarSQL);
+            connection.close();
+            conn.desconectar();
+            return results;
+        } catch (java.lang.Exception ex) {
+            return 0;
+        }
     }
 
     @Override
