@@ -73,13 +73,23 @@ public class ControladorAdministrador extends HttpServlet {
                 alu = (new AlumnoDAO()).buscarDatos(rut);
                 if (alu == null) {
                     sesion.setAttribute("rutU",rut);
-                    response.sendRedirect("Admin/addUser.jsp");
-                    
+                    response.sendRedirect("Admin/addUser.jsp");  
                 }
+                else
+                {
+                    sesion.setAttribute("respU",alu);
+                    response.sendRedirect("Admin/addUser.jsp");
+                }
+                
             }
             if (xCrud.equals("2")) {
                 doce = (new DocenteDAO()).buscarDatos(rut);
                 if (doce == null) {
+                    response.sendRedirect("Admin/addUser.jsp");
+                }
+                else
+                {
+                    sesion.setAttribute("respU",doce);
                     response.sendRedirect("Admin/addUser.jsp");
                 }
             }
@@ -88,16 +98,31 @@ public class ControladorAdministrador extends HttpServlet {
                 if (doce == null) {
                     response.sendRedirect("Admin/addUser.jsp");
                 }
+                else
+                {
+                    sesion.setAttribute("respU",dire);
+                    response.sendRedirect("Admin/addUser.jsp");
+                }
             }
             if (xCrud.equals("4")) {
                 admin = (new AdministradorDAO()).buscarDatos(rut);
                 if (doce == null) {
                     response.sendRedirect("Admin/addUser.jsp");
                 }
+                else
+                {
+                    sesion.setAttribute("respU",admin);
+                    response.sendRedirect("Admin/addUser.jsp");
+                }
             }
             if (xCrud.equals("5")) {
                 secr = (new SecretariaDAO()).buscarDatos(rut);
                 if (doce == null) {
+                    response.sendRedirect("Admin/addUser.jsp");
+                }
+                else
+                {
+                    sesion.setAttribute("respU",secr);
                     response.sendRedirect("Admin/addUser.jsp");
                 }
             }
@@ -120,27 +145,36 @@ public class ControladorAdministrador extends HttpServlet {
                 }
             }
             if (xCrud.equals("2")) {
-                doce = (new DocenteDAO()).buscarDatos(rut);
-                if (doce == null) {
-                    response.sendRedirect("Admin/addUser.jsp");
+                doce = new Docente(0, rut, pnom, snom, apat, amat, mail, 1);
+               
+                if (x != 0) {
+                    response.sendRedirect("index.jsp?mensaje=Agregado"+x);
                 }
             }
             if (xCrud.equals("3")) {
-                dire = (new DirectorDAO()).buscarDatos(rut);
-                if (doce == null) {
-                    response.sendRedirect("Admin/addUser.jsp");
+                //dire = (new DirectorDAO()).buscarDatos(rut);
+                
+                dire = new Director(0, rut, pnom, snom, apat, amat, mail, 1);
+                
+                if (x != 0) {
+                    response.sendRedirect("index.jsp?mensaje=Agregado"+x);
                 }
             }
             if (xCrud.equals("4")) {
-                admin = (new AdministradorDAO()).buscarDatos(rut);
-                if (doce == null) {
-                    response.sendRedirect("Admin/addUser.jsp");
+                //admin = (new AdministradorDAO()).buscarDatos(rut);
+                admin = new Administrador(0, carrera, pnom, snom, apat, amat, mail, 1);
+                
+                if (x != 0) {
+                    response.sendRedirect("index.jsp?mensaje=Agregado"+x);
                 }
             }
             if (xCrud.equals("5")) {
-                secr = (new SecretariaDAO()).buscarDatos(rut);
-                if (doce == null) {
-                    response.sendRedirect("Admin/addUser.jsp");
+                //secr = (new SecretariaDAO()).buscarDatos(rut);
+                secr = new Secretaria(0, carrera, pnom, snom, apat, amat, mail, 1);
+                
+                
+                if (x != 0) {
+                    response.sendRedirect("index.jsp?mensaje=Agregado"+x);
                 }
             }
         }
