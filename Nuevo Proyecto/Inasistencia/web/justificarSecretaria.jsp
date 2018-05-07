@@ -165,8 +165,7 @@
                         </table>
                         <br>
                         <div>
-                            <% // holi aca seba :3 %>
-                            <input type="file" name="file" accept="image/*"/>
+                            <input type="file" name="file" required="" accept="image/*"/>
                         </div>
                         <br>
                         <div>

@@ -4,6 +4,10 @@
     Author     : carlos
 --%>
 
+<%@page import="modelo.Docente"%>
+<%@page import="modelo.Secretaria"%>
+<%@page import="modelo.Director"%>
+<%@page import="modelo.Alumno"%>
 <%@page import="dao.CarreraDAO"%>
 <%@page import="modelo.Carrera"%>
 <%@page import="java.util.ArrayList"%>
@@ -27,10 +31,17 @@
             Administrador admin = new Administrador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = "", estado = "", xCrud = "";
-            int encontrado=0;
+            int valido=0;
             String mensaje="";
-            String rutU="",pnombreU="",snombreU="",appaternoU="",apmaternoU="",correoU="",activoU="";
-                    
+            String rutU="",pnombreU="",snombreU="",appaternoU="",apmaternoU="",correoU="",activoU="",carreraU="";
+            
+            Alumno alum = new Alumno();
+            Director dire = new Director();
+            Secretaria secre = new Secretaria();
+            Docente doce = new Docente();
+            Administrador administrador = new Administrador();
+            
+            
             ArrayList<Carrera> carreras = new ArrayList<Carrera>();
             
             
@@ -43,11 +54,28 @@
                     admin = (new AdministradorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     xCrud = sesion.getAttribute("xCrud").toString();
-                    rutU = sesion.getAttribute("rutU").toString();
+                    
+                    if (session.getAttribute("rutU")!=null) {
+                        rutU = sesion.getAttribute("rutU").toString();
+                    }
+                   
                     
                     if (xCrud.equals("1")) {
-                        mensaje = "Alumno";
+                        mensaje = "Alumno";                        
                         carreras = (new CarreraDAO()).mostrarDatos();
+                        
+                        if (session.getAttribute("respU")!=null) {
+                            alum=(Alumno)session.getAttribute("respU");
+                            rutU=alum.getRutAlumno();
+                            pnombreU=alum.getPnombre();
+                            snombreU=alum.getSnombre();
+                            appaternoU=alum.getAppaterno();
+                            apmaternoU=alum.getApmaterno();
+                            correoU=alum.getEmail();
+                            activoU=alum.getActivo().toString();
+                            carreraU=(new CarreraDAO()).buscar(alum.getIdCarrera()).toString();
+                            valido=1;
+                        }
                     }
                     if (xCrud.equals("2")) {
                         mensaje = "Docente";
@@ -103,7 +131,7 @@
                         <p><strong> Correo Eléctronico :</strong> <input type="email" name="txtEmail" required="" value="<%=correoU%>" maxlength="30"/> </p>                   
 
                     </div>
-                    <%if (xCrud.equals("1") && !carreras.isEmpty()) {%>
+                    <%if (xCrud.equals("1") && !carreras.isEmpty() && valido==0) {%>
                     <div class="col s12 m6 color-Azul-text">
                         <h4 class="color-Plomo center-align">Carrera</h4>     
                         <div class="input-field">                                
@@ -127,7 +155,19 @@
                         </div>
                     </div>
                     <%
-                        }
+                        }else{
+                        if (valido==1) { %>
+                             <div class="col s12 m6 color-Azul-text">
+                        <h4 class="color-Plomo center-align">Carrera</h4>     
+                        <div class="input-field">         
+                            <p><strong> Carrera :</strong> 
+                                <%=carreraU%>
+                            </p>
+                        </div>
+                    </div>   
+                           <% }
+                    }
+
                     %>
 
                     <a class="white-text btn  waves-effect waves-light  red" href="askUser.jsp">Volver</a>
