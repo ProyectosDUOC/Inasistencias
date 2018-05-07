@@ -9,6 +9,7 @@ import conexion.Conectar;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import modelo.Ramo;
 
 /**
@@ -54,6 +55,44 @@ public class RamoDAO implements GeneralRamoDAO{
             System.out.println("Error: " + ex);
         }
         return obj;
+    }
+    
+    
+    private ArrayList<Ramo> arrayRamos = new ArrayList<>();
+    @Override
+    public ArrayList mostrarDatos() {
+        Ramo obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM ramo;";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+            String cod, nomMot;
+            
+
+            /*
+                d_ramo       VARCHAR(30) NOT NULL,
+                nombre_ramo   VARCHAR(100)
+            
+            */
+            arrayRamos.removeAll(arrayRamos);
+            while (results.next()) {
+                cod = results.getString("id_ramo"); 
+                nomMot = results.getString("nombre_ramo");
+                
+                obj = new Ramo(cod, nomMot);
+                arrayRamos.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayRamos;
     }
     
 }

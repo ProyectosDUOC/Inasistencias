@@ -5,11 +5,13 @@
  */
 package dao;
 
+import java.util.ArrayList;
 import modelo.Ramo;
 /**
  *
  * @author benja
  */
 public interface GeneralRamoDAO {    
-    public abstract Ramo buscar(String codRamo) ;
+    public abstract Ramo buscar(String codRamo) ;    
+    public abstract ArrayList mostrarDatos();
 }
