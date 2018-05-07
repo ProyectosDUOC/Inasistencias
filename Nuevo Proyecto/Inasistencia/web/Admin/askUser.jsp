@@ -1,11 +1,11 @@
 <%-- 
-    Document   : addDet
-    Created on : 06-05-2018, 17:35:18
+    Document   : addUser
+    Created on : 06-05-2018, 0:27:21
     Author     : carlos
 --%>
 
-<%@page import="modelo.Alumno"%>
-<%@page import="modelo.Seccion"%>
+<%@page import="dao.CarreraDAO"%>
+<%@page import="modelo.Carrera"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dao.AdministradorDAO"%>
 <%@page import="modelo.ControlUsuario"%>
@@ -27,11 +27,7 @@
             Administrador admin = new Administrador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = "", estado = "", xCrud = "";
-            String nomAlu ="";
-            
-            //Detalle Seccion
-            ArrayList<Seccion> secciones = new ArrayList<Seccion>();
-            ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
+            String mensaje = "";
 
             if (user == null) {
                 response.sendRedirect("../index.jsp");
@@ -42,12 +38,23 @@
                     admin = (new AdministradorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     xCrud = sesion.getAttribute("xCrud").toString();
-                    // directores = (new DirectorDAO()).mostrarDatos();
-                    
-                    //secciones = (new Seccion()).;
-                    //alumnos = (new Alumno()).;
+                    if (xCrud.equals("1")) {
+                        mensaje = "Alumno";
+                    }
+                    if (xCrud.equals("2")) {
+                        mensaje = "Docente";
+                    }
+                    if (xCrud.equals("3")) {
+                        mensaje = "Director";
+                    }
+                    if (xCrud.equals("4")) {
+                        mensaje = "Administrador";
+                    }
+                    if (xCrud.equals("5")) {
+                        mensaje = "Secretaria";
+                    }
                 } else {
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("../index.jsp");
                 }
 
             }
@@ -72,56 +79,22 @@
                 </div>
             </div>                   
         </header>  
-
         <div class="container">
             <div class="row">
-                <form method="" action="">
-                    <h4 class="color-Plomo color-Azul-text center-align" >Mi Cuenta</h4>
+                <form method="POST" action="../ControladorAdministrador">
 
-                    <h4 class="color-Plomo color-Azul-text center-align" >Datos Personales</h4>  
-                    <p><strong> Activo :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
 
-                    <!--Seccion -->
-                    <%if (xCrud.equals("1") && !secciones.isEmpty()) {%>
+                    <h4 class="color-Plomo color-Azul-text center-align" >Buscar <%=mensaje%></h4>
+
                     <div class="col s12 m6 color-Azul-text">
-                        <h4 class="color-Plomo center-align">Ramo</h4>     
-                        <div class="input-field">                                   
-                            <p><strong> Carrera :</strong> 
-                                <select name="carreras" class="color-Azul color-Amarillo-text browser-default" required="">
-                                    <option value="" disabled selected>Seleccione Ramo</option>                    
-                                    <% for (Seccion secc : secciones) {
+                        <h4 class="color-Plomo color-Azul-text center-align" >Datos Personales</h4>
+                        <p><strong> Rut :</strong> <input type="text" name="txtRut" required="" value="" maxlength="30"/> </p>
+                        <button name="opcion" type="submit" value="buscar" class="white-text btn  waves-effect waves-light  red">Buscar</button>
 
-                                    %>
-                                    <option value="<%=secc.getIdSeccion()%>" >
-                                        <%= secc.getCodRamo()%>
-                                    </option>
-                                    <%
-                                        }
-                                    %>
-                                </select>
-                            </p>
-                        </div>
                     </div>
-                    <%
-                        }
-                    %>
 
+                    <a class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-                    <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
-                    <!--Editar -->
-                    <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Agregar Detalle</a>
                 </form>
             </div>
         </div>
@@ -131,6 +104,6 @@
                 <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>                                
                 <br>
             </div>
-        </footer>          
+        </footer> 
     </body>
 </html>

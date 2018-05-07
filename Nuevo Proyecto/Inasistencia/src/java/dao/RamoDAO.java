@@ -81,7 +81,7 @@ public class RamoDAO implements GeneralRamoDAO{
             */
             arrayRamos.removeAll(arrayRamos);
             while (results.next()) {
-                cod = results.getString("id_ramo"); 
+                cod = results.getString("cod_ramo"); 
                 nomMot = results.getString("nombre_ramo");
                 
                 obj = new Ramo(cod, nomMot);

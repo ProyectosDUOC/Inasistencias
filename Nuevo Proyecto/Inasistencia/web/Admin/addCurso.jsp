@@ -24,11 +24,13 @@
         <title>Menu Principal Coordinador</title>
         <%
             HttpSession sesion = request.getSession(true);
-            Administrador admin = new Administrador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
+            Administrador admin = new Administrador();
             String nombre = "", estado = "", xCrud = "";
+            
             ArrayList<Director> directores = new ArrayList<Director>();
             String nomDir = ""; 
+            
             
             if (user == null) {
                 response.sendRedirect("../index.jsp");

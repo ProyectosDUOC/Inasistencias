@@ -4,6 +4,7 @@
     Author     : carlos
 --%>
 
+<%@page import="dao.DocenteDAO"%>
 <%@page import="dao.RamoDAO"%>
 <%@page import="modelo.Alumno"%>
 <%@page import="modelo.Seccion"%>
@@ -45,8 +46,10 @@
                     admin = (new AdministradorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     xCrud = sesion.getAttribute("xCrud").toString();
-                    ramos = (new RamoDAO()).buscar();
-                    // directores = (new DirectorDAO()).mostrarDatos();
+                    
+                    ramos = (new RamoDAO()).mostrarDatos();
+                    //docentes (new DocenteDAO()).mostrarDatos();
+                
                 } else {
                     response.sendRedirect("index.jsp");
                 }

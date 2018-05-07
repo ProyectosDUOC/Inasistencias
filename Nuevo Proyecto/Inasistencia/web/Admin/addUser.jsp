@@ -27,8 +27,13 @@
             Administrador admin = new Administrador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = "", estado = "", xCrud = "";
+            int encontrado=0;
+            String mensaje="";
+            String rutU="",pnombreU="",snombreU="",appaternoU="",apmaternoU="",correoU="",activoU="";
+                    
             ArrayList<Carrera> carreras = new ArrayList<Carrera>();
-
+            
+            
             if (user == null) {
                 response.sendRedirect("../index.jsp");
             } else {
@@ -38,7 +43,24 @@
                     admin = (new AdministradorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     xCrud = sesion.getAttribute("xCrud").toString();
-                    carreras = (new CarreraDAO()).mostrarDatos();
+                    rutU = sesion.getAttribute("rutU").toString();
+                    
+                    if (xCrud.equals("1")) {
+                        mensaje = "Alumno";
+                        carreras = (new CarreraDAO()).mostrarDatos();
+                    }
+                    if (xCrud.equals("2")) {
+                        mensaje = "Docente";
+                    }
+                    if (xCrud.equals("3")) {
+                        mensaje = "Director";
+                    }
+                    if (xCrud.equals("4")) {
+                        mensaje = "Administrador";
+                    }
+                    if (xCrud.equals("5")) {
+                        mensaje = "Secretaria";
+                    }
                 } else {
                     response.sendRedirect("index.jsp");
                 }
@@ -67,31 +89,27 @@
         </header>  
         <div class="container">
             <div class="row">
-                <form method="" action="">
+                <form method="POST" action="../ControladorAdministrador">  
 
-
-                    <h4 class="color-Plomo color-Azul-text center-align" >Mi Cuenta</h4>
+                    <h4 class="color-Plomo color-Azul-text center-align" >Agregar <%=mensaje%></h4>
 
                     <div class="col s12 m6 color-Azul-text">
-                        <h4 class="color-Plomo color-Azul-text center-align" >Datos Personales</h4>  
-                        <p><strong> Rut :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Primer Nombre :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Segundo Nombre :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Apellido Paterno :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Apellido Materno :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>
-                        <p><strong> Correo Eléctronico :</strong> <input type="text" name="txtUser" required="" maxlength="10"/> </p>                   
+                        <h4 class="color-Plomo color-Azul-text center-align" >Datos Personales</h4>
+                        <p><strong> Rut :</strong> <input type="text" name="txtRut" readonly="" value="<%=rutU%>" maxlength="30"/> </p>
+                        <p><strong> Primer Nombre :</strong> <input type="text" name="txtPnombre" required="" value="<%=pnombreU%>" maxlength="30"/> </p>
+                        <p><strong> Segundo Nombre :</strong> <input type="text" name="txtSnombre" required="" value="<%=snombreU%>" maxlength="30"/> </p>
+                        <p><strong> Apellido Paterno :</strong> <input type="text" name="txtApaterno" required="" value="<%=appaternoU%>" maxlength="30"/> </p>
+                        <p><strong> Apellido Materno :</strong> <input type="text" name="txtAmaterno" required="" value="<%=apmaternoU%>" maxlength="30"/> </p>
+                        <p><strong> Correo Eléctronico :</strong> <input type="email" name="txtEmail" required="" value="<%=correoU%>" maxlength="30"/> </p>                   
 
-                        <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
-                        <!-- Editar -->
-                        <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Agregar</a>
                     </div>
                     <%if (xCrud.equals("1") && !carreras.isEmpty()) {%>
                     <div class="col s12 m6 color-Azul-text">
                         <h4 class="color-Plomo center-align">Carrera</h4>     
                         <div class="input-field">                                
-                            
+
                             <p><strong> Carrera :</strong> 
-                                <select name="carreras" class="color-Azul color-Amarillo-text browser-default" required="">
+                                <select name="carrera" class="color-Azul color-Amarillo-text browser-default" required="">
                                     <option value="" disabled selected>Seleccione Carrera</option>                    
                                     <% for (Carrera car : carreras) {
 
@@ -111,6 +129,9 @@
                     <%
                         }
                     %>
+
+                    <a class="white-text btn  waves-effect waves-light  red" href="askUser.jsp">Volver</a>
+                    <button  name="opcion" type="submit" value="Agregar" class="white-text btn  waves-effect waves-light  red">Agregar</button>
                 </form>
             </div>
         </div>
