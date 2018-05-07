@@ -40,7 +40,7 @@ public class CarreraDAO implements GeneralCarreraDAO{
 
             while (results.next()) {
                 id = results.getInt("id_carrera"); 
-                codCar = results.getString("cod_Carrera");
+                codCar = results.getString("cod_carrera");
                 nombCar = results.getString("nombre_carrera");
                 director = results.getInt("id_director");
                 
@@ -79,7 +79,7 @@ public class CarreraDAO implements GeneralCarreraDAO{
             
             while (results.next()) {
                id = results.getInt("id_carrera"); 
-                codCar = results.getString("cod_Carrera");
+                codCar = results.getString("cod_carrera");
                 nombCar = results.getString("nombre_carrera");
                 director = results.getInt("id_director");
                 

@@ -73,7 +73,6 @@ public class RamoDAO implements GeneralRamoDAO{
             ResultSet results = statement.executeQuery(consultaSQL);
             String cod, nomMot;
             
-
             /*
                 d_ramo       VARCHAR(30) NOT NULL,
                 nombre_ramo   VARCHAR(100)
