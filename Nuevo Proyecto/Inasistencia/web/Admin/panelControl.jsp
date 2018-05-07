@@ -29,6 +29,7 @@
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 if (estado.equals("administrador")) {
+                    sesion.setAttribute("respU",null);
                     String rut = user.getRutUsuario();
                     admin = (new AdministradorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
