@@ -90,14 +90,12 @@
                         <h4 class="color-Plomo color-Azul-text center-align" >Datos Personales</h4>
                         <p><strong> Rut :</strong> <input type="text" name="txtRut" required="" value="" maxlength="30"/> </p>
                         <button name="opcion" type="submit" value="buscar" class="white-text btn  waves-effect waves-light  red">Buscar</button>
-
+                        <a class="white-text btn  waves-effect waves-light  red" href="../<%=estado%>.jsp">Volver</a>
                     </div>
-
-                    <a class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
-
                 </form>
             </div>
         </div>
+                    <br> <br> <br> <br> <br> <br> <br> <br> <br>
         <footer class="color-Azul">            
             <div class="container">
                 <br>
