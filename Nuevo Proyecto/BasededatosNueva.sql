@@ -176,6 +176,35 @@ CREATE TABLE ramo (
     PRIMARY KEY(cod_ramo)
 );
 
+CREATE TABLE reporte_secretaria (
+    id_reporte         INT NOT NULL AUTO_INCREMENT,
+    id_inasistencia    INT NOT NULL,
+    id_justificacion   INT NOT NULL,
+    id_secretaria      INT NOT NULL,
+    id_director        INT NOT NULL,
+    id_alumno          INT NOT NULL,
+    semestre           INT NOT NULL,
+    anio               INT NOT NULL,
+    activo             INT NOT NULL,
+    PRIMARY KEY(id_reporte)
+);
+
+ALTER TABLE reporte_secretaria
+    ADD CONSTRAINT repo_inas_fk FOREIGN KEY ( id_inasistencia )
+        REFERENCES inasistencia ( id_inasistencia );
+ALTER TABLE reporte_secretaria
+    ADD CONSTRAINT repo_justi_fk FOREIGN KEY ( id_justificacion )
+        REFERENCES justificacion ( id_justificacion );
+ALTER TABLE reporte_secretaria
+    ADD CONSTRAINT repo_secre_fk FOREIGN KEY ( id_secretaria )
+        REFERENCES secretaria ( id_secretaria );
+ALTER TABLE reporte_secretaria
+    ADD CONSTRAINT repo_dire_fk FOREIGN KEY ( id_director )
+        REFERENCES director ( id_director );
+ALTER TABLE reporte_secretaria
+    ADD CONSTRAINT repo_alu_fk FOREIGN KEY ( id_alumno )
+        REFERENCES alumno ( id_alumno );
+
 ALTER TABLE alumno
     ADD CONSTRAINT alum_carr_fk FOREIGN KEY ( id_carrera )
         REFERENCES carrera ( id_carrera );

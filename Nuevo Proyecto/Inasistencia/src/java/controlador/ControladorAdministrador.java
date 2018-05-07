@@ -11,7 +11,6 @@ import dao.DirectorDAO;
 import dao.DocenteDAO;
 import dao.SecretariaDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -135,20 +134,17 @@ public class ControladorAdministrador extends HttpServlet {
             xCrud = sesion.getAttribute("xCrud").toString();
             if (xCrud.equals("1")) {
                 for (int i = 0; i < miselect.length; i++) {
-                carrera = miselect[i];
-            }
-                
+                    carrera = miselect[i];
+                }                
                 alu = new Alumno(0, rut, pnom, snom, apat, amat, mail, Integer.parseInt(carrera) , 1);         
-                x = (new AlumnoDAO()).agregar(alu);
-                
-                
+                x = (new AlumnoDAO()).agregar(alu);                
                 if (x != 0) {
                     response.sendRedirect("index.jsp?mensaje=Agregado"+x);
                 }
             }
             if (xCrud.equals("2")) {
                 doce = new Docente(0, rut, pnom, snom, apat, amat, mail, 1);
-               
+                x = (new DocenteDAO()).agregar(doce);
                 if (x != 0) {
                     response.sendRedirect("index.jsp?mensaje=Agregado"+x);
                 }
@@ -157,7 +153,7 @@ public class ControladorAdministrador extends HttpServlet {
                 //dire = (new DirectorDAO()).buscarDatos(rut);
                 
                 dire = new Director(0, rut, pnom, snom, apat, amat, mail, 1);
-                
+                x= (new DirectorDAO()).agregar(dire);
                 if (x != 0) {
                     response.sendRedirect("index.jsp?mensaje=Agregado"+x);
                 }
@@ -165,7 +161,7 @@ public class ControladorAdministrador extends HttpServlet {
             if (xCrud.equals("4")) {
                 //admin = (new AdministradorDAO()).buscarDatos(rut);
                 admin = new Administrador(0, carrera, pnom, snom, apat, amat, mail, 1);
-                
+                x = (new AdministradorDAO()).agregar(admin);
                 if (x != 0) {
                     response.sendRedirect("index.jsp?mensaje=Agregado"+x);
                 }
@@ -173,10 +169,51 @@ public class ControladorAdministrador extends HttpServlet {
             if (xCrud.equals("5")) {
                 //secr = (new SecretariaDAO()).buscarDatos(rut);
                 secr = new Secretaria(0, carrera, pnom, snom, apat, amat, mail, 1);
-                
-                
+                x = (new SecretariaDAO()).agregar(secr);                
                 if (x != 0) {
                     response.sendRedirect("index.jsp?mensaje=Agregado"+x);
+                }
+            }
+        }
+          
+        if (opcion.equals("Actualizar")) {
+            xCrud = sesion.getAttribute("xCrud").toString();
+            if (xCrud.equals("1")) {
+                for (int i = 0; i < miselect.length; i++) {
+                    carrera = miselect[i];
+                }                
+                alu = new Alumno(0, rut, pnom, snom, apat, amat, mail, Integer.parseInt(carrera) , 1);         
+                x = (new AlumnoDAO()).actualizar(alu);                
+                if (x != 0) {
+                    response.sendRedirect("index.jsp?mensaje=Actualizado "+x);
+                }
+            }
+            if (xCrud.equals("2")) {
+                doce = new Docente(0, rut, pnom, snom, apat, amat, mail, 1);
+                x = (new DocenteDAO()).actualizar(doce);
+                if (x != 0) {
+                    response.sendRedirect("index.jsp?mensaje=Actualizado "+x);
+                }
+            }
+            if (xCrud.equals("3")) {                
+                dire = new Director(0, rut, pnom, snom, apat, amat, mail, 1);
+                x= (new DirectorDAO()).actualizar(dire);
+                if (x != 0) {
+                    response.sendRedirect("index.jsp?mensaje=Actualizado "+x);
+                }
+            }
+            if (xCrud.equals("4")) {
+                admin = new Administrador(0, carrera, pnom, snom, apat, amat, mail, 1);
+                x = (new AdministradorDAO()).actualizar(admin);
+                if (x != 0) {
+                    response.sendRedirect("index.jsp?mensaje=Actualizado "+x);
+                }
+            }
+            if (xCrud.equals("5")) {
+                secr = new Secretaria(0, carrera, pnom, snom, apat, amat, mail, 1);
+                x = (new SecretariaDAO()).actualizar(secr);                
+                if (x != 0) {
+                    response.sendRedirect("index.jsp?mensaje=Actualizado "+x);
                 }
             }
         }

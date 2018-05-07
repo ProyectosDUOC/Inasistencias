@@ -4,6 +4,15 @@
     Author     : benja
 --%>
 
+<%@page import="modelo.Ramo"%>
+<%@page import="dao.RamoDAO"%>
+<%@page import="modelo.Inasistencia"%>
+<%@page import="dao.InasistenciaDAO"%>
+<%@page import="dao.GlobalSemestreDAO"%>
+<%@page import="modelo.GlobalSemestre"%>
+<%@page import="dao.ReporteSecretariaDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="modelo.ReporteSecretaria"%>
 <%@page import="dao.DirectorDAO"%>
 <%@page import="modelo.Director"%>
 <%@page import="modelo.ControlUsuario"%>
@@ -25,8 +34,13 @@
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             Director dire = new Director();
-
+            ReporteSecretaria reportes = new ReporteSecretaria();
+            ArrayList<ReporteSecretaria> arrayReportes = new ArrayList<ReporteSecretaria>();
             String nombre = "", estado = "", rut = "";
+            Inasistencia inasistencia = new Inasistencia();
+            Ramo ramo = new Ramo();
+            
+            GlobalSemestre semestreActual = new GlobalSemestre();
             if (user == null) {
                 response.sendRedirect("../index.jsp");
             } else {
@@ -34,7 +48,12 @@
                 if (estado.equals("director")) {
                     rut = user.getRutUsuario();
                     dire = (new DirectorDAO()).buscarDatos(rut);
+                    
+                    semestreActual = (new GlobalSemestreDAO()).buscar();
+                    System.out.println(semestreActual.getAnio()+" "+semestreActual.getSemestre());
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
+                    arrayReportes = (new ReporteSecretariaDAO()).mostrarDatosDirector(dire.getIdDirector(), semestreActual.getSemestre(), semestreActual.getAnio());
+                   
                 } else {
                     response.sendRedirect("../index.jsp");
                 }
@@ -72,35 +91,37 @@
                                 <th>Nombre Asignatura</th>
                                 <th>Asignatura/sección</th>                                    
                                 <th>Fecha</th>
-                                <th></th>
+                                <th>Acción</th>
                             </tr>
                         </thead>
                         <tbody>
                         <form action="" method="post" >
+                            <%if (arrayReportes.isEmpty()){ %>
                            <tr>
-                               <td>a</td>
-                               <td>a</td>
-                               <td>a</td>
+                               <td></td>
+                               <td>No se han encontrados nuevos registros</td>
+                               <td></td>
                                <td>a</td>
                            </tr>
-                           <tr>
+                           <% }else{                             
+                            for (ReporteSecretaria r : arrayReportes) {
+                                
+                            %>
+                            <tr>
+                               <td><%=r.getIdJustificacion()%></td>
                                <td>a</td>
                                <td>a</td>
-                               <td>a</td>
-                               <td>a</td>
-                           </tr>
-                           <tr>
-                               <td>a</td>
-                               <td>a</td>
-                               <td>a</td>
-                               <td>a</td>
-                           </tr>
-                           <tr>
-                               <td>a</td>
-                               <td>a</td>
-                               <td>a</td>
-                               <td>a</td>
-                           </tr>
+                               <td><button class="btn amber waves-effect waves-light" 
+                                        type="submit" 
+                                        name="opcion" 
+                                        value="J<%=r.getIdJustificacion()%>">
+                                       Ver
+                                   </button>
+                                </td>
+                           </tr>       
+                           <%     }
+                                
+                            }%>                        
                         </form>
                         </tbody>
                     </table>  

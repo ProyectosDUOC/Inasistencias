@@ -4,6 +4,7 @@
     Author     : carlos
 --%>
 
+<%@page import="modelo.GlobalSemestre"%>
 <%@page import="dao.DirectorDAO"%>
 <%@page import="modelo.ControlUsuario"%>
 <%@page import="modelo.Director"%>
@@ -23,13 +24,14 @@
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             Director dire = new Director();
-
+            GlobalSemestre semestreActual = new GlobalSemestre();
             String nombre = "", estado = "", rut = "";
             if (user == null) {
                 response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 if (estado.equals("director")) {
+                    semestreActual = (GlobalSemestre) session.getAttribute("semestreActual");
                     rut = user.getRutUsuario();
                     dire = (new DirectorDAO()).buscarDatos(rut);
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();

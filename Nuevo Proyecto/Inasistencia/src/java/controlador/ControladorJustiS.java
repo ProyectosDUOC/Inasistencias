@@ -6,9 +6,12 @@
 package controlador;
 
 import dao.AlumnoDAO;
+import dao.CarreraDAO;
 import dao.ImagenDAO;
 import dao.InasistenciaDAO;
 import dao.JustificacionDAO;
+import dao.ReporteSecretariaDAO;
+import dao.SecretariaDAO;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.SecretKey;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -27,9 +31,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import modelo.Alumno;
+import modelo.Carrera;
+import modelo.ControlUsuario;
+import modelo.GlobalSemestre;
 import modelo.Inasistencia;
 import modelo.Justificacion;
 import modelo.JustificacionImagen;
+import modelo.ReporteSecretaria;
+import modelo.Secretaria;
 
 /**
  *
@@ -52,6 +61,7 @@ public class ControladorJustiS extends HttpServlet {
         response.setContentType("text/html;charset=ISO-8859-1");
 
         HttpSession session = request.getSession(true);
+        ControlUsuario user = session.getAttribute("usuario") == null ? new ControlUsuario() : (ControlUsuario) session.getAttribute("usuario");
 
         String fechaInasistencia = request.getParameter("fecha");
         String[] miselect;
@@ -65,10 +75,13 @@ public class ControladorJustiS extends HttpServlet {
         String fechaHoy = parseador.format(date);
         int x = 0;
         Alumno alum = new Alumno();
+        Secretaria secre = new Secretaria();
         Justificacion justificacion = new Justificacion();
         Inasistencia inasistencia = new Inasistencia();
         JustificacionImagen img = new JustificacionImagen();
-                
+        ReporteSecretaria report = new ReporteSecretaria();
+        GlobalSemestre semestreActual = new GlobalSemestre();
+        Carrera carrera = new Carrera();
         Part filePart = request.getPart("file");
 
         if (opcion.charAt(0) == 'G') {
@@ -88,7 +101,6 @@ public class ControladorJustiS extends HttpServlet {
             x = (new JustificacionDAO()).agregar(justificacion);
             justificacion = (new JustificacionDAO()).buscarEspecifica(justificacion);
             
-            
             File file = File.createTempFile("foto-", ".jpg");
             File file2 = new File(System.getenv("UPLOADS"), file.getName());
             try (InputStream input = filePart.getInputStream()) {
@@ -98,7 +110,12 @@ public class ControladorJustiS extends HttpServlet {
             descripcion="idIna:"+inasistencia.getIdInasistencia()+" rut:"+rutA+" fecha:"+fechaInasistencia;
             img = new JustificacionImagen(0, justificacion.getIdJustificacion(), nombreFile, descripcion);
             x = (new ImagenDAO()).agregar(img);
-            System.out.println("todo "+ x + "descripcion :"+descripcion);
+            semestreActual = (GlobalSemestre) session.getAttribute("semestreActual");
+            secre = (new SecretariaDAO()).buscarDatos(user.getRutUsuario());
+            carrera = (new CarreraDAO()).buscar(alum.getIdCarrera());
+            report = new ReporteSecretaria(0,justificacion.getIdInasistencia(),justificacion.getIdJustificacion(),secre.getIdSecretaria(),carrera.getIdDirector(), alum.getIdAlumno(), semestreActual.getSemestre(), semestreActual.getAnio(), 1);
+            x = (new ReporteSecretariaDAO()).agregar(report);
+            System.out.println("todo x :"+ x);
             session.setAttribute("rut", null);
             response.sendRedirect("secretaria.jsp?mensaje=Se ha enviado exitosamente");
         }
