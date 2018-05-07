@@ -73,25 +73,73 @@
                             apmaternoU=alum.getApmaterno();
                             correoU=alum.getEmail();
                             activoU=alum.getActivo().toString();
-                            carreraU=(new CarreraDAO()).buscar(alum.getIdCarrera()).toString();
+                            carreraU=(new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
                             valido=1;
                             button=1;
                         }
                     }
                     if (xCrud.equals("2")) {
                         mensaje = "Docente";
+                         if (session.getAttribute("respU")!=null) {
+                            doce=(Docente)session.getAttribute("respU");
+                            rutU=doce.getRutDocente();
+                            pnombreU=doce.getPnombre();
+                            snombreU=doce.getSnombre();
+                            appaternoU=doce.getAppaterno();
+                            apmaternoU=doce.getApmaterno();
+                            correoU=doce.getEmail();
+                            activoU=doce.getActivo().toString();
+                            valido=0;
+                            button=1;
+                        }
                     }
                     if (xCrud.equals("3")) {
                         mensaje = "Director";
+                        if (session.getAttribute("respU")!=null) {
+                            dire=(Director)session.getAttribute("respU");
+                            rutU=dire.getRutDirector();
+                            pnombreU=dire.getPnombre();
+                            snombreU=dire.getSnombre();
+                            appaternoU=dire.getAppaterno();
+                            apmaternoU=dire.getApmaterno();
+                            correoU=dire.getEmail();
+                            activoU=dire.getActivo().toString();
+                            valido=0;
+                            button=1;
+                        }
                     }
                     if (xCrud.equals("4")) {
                         mensaje = "Administrador";
+                        if (session.getAttribute("respU")!=null) {
+                            admin=(Administrador)session.getAttribute("respU");
+                            rutU=admin.getRutAdministrador();
+                            pnombreU=admin.getPnombre();
+                            snombreU=admin.getSnombre();
+                            appaternoU=admin.getAppaterno();
+                            apmaternoU=admin.getApmaterno();
+                            correoU=admin.getEmail();
+                            activoU=admin.getActivo().toString();
+                            valido=0;
+                            button=1;
+                        }
                     }
                     if (xCrud.equals("5")) {
                         mensaje = "Secretaria";
+                        if (session.getAttribute("respU")!=null) {
+                            secre=(Secretaria)session.getAttribute("respU");
+                            rutU=secre.getRutSecretaria();
+                            pnombreU=secre.getPnombre();
+                            snombreU=secre.getSnombre();
+                            appaternoU=secre.getAppaterno();
+                            apmaternoU=secre.getApmaterno();
+                            correoU=secre.getEmail();
+                            activoU=secre.getActivo().toString();
+                            valido=0;
+                            button=1;
+                        }
                     }
                 } else {
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("../index.jsp");
                 }
 
             }
