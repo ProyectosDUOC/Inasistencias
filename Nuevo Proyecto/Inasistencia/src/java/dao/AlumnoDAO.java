@@ -153,7 +153,7 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
             conn = new Conectar();
             Connection connection = conn.getConnection();
             Statement statement = connection.createStatement();
-            String agregarSQL = "INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,appmaterno,email,id_carrera,activo)"
+            String agregarSQL = "INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo)"
                     + " VALUES('"+alumno.getRutAlumno()+"','"+alumno.getPnombre()+"','"+alumno.getSnombre()+"','"+alumno.getAppaterno()+"','"+alumno.getApmaterno()+"','"+alumno.getEmail()+"',"+alumno.getIdCarrera()+","+alumno.getActivo()+");";
             int results = statement.executeUpdate(agregarSQL);
             connection.close();
