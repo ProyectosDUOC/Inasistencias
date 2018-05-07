@@ -31,7 +31,7 @@
             Administrador admin = new Administrador();
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = "", estado = "", xCrud = "";
-            int valido=0;
+            int valido=0, button=0;
             String mensaje="";
             String rutU="",pnombreU="",snombreU="",appaternoU="",apmaternoU="",correoU="",activoU="",carreraU="";
             
@@ -75,6 +75,7 @@
                             activoU=alum.getActivo().toString();
                             carreraU=(new CarreraDAO()).buscar(alum.getIdCarrera()).toString();
                             valido=1;
+                            button=1;
                         }
                     }
                     if (xCrud.equals("2")) {
@@ -171,7 +172,12 @@
                     %>
 
                     <a class="white-text btn  waves-effect waves-light  red" href="askUser.jsp">Volver</a>
-                    <button  name="opcion" type="submit" value="Agregar" class="white-text btn  waves-effect waves-light  red">Agregar</button>
+                    <% if (button==0) { %>
+                          <button  name="opcion" type="submit" value="Agregar" class="white-text btn  waves-effect waves-light  red">Agregar</button>
+                    <%  }else{ %>
+                           <button  name="opcion" type="submit" value="Actualizar" class="black-text btn  waves-effect waves-light  yellow">Actualizar</button>
+                    <%    }
+                    %>                    
                 </form>
             </div>
         </div>
