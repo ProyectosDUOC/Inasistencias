@@ -12,4 +12,5 @@ import modelo.Ramo;
  */
 public interface GeneralRamoDAO {    
     public abstract Ramo buscar(String codRamo) ;
+    
 }
