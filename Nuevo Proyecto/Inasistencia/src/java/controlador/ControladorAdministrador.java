@@ -69,10 +69,11 @@ public class ControladorAdministrador extends HttpServlet {
 
         if (opcion.equals("buscar")) {
             xCrud = sesion.getAttribute("xCrud").toString();
+            sesion.setAttribute("rutU",rut);
             if (xCrud.equals("1")) {
                 alu = (new AlumnoDAO()).buscarDatos(rut);
                 if (alu == null) {
-                    sesion.setAttribute("rutU",rut);
+                    
                     response.sendRedirect("Admin/addUser.jsp");  
                 }
                 else
@@ -85,6 +86,7 @@ public class ControladorAdministrador extends HttpServlet {
             if (xCrud.equals("2")) {
                 doce = (new DocenteDAO()).buscarDatos(rut);
                 if (doce == null) {
+                   
                     response.sendRedirect("Admin/addUser.jsp");
                 }
                 else

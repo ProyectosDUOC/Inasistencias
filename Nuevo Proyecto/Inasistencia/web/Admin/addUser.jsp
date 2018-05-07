@@ -55,9 +55,9 @@
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     xCrud = sesion.getAttribute("xCrud").toString();
                     
-                    if (session.getAttribute("rutU")!=null) {
-                        rutU = sesion.getAttribute("rutU").toString();
-                    }
+                   
+                    rutU = sesion.getAttribute("rutU").toString();
+                   
                    
                     
                     if (xCrud.equals("1")) {
@@ -66,7 +66,7 @@
                         
                         if (session.getAttribute("respU")!=null) {
                             alum=(Alumno)session.getAttribute("respU");
-                            rutU=alum.getRutAlumno();
+                            
                             pnombreU=alum.getPnombre();
                             snombreU=alum.getSnombre();
                             appaternoU=alum.getAppaterno();
@@ -82,7 +82,7 @@
                         mensaje = "Docente";
                          if (session.getAttribute("respU")!=null) {
                             doce=(Docente)session.getAttribute("respU");
-                            rutU=doce.getRutDocente();
+                            
                             pnombreU=doce.getPnombre();
                             snombreU=doce.getSnombre();
                             appaternoU=doce.getAppaterno();
@@ -97,7 +97,7 @@
                         mensaje = "Director";
                         if (session.getAttribute("respU")!=null) {
                             dire=(Director)session.getAttribute("respU");
-                            rutU=dire.getRutDirector();
+                           
                             pnombreU=dire.getPnombre();
                             snombreU=dire.getSnombre();
                             appaternoU=dire.getAppaterno();
@@ -112,7 +112,7 @@
                         mensaje = "Administrador";
                         if (session.getAttribute("respU")!=null) {
                             admin=(Administrador)session.getAttribute("respU");
-                            rutU=admin.getRutAdministrador();
+                           
                             pnombreU=admin.getPnombre();
                             snombreU=admin.getSnombre();
                             appaternoU=admin.getAppaterno();
@@ -127,7 +127,7 @@
                         mensaje = "Secretaria";
                         if (session.getAttribute("respU")!=null) {
                             secre=(Secretaria)session.getAttribute("respU");
-                            rutU=secre.getRutSecretaria();
+                           
                             pnombreU=secre.getPnombre();
                             snombreU=secre.getSnombre();
                             appaternoU=secre.getAppaterno();
