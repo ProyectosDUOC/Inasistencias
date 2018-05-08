@@ -15,6 +15,8 @@ import modelo.Alumno;
 public interface GeneralAlumnoDAO {
     public abstract ArrayList mostrarDatos();
     public abstract Alumno buscarDatos(String rut) ;
+    
+    public abstract Alumno buscarDatosId(int id) ;
     public abstract Alumno buscarDatosCorreo(String correo) ;
     public abstract int agregar(Alumno alumno);
     public abstract int eliminar(String rut);

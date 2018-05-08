@@ -38,14 +38,13 @@ public class MotivoDAO implements GeneralMotivoDAO{
             */
             
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM motivo WHERE id_motivo  =" + idMotivo + ";";
+            String query = "SELECT * FROM motivo WHERE id_motivo="+idMotivo+";";
 
             ResultSet results = statement.executeQuery(query);
             
             int idMot;
             String nomMot;
             
-            //int idDetSecc, idSecc, activo, idAlumno ;
 
             while (results.next()) {
                 idMot = results.getInt("id_motivo"); 

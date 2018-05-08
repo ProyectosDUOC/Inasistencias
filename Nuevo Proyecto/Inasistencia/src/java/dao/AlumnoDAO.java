@@ -174,4 +174,42 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+     @Override
+    public Alumno buscarDatosId(int id) {
+        Alumno obj = null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+            
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM alumno WHERE id_alumno=" + id + ";";
+
+            ResultSet results = statement.executeQuery(query);
+
+            int id1, idCarrera, activo;
+            String rut1, pnombre, snombre, appaterno, apmaterno, email;
+
+            while (results.next()) {
+                id1 = results.getInt("id_alumno");
+                rut1 = results.getString("rut_alumno");
+                pnombre = results.getString("pnombre");
+                snombre = results.getString("snombre");
+                appaterno = results.getString("appaterno");
+                apmaterno = results.getString("apmaterno");
+                email = results.getString("email");
+                idCarrera = results.getInt("id_carrera");                
+                activo = results.getInt("activo");
+
+                if (id == id1) {
+                    obj = new Alumno(id1, rut1, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo);
+                   break;
+                }
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return obj;
+    }
 }

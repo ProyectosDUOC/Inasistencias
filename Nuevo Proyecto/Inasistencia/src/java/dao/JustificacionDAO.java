@@ -21,8 +21,7 @@ public class JustificacionDAO implements GeneralJustificacionDAO{
     Conectar conn;
     
     @Override
-    public Justificacion buscar(int idJustificacion) {
-     
+    public Justificacion buscar(int idJustificacion) {     
         Justificacion obj = null;
         try {
             conn = new Conectar();
@@ -61,7 +60,7 @@ public class JustificacionDAO implements GeneralJustificacionDAO{
                 
                 
                 if (id == idJustificacion) {                   
-                    obj = new Justificacion(idIna, idIna, fechaJ, idMot, glos);
+                    obj = new Justificacion(id, idIna, fechaJ, idMot, glos);
                    break;
                 }
             }
@@ -131,8 +130,8 @@ public class JustificacionDAO implements GeneralJustificacionDAO{
                 glos = results.getString("glosa");
                 
                 
-                if (jus.getIdInasistencia() == idIna && jus.getIdMotivo()==idMot ) {                   
-                    obj = new Justificacion(idIna, idIna, fechaJ, idMot, glos);
+                if (jus.getIdInasistencia() == idIna ) {                   
+                    obj = new Justificacion(id, idIna, fechaJ, idMot, glos);
                    break;
                 }
             }

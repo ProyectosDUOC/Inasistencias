@@ -46,7 +46,7 @@ public class ImagenDAO implements GeneralImagen{
     */   
             
             while (results.next()) {
-                id_img = results.getInt("id_justuficacion_img"); 
+                id_img = results.getInt("id_justificacion_img"); 
                 id_j = results.getInt("id_justificacion");
                 nombre = results.getString("nombre_imagen");
                 desc = results.getString("descripcion");

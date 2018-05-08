@@ -113,6 +113,7 @@ public class ControladorJustiS extends HttpServlet {
             semestreActual = (GlobalSemestre) session.getAttribute("semestreActual");
             secre = (new SecretariaDAO()).buscarDatos(user.getRutUsuario());
             carrera = (new CarreraDAO()).buscar(alum.getIdCarrera());
+            
             report = new ReporteSecretaria(0,justificacion.getIdInasistencia(),justificacion.getIdJustificacion(),secre.getIdSecretaria(),carrera.getIdDirector(), alum.getIdAlumno(), semestreActual.getSemestre(), semestreActual.getAnio(), 1);
             x = (new ReporteSecretariaDAO()).agregar(report);
             System.out.println("todo x :"+ x);

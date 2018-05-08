@@ -61,44 +61,44 @@
                 </div>
             </div>                   
         </header>  
+
         <div class="container">
-            <div class="row">            
-                <h4 class="color-Plomo color-Azul-text center-align" >Menu Director de Carrera</h4>                  
-                <table border="1" class="center-align">   
-                    <tr>
-                        <td>
-                            <a class="btn-large waves-effect waves-light color-AzulClaro" href="">
-                                Inasistencias Justificadas
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a class="btn-large waves-effect waves-light color-AzulClaro" href="">
-                                Checkeado por docente 
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a class="btn-large waves-effect waves-light color-AzulClaro" href="">
-                                Reporte por Semestre
-                            </a>
-                        </td>
-                    </tr>
-                    <a class="btn-large waves-effect waves-light color-AzulClaro" href="Director/justificaciones.jsp">
-                        Justificar
-                    </a>
-                    <tr>
-                        <td>
-                            <a class="btn-large waves-effect waves-light color-AzulClaro" href="index.jsp">
-                                Salir
-                            </a>
-                        </td>
-                    </tr> 
-                </table>
+            <div class="row">
+                <h4 class="color-Plomo color-Azul-text center-align" >Menu Director de carrera</h4>
+
+
+                <div class="col s12 m6 color-Azul-text">
+                    <h4 class="color-Plomo color-Azul-text center-align" ></h4>                   
+                    <div class="col s12">
+                        <a href="Director/justificaciones.jsp" class="btn waves-effect waves-light color-AzulClaro" > Inasistencias Justificadas</a>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="col s12">
+                        <a href="" class="btn waves-effect waves-light color-AzulClaro" > Checkeado por docente </a>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="col s12">
+                        <a href="" class="btn waves-effect waves-light color-AzulClaro">  Reporte por Semestre</a>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                     <div class="col s12">
+                        <a  class="white-text btn  waves-effect waves-light  red" href="index.jsp">Salir</a>
+                        <br>
+                        <br>
+                        <br>                        
+                        <br>
+                        <br>                        
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div>   
         <footer class="color-Azul">            
             <div class="container">
                 <br>
