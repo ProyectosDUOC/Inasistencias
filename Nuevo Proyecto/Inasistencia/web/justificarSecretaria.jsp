@@ -30,7 +30,7 @@
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-     <head>
+    <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
         <!-- CSS  -->
@@ -42,58 +42,58 @@
         <%
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-           
+
             Alumno alum = new Alumno();
             Docente docente = new Docente();
             Secretaria secre = new Secretaria();
             Seccion seccion = new Seccion();
             Director dire = new Director();
             Carrera carrera = new Carrera();
-            
+
             SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date();
             String fechaActual = parseador.format(date);
             GlobalSemestre semestreActual = new GlobalSemestre();
-            
-            String idSeccion="",rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre="", estado="",semestre="", nombreDocente="", nombreAsig="", nombreCod="";
-            String nombreDirector="";
+
+            String idSeccion = "", rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreDocente = "", nombreAsig = "", nombreCod = "";
+            String nombreDirector = "";
             ArrayList<Motivo> motivos = new MotivoDAO().mostrarDatos();
-            
+
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
-                if (estado.equals("secretaria")) {                    
+                if (estado.equals("secretaria")) {
                     if (sesion.getAttribute("rut") != null) {
-                       if (sesion.getAttribute("idSeccion")!=null) {
-                           semestreActual = (GlobalSemestre) session.getAttribute("semestreActual");
-                           secre = (new SecretariaDAO()).buscarDatos(user.getRutUsuario());
-                           nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();
-                           
-                           rutA = session.getAttribute("rut").toString();
-                           alum = (new AlumnoDAO()).buscarDatos(rutA); 
-                           nombreA = alum.getPnombre() + " " + alum.getSnombre() + " " + alum.getAppaterno() + " " + alum.getApmaterno();
-                           idSeccion = sesion.getAttribute("idSeccion").toString();
-                           carrera = (new CarreraDAO()).buscar(alum.getIdCarrera());
-                           carreraA= carrera.getNombreCarrera();
-                           dire = (new DirectorDAO()).buscarDatos(carrera.getIdDirector());
-                           nombreDirector = dire.getPnombre()+" "+dire.getAppaterno();
-                           seccion = (new SeccionDAO()).buscar(Integer.parseInt(idSeccion)); 
-                           nombreAsig = (new RamoDAO()).buscar(seccion.getCodRamo()).getNombreRamo();
-                           docente = (new DocenteDAO()).buscarDatos(seccion.getIdDocente());
-                           nombreDocente = docente.getPnombre()+" "+docente.getSnombre()+" "+docente.getAppaterno()+" "+docente.getApmaterno();
-                           
-                       }else{
-                           response.sendRedirect("secretaria.jsp?mensaje=No se encontro curso");
-                       }                        
-                    }else{
-                       response.sendRedirect("secretaria.jsp");
-                   }                   
+                        if (sesion.getAttribute("idSeccion") != null) {
+                            semestreActual = (GlobalSemestre) session.getAttribute("semestreActual");
+                            secre = (new SecretariaDAO()).buscarDatos(user.getRutUsuario());
+                            nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();
+
+                            rutA = session.getAttribute("rut").toString();
+                            alum = (new AlumnoDAO()).buscarDatos(rutA);
+                            nombreA = alum.getPnombre() + " " + alum.getSnombre() + " " + alum.getAppaterno() + " " + alum.getApmaterno();
+                            idSeccion = sesion.getAttribute("idSeccion").toString();
+                            carrera = (new CarreraDAO()).buscar(alum.getIdCarrera());
+                            carreraA = carrera.getNombreCarrera();
+                            dire = (new DirectorDAO()).buscarDatos(carrera.getIdDirector());
+                            nombreDirector = dire.getPnombre() + " " + dire.getAppaterno();
+                            seccion = (new SeccionDAO()).buscar(Integer.parseInt(idSeccion));
+                            nombreAsig = (new RamoDAO()).buscar(seccion.getCodRamo()).getNombreRamo();
+                            docente = (new DocenteDAO()).buscarDatos(seccion.getIdDocente());
+                            nombreDocente = docente.getPnombre() + " " + docente.getSnombre() + " " + docente.getAppaterno() + " " + docente.getApmaterno();
+
+                        } else {
+                            response.sendRedirect("secretaria.jsp?mensaje=No se encontro curso");
+                        }
+                    } else {
+                        response.sendRedirect("secretaria.jsp");
+                    }
                 } else {
                     response.sendRedirect("index.jsp");
                 }
             }
-        %>    
+        %> 
     </head>
     <body>
         <header class="color-Azul">
@@ -127,7 +127,7 @@
                     <p><strong>Carrera :</strong> <span><%=carreraA%></span></p>
                     <p><strong>Correo :</strong><span><%=alum.getEmail()%></span></p>
                     <h4 class="color-Plomo center-align">Director de Carrera</h4>  
-                    <p><strong>Nombre Director :</strong> <span><%=nombreDirector %></span></p>
+                    <p><strong>Nombre Director :</strong> <span><%=nombreDirector%></span></p>
                     <br>
                 </div>
                 <div class="col s12 m6 color-Azul-text">
@@ -136,7 +136,7 @@
                         <table class="color-Plomo color-Azul-text">
                             <tr>
                                 <td><p><strong>Fecha Inasistencia:</strong></td>
-                                <td><p><input type="date" name="fecha" value="" required="" min="<%=semestreActual.getFechaInicio()%>" max="<%=fechaActual%>"></p></td>
+                                <td><p><input type="date" id="fecha" name="fecha"  value="" required="" min="<%=semestreActual.getFechaInicio()%>" max="<%=fechaActual%>"></p></td>
                             </tr>
                             <tr>
                                 <td><strong>Motivo:</strong></td>
@@ -176,12 +176,12 @@
                 </div>
             </div>
         </div>         
-       <footer class="color-Azul">            
+        <footer class="color-Azul">            
             <div class="container">
                 <br>
                 <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>                                
                 <br>
             </div>
-        </footer>  
+        </footer> 
     </body>
 </html>
