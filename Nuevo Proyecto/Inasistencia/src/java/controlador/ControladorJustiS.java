@@ -93,7 +93,7 @@ public class ControladorJustiS extends HttpServlet {
             }
             alum = (new AlumnoDAO()).buscarDatos(rutA);
 
-            inasistencia = new Inasistencia(0, fechaInasistencia, Integer.parseInt(idSeccion), alum.getIdAlumno(), 0, 7);
+            inasistencia = new Inasistencia(0, fechaInasistencia, Integer.parseInt(idSeccion), alum.getIdAlumno(), 3, 7);
             x = (new InasistenciaDAO()).agregar(inasistencia);
             inasistencia = (new InasistenciaDAO()).buscarIdCorreo(7);
             justificacion = new Justificacion(0, inasistencia.getIdInasistencia(), fechaHoy, Integer.parseInt(motivo), glosa);

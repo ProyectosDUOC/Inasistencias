@@ -152,7 +152,7 @@ public class ReporteSecretariaDAO implements GeneralReporteSDAO{
 
             Statement statement = connection.createStatement();
 
-            String consultaSQL = "SELECT * FROM reporte_secretaria where id_director="+idDirector+" and semestre="+semestre+" and anio="+anio+" order by id_justificacion asc;";
+            String consultaSQL = "SELECT * FROM reporte_secretaria where id_director="+idDirector+" and semestre="+semestre+" and anio="+anio+" and activo=1 order by id_justificacion asc;";
 
             ResultSet results = statement.executeQuery(consultaSQL);
             
@@ -181,5 +181,70 @@ public class ReporteSecretariaDAO implements GeneralReporteSDAO{
         }
         return arrayReportes;
     }
+
+    @Override
+    public ReporteSecretaria buscarDatosReporte(int idR) {
+        ReporteSecretaria obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM reporte_secretaria where id_reporte="+idR+";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+            
+            int id1, idIna1, idJus, idAlum,idSecr,idDire,idlum,semestre1,anio1,activo1;
+            
+      
+            
+            while (results.next()) {
+                id1 = results.getInt("id_reporte");                
+                idIna1 = results.getInt("id_inasistencia");
+                idJus = results.getInt("id_justificacion");
+                idSecr = results.getInt("id_secretaria");
+                idDire = results.getInt("id_director");
+                idAlum = results.getInt("id_alumno");
+                semestre1 = results.getInt("semestre");                
+                anio1 = results.getInt("anio");                
+                activo1 = results.getInt("activo");
+                
+                if (idR==id1) {
+                    obj = new ReporteSecretaria(id1, idIna1, idJus, idSecr, idDire, idAlum, semestre1, anio1, activo1);
+                    break; 
+                }
+                
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return obj;
+    }
+
+    @Override
+    public int actualizarActivo(int idR, int activo) {
+        int results = 0;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+            Statement statement = connection.createStatement();
+
+            String agregarSQL = "UPDATE reporte_secretaria SET  " + 
+                    " activo="+activo+ 
+                    " where id_reporte="+idR+";"; 
+            results = statement.executeUpdate(agregarSQL);
+            connection.close();
+            conn.desconectar();
+
+        } //catching excepcion
+        catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return results;
+    }
+
     
 }

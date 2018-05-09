@@ -16,6 +16,8 @@ public interface GeneralReporteSDAO {
     public abstract ArrayList mostrarDatos();    
     public abstract ArrayList mostrarDatosDirector(int idDirector, int semestre , int anio);
     public abstract ReporteSecretaria buscarDatos(int idJ) ; 
+    public abstract ReporteSecretaria buscarDatosReporte(int idR) ; 
+    public abstract int actualizarActivo(int idR, int activo) ; 
     public abstract int agregar(ReporteSecretaria reporte);
     public abstract int actualizar(int idJusti, int activo);
 }

@@ -42,7 +42,8 @@
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-        <link rel="stylesheet" type="text/css" href="../css/styleLogin.css"> 
+        <link rel="stylesheet" type="text/css" href="../css/styleLogin.css">         
+        <link rel="stylesheet" type="text/css" href="../css/lightbox.css">
         <link rel="shortcut icon" href="../images/favicon.ico?" type="images/favicon.ico" />
         <title>Justificar Inasistencia</title>
         <%
@@ -63,7 +64,7 @@
             SimpleDateFormat parseador = new SimpleDateFormat("dd-MM-yyyy");
             Date date = new Date();
 
-            String fechaA = "",glosa="", rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreDocente = "", nombreAsig = "", nombreCod = "", motivo = "";
+            String fechaA = "", glosa = "", rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreDocente = "", nombreAsig = "", nombreCod = "", motivo = "";
             String nombreDirector = "";
             int id = 0;
 
@@ -74,32 +75,31 @@
                 if (estado.equals("director")) {
                     dire = (new DirectorDAO()).buscarDatos(user.getRutUsuario());
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
-                    
+
                     if (session.getAttribute("idJ") != null) {
                         id = Integer.parseInt(sesion.getAttribute("idJ").toString());
 
-                        reporte = (new ReporteSecretariaDAO()).buscarDatos(id);                        
+                        reporte = (new ReporteSecretariaDAO()).buscarDatos(id);
                         alum = (new AlumnoDAO()).buscarDatosId(reporte.getIdAlumno());
                         ina = (new InasistenciaDAO()).buscar(reporte.getIdInasistencia());
-                        justi = (new JustificacionDAO()).buscar(reporte.getIdJustificacion());                        
+                        justi = (new JustificacionDAO()).buscar(reporte.getIdJustificacion());
                         seccion = (new SeccionDAO()).buscar(ina.getIdSeccion());
                         carrera = (new CarreraDAO()).buscar(alum.getIdCarrera());
                         carreraA = carrera.getNombreCarrera();
-                        justiImg = (new ImagenDAO()).buscar(justi.getIdJustificacion());
+                       justiImg = (new ImagenDAO()).buscar(justi.getIdJustificacion());
                         dire = (new DirectorDAO()).buscarDatos(carrera.getIdDirector());
                         nombreDirector = dire.getPnombre() + " " + dire.getAppaterno();
 
-                        nombreAsig = (new RamoDAO()).buscar(seccion.getCodRamo()).getNombreRamo();  
-                        docente = (new DocenteDAO()).buscarDatos(seccion.getIdDocente());     
+                        nombreAsig = (new RamoDAO()).buscar(seccion.getCodRamo()).getNombreRamo();
+                        docente = (new DocenteDAO()).buscarDatos(seccion.getIdDocente());
 
                         nombreA = alum.getPnombre() + " " + alum.getSnombre() + " " + alum.getAppaterno() + " " + alum.getApmaterno();
                         nombreDocente = docente.getPnombre() + " " + docente.getSnombre() + " " + docente.getAppaterno() + " " + docente.getApmaterno();
-                        
-                        
+
                         glosa = justi.getGlosa();
                         motivo = (new MotivoDAO()).buscar(justi.getIdMotivo()).getNombreMotivo();
                         fechaA = parseador.format(ina.getFechaInasistencia());
-                        
+                        sesion.setAttribute("reporte", reporte);
                     } else {
                         response.sendRedirect("../index.jsp");
                     }
@@ -118,11 +118,11 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <div class="col s6 offset-s6">
-                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>                            
-                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
+                            <a href="../<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>                            
+                            <a href="../<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
-                                <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
-                                <a class="waves-effect waves-light" href="index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         
+                                <a class="waves-effect waves-light" href="../configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
+                                <a class="waves-effect waves-light" href="../index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         
                             </div>                            
                         </div>
                     </div>
@@ -145,39 +145,45 @@
                     <p><strong>Nombre Director :</strong> <span><%=nombreDirector%></span></p>
                     <br>
                     <a class="white-text btn  waves-effect waves-light  red" href="justificaciones.jsp">Volver</a>
-                     
+
                 </div>
+
                 <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo center-align">Justificación</h4>
-                    <table class="color-Plomo color-Azul-text">
-                        <tr>
-                            <td><p><strong>Fecha Inasistencia:</strong></td>
-                            <td><p><%=fechaA%></p></td>
-                        </tr>
-                        <tr>
-                            <td><p><strong>Fecha Justificacion:</strong></td>
-                            <td><p><%=fechaA%></p></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Motivo:</strong></td>
-                            <td><p><%=motivo%></p></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Glosa:</strong></td>                       
-                             <td><p><%=glosa%></p></td>
-                        </tr>
-                    </table>
-                    <br>                        
-                    <div class="gallery">                       
-                        <a href="../enviado.jsp?file=<%=justiImg.getNombreImagen()%>" target="_blank" data-lightbox="mygallery"><strong>Ver Archivo</strong></a>
-                          
-                            
-                    </div>
-                    <br>
-                    <div>
-                        <button class="btn waves-effect waves-light green" type="submit" name="opcion" value="Rechazar">Rechazar</button>
-                        <button class="btn waves-effect waves-light green" type="submit" name="opcion" value="Aprobar">Aprobar</button>
-                    </div>                 
+                    <form method="post" action="../ControladorVerJustifi">
+                        <table class="color-Plomo color-Azul-text">
+                            <tr>
+                                <td><p><strong>Fecha Inasistencia:</strong></td>
+                                <td><p><%=fechaA%></p></td>
+                            </tr>
+                            <tr>
+                                <td><p><strong>Fecha Justificacion:</strong></td>
+                                <td><p><%=fechaA%></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Motivo:</strong></td>
+                                <td><p><%=motivo%></p></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Glosa:</strong></td>                       
+                                <td><p><%=glosa%></p></td>
+                            </tr>
+                        </table>
+                        <br>                        
+                        <div> 
+                            <a href="../enviado.jsp?file=<%=justiImg.getNombreImagen()%>" target="_blank" class="btn green" ><strong>Ver Archivo <i class="material-icons">folder_open</i></strong></a>
+                        </div>
+                        <!--<div class="gallery">                       
+                            <a href="files/" data-lightbox="mygallery" alt="Galer" data-title="Justificacion">
+                            <img src="files/" alt="Justificacion alumno" class="circle" width="100" height="100"></a>
+                        </div> -->    
+                        <br>
+                        <div>
+
+                            <button class="btn waves-effect waves-light blue" type="submit" name="opcion" value="Rechazar"><strong>Rechazar</strong></button>
+                            <button class="btn waves-effect waves-light blue" type="submit" name="opcion" value="Aprobar"><strong>Aprobar</strong></button>
+                        </div> 
+                    </form>
                 </div>
             </div>
         </div>         
@@ -188,6 +194,7 @@
                 <br>
             </div>
         </footer>  
-        <script src="js/lightbox-plus-jquery.min.js" type="text/javascript"></script>
+
+        <script src="../js/lightbox-plus-jquery.min.js" type="text/javascript"></script>
     </body>
 </html>

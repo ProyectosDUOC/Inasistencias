@@ -28,6 +28,10 @@
         <servlet-name>ControladorJustificacion</servlet-name>
         <servlet-class>controlador.ControladorJustificacion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorVerJustifi</servlet-name>
+        <servlet-class>controlador.ControladorVerJustifi</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>ControladorJustificacion</servlet-name>
         <url-pattern>/ControladorJustificacion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorVerJustifi</servlet-name>
+        <url-pattern>/ControladorVerJustifi</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

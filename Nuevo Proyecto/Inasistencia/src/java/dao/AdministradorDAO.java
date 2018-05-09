@@ -200,7 +200,8 @@ public class AdministradorDAO implements GeneralAdminDAO{
 
     @Override
     public int actualizar(Administrador cordinador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 0;
+       
     }
     
 }

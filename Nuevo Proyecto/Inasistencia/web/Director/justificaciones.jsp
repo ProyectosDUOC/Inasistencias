@@ -57,7 +57,7 @@
                     System.out.println(semestreActual.getAnio() + " " + semestreActual.getSemestre());
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
                     arrayReportes = (new ReporteSecretariaDAO()).mostrarDatosDirector(dire.getIdDirector(), semestreActual.getSemestre(), semestreActual.getAnio());
-
+                    sesion.setAttribute("reporte", null);
                 } else {
                     response.sendRedirect("../index.jsp");
                 }
@@ -105,7 +105,7 @@
                                     <td></td>
                                     <td>No se han encontrados nuevos registros</td>
                                     <td></td>
-                                    <td>a</td>
+                                    <td></td>
                                 </tr>
                                 <% } else {
                                     for (ReporteSecretaria r : arrayReportes) {

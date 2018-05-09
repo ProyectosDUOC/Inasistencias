@@ -331,7 +331,7 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
             Statement statement = connection.createStatement();
 
             String agregarSQL = "UPDATE inasistencia SET  " + 
-                    ", fecha_inasistencia='" +inasistencia.getFechaInaString()+ 
+                    " fecha_inasistencia='" +inasistencia.getFechaInasistencia()+ 
                     "', id_seccion="+ inasistencia.getIdSeccion()  +
                     ", id_alumno=" + inasistencia.getIdAlumno()+
                     ", id_estadoi=" + inasistencia.getIdEstadoi() +
