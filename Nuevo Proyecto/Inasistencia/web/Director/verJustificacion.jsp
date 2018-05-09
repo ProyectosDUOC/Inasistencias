@@ -44,7 +44,7 @@
         <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link rel="stylesheet" type="text/css" href="../css/styleLogin.css">         
         <link rel="stylesheet" type="text/css" href="../css/lightbox.css">
-        <link rel="shortcut icon" href="../images/favicon.ico?" type="images/favicon.ico" />
+        <link rel="shortcut icon" href="../images/favicon.ico" type="images/favicon.ico" />
         <title>Justificar Inasistencia</title>
         <%
             HttpSession sesion = request.getSession(true);
@@ -64,10 +64,10 @@
             SimpleDateFormat parseador = new SimpleDateFormat("dd-MM-yyyy");
             Date date = new Date();
 
-            String fechaA = "", glosa = "", rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreDocente = "", nombreAsig = "", nombreCod = "", motivo = "";
+            String fechaA = "", glosa = "", rut = "", fechaJ="", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreDocente = "", nombreAsig = "", nombreCod = "", motivo = "";
             String nombreDirector = "";
-            int id = 0;
-
+            int id = 0, activo=0;
+            
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("../index.jsp");
             } else {
@@ -86,7 +86,7 @@
                         seccion = (new SeccionDAO()).buscar(ina.getIdSeccion());
                         carrera = (new CarreraDAO()).buscar(alum.getIdCarrera());
                         carreraA = carrera.getNombreCarrera();
-                       justiImg = (new ImagenDAO()).buscar(justi.getIdJustificacion());
+                        justiImg = (new ImagenDAO()).buscar(justi.getIdJustificacion());
                         dire = (new DirectorDAO()).buscarDatos(carrera.getIdDirector());
                         nombreDirector = dire.getPnombre() + " " + dire.getAppaterno();
 
@@ -100,6 +100,8 @@
                         motivo = (new MotivoDAO()).buscar(justi.getIdMotivo()).getNombreMotivo();
                         fechaA = parseador.format(ina.getFechaInasistencia());
                         sesion.setAttribute("reporte", reporte);
+                        activo = reporte.getActivo();
+                        fechaJ = justi.getFechaJustificacion().toString();
                     } else {
                         response.sendRedirect("../index.jsp");
                     }
@@ -144,8 +146,14 @@
                     <h4 class="color-Plomo center-align">Director de Carrera</h4>  
                     <p><strong>Nombre Director :</strong> <span><%=nombreDirector%></span></p>
                     <br>
-                    <a class="white-text btn  waves-effect waves-light  red" href="justificaciones.jsp">Volver</a>
-
+                    <%if (activo==1) { %>
+                        <a class="white-text btn  waves-effect waves-light  red" href="justificaciones.jsp">Volver</a>
+                    <%    }
+                    %>
+                    <%if (activo!=1) { %>
+                        <a class="white-text btn  waves-effect waves-light  red" href="allJustificaciones.jsp">Volver</a>
+                    <%    }
+                    %>
                 </div>
 
                 <div class="col s12 m6 color-Azul-text">
@@ -158,7 +166,7 @@
                             </tr>
                             <tr>
                                 <td><p><strong>Fecha Justificacion:</strong></td>
-                                <td><p><%=fechaA%></p></td>
+                                <td><p><%=fechaJ%></p></td>
                             </tr>
                             <tr>
                                 <td><strong>Motivo:</strong></td>
@@ -179,9 +187,19 @@
                         </div> -->    
                         <br>
                         <div>
-
-                            <button class="btn waves-effect waves-light blue" type="submit" name="opcion" value="Rechazar"><strong>Rechazar</strong></button>
-                            <button class="btn waves-effect waves-light blue" type="submit" name="opcion" value="Aprobar"><strong>Aprobar</strong></button>
+                            <%if (activo == 1) {%>
+                              <button class="btn waves-effect waves-light blue" type="submit" name="opcion" value="Rechazar"><strong>Rechazar</strong></button>
+                              <button class="btn waves-effect waves-light blue" type="submit" name="opcion" value="Aprobar"><strong>Aprobar</strong></button>
+                            <%  }
+                            %>
+                            <%if (activo == 2) {%>
+                                <h3 class="black-text green btn">Aprobado</h3>
+                            <%  }
+                            %>
+                            <%if (activo == 3) {%>
+                                <h3 class="black-text red btn">Rechazado</h3>
+                            <%  }
+                            %>
                         </div> 
                     </form>
                 </div>

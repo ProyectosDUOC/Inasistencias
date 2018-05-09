@@ -16,7 +16,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link rel="stylesheet" type="text/css" href="css/styleLogin.css">          
-        <link rel="shortcut icon" href="images/favicon.ico?" type="images/favicon.ico" />
+        <link rel="shortcut icon" href="images/favicon.ico" type="images/favicon.ico" />
         <%
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
@@ -44,7 +44,6 @@
             </div>
         </div>
         <section>
-            <p><%=System.getenv("UPLOADS")%></p>
             <div class="container">
                 <div class="row">
                     <div class="col s12 m4">     
@@ -54,11 +53,11 @@
                                 <table>
                                     <tr>
                                         <td>Usuario:</td>
-                                        <td><input type="text" name="txtUser" required="" maxlength="10"/></td>
+                                        <td><input type="text" name="txtUser" required="" maxlength="10" placeholder="Usuario"/></td>
                                     </tr>
                                     <tr>
                                         <td>Contraseña:</td>
-                                        <td><input type="password" name="txtPass" required="" maxlength="10"/></td>
+                                        <td><input type="password" name="txtPass" required="" maxlength="10" placeholder="********" /></td>
                                     </tr>                                    
                                 </table>
                                 <div >

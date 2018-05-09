@@ -50,10 +50,10 @@
             ArrayList<Seccion> arraySeccionesAlumno = new ArrayList<Seccion>();
             int alumnoEncontrado = 0; //0 no encontrado, 1 se encontro, 2 no tiene ramos
             int cursosEncontrado = 0;
-            
+
             //Variables de cursos
-            String nombreAsig="", nombreCod="", nombreProfe="";
-            
+            String nombreAsig = "", nombreCod = "", nombreProfe = "";
+
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
             } else {
@@ -95,7 +95,20 @@
                     response.sendRedirect("index.jsp");
                 }
             }
-        %>        
+        %>   
+        <script>
+            function validarRut(string) {//solo letras y numeros
+                var out = '';
+                //Se añaden las letras validas
+                var filtro = '1234567890k';//Caracteres validos
+
+                for (var i = 0; i < string.length; i++)
+                    if (filtro.indexOf(string.charAt(i)) != -1)
+                        out += string.charAt(i);
+                return out;
+            }
+
+        </script>
     </head>
     <body>
         <header class="color-Azul">
@@ -122,7 +135,7 @@
                 <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo color-Azul-text center-align" >Ingreso de Alumno</h4> 
                     <form method="post" action="ControladorSecretaria">
-                        <p><strong> Rut:</strong> <input type="text" name="txtRut" maxlength="10"/> </p>  
+                        <p><strong> Rut:</strong> <input type="text" name="txtRut" maxlength="10" placeholder="19000222 (Sin digito verificador y puntos)" onkeyup="this.value = validarRut(this.value)"/> </p>  
                         <input type="submit" name="opcion" value="Buscar" class="color-AzulClaro waves-effect waves-light btn"/>                                
                         <input type="submit" name="opcion" value="Nuevo" class="color-AzulClaro waves-effect waves-light btn"/>                                
                     </form>
@@ -178,7 +191,7 @@
                         </tbody>
                     </table> 
                     <% }
-                }%>                    
+                        }%>                    
                 </div>
             </div>
         </div>                   

@@ -5,8 +5,12 @@
  */
 package controlador;
 
+import dao.AlumnoDAO;
+import dao.DocenteDAO;
 import dao.InasistenciaDAO;
+import dao.JustificacionDAO;
 import dao.ReporteSecretariaDAO;
+import dao.SeccionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,8 +18,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modelo.Alumno;
+import modelo.Docente;
 import modelo.Inasistencia;
+import modelo.Justificacion;
 import modelo.ReporteSecretaria;
+import modelo.Seccion;
 
 /**
  *
@@ -39,9 +47,13 @@ public class ControladorVerJustifi extends HttpServlet {
         HttpSession sesion = request.getSession(true);
         
         ReporteSecretaria reporte= new ReporteSecretaria();   
-        Inasistencia inasistencia = new Inasistencia();
-        
+        Inasistencia inasistencia = new Inasistencia();    
+        Seccion seccion = new Seccion();
+        Docente doce = new Docente();
+        Alumno alum = new Alumno();
+        Justificacion justi = new Justificacion();
         String opcion = request.getParameter("opcion");
+        String mensaje="", asunto="";
         int x;
         if (opcion.equals("Aprobar")) {
             reporte = (ReporteSecretaria)sesion.getAttribute("reporte");
@@ -49,6 +61,21 @@ public class ControladorVerJustifi extends HttpServlet {
             inasistencia=(new InasistenciaDAO()).buscar(reporte.getIdInasistencia());
             inasistencia.setIdEstadoi(6);
             (new InasistenciaDAO()).actualizar(inasistencia);
+            seccion = (new SeccionDAO()).buscar(inasistencia.getIdSeccion());
+            doce =(new DocenteDAO()).buscarDatos(seccion.getIdDocente());
+            
+            //JUSTI
+            alum = (new AlumnoDAO()).buscarDatosId(inasistencia.getIdAlumno());
+            justi = (new JustificacionDAO()).buscar(reporte.getIdJustificacion());
+            //Enviar Correo Electronico
+            mensaje = (new ControladorCorreo()).mensajeAprobadoAlumno(alum,inasistencia,justi);
+            
+            asunto = "Justificacion Aprobada";    
+            
+            x = (new ControladorCorreo()).enviar(alum.getEmail(), mensaje, asunto);
+            
+            
+            
             response.sendRedirect("Director/justificaciones.jsp");
         }
         if (opcion.equals("Rechazar")) {

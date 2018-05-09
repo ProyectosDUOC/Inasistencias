@@ -79,8 +79,6 @@ public class Login extends HttpServlet {
                     switch (tipousuario) {
                         case 1:
                             sesion.setAttribute("tipoUsuario", "alumno");
-                            alum = (new AlumnoDAO()).buscarDatos(ingreso.getRutUsuario());
-                            sesion.setAttribute("login",alum);
                             response.sendRedirect("alumno.jsp");
                             break;
                         case 2:

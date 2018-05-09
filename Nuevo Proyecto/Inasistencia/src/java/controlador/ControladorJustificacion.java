@@ -6,7 +6,6 @@
 package controlador;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,31 @@ public class ControladorJustificacion extends HttpServlet {
         
         String opcion = request.getParameter("opcion");
         
+        //Director
         if (opcion.charAt(0) == 'J') {
+            id = opcion.substring(1);           
+            
+            session.setAttribute("idJ", id);
+            response.sendRedirect("Director/verJustificacion.jsp");
+        }
+        if (opcion.charAt(0) == 'V') {
+            id = opcion.substring(1);           
+            
+            session.setAttribute("idJ", id);
+            response.sendRedirect("Director/verJustificacion.jsp");
+        }
+        
+        //Alumno
+        
+        //Pendiente
+         if (opcion.charAt(0) == 'P') {
+            id = opcion.substring(1);           
+            
+            session.setAttribute("idJ", id);
+            response.sendRedirect("Director/verJustificacion.jsp");
+        }
+        //Ver el estado
+          if (opcion.charAt(0) == 'v') {
             id = opcion.substring(1);           
             
             session.setAttribute("idJ", id);

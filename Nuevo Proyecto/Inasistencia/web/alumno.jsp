@@ -4,6 +4,8 @@
     Author     : benja
 --%>
 
+<%@page import="dao.InasistenciaDAO"%>
+<%@page import="modelo.Inasistencia"%>
 <%@page import="dao.DocenteDAO"%>
 <%@page import="dao.RamoDAO"%>
 <%@page import="dao.SeccionDAO"%>
@@ -32,10 +34,10 @@
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             Alumno alu = new Alumno();
             String nombre = "", estado = "", rut = "";
-            int semestre = 0, year = 0;
-            ArrayList<Seccion> arrayCursos = new ArrayList<Seccion>();
+            int semestre = 0, year = 0, encontrado = 0;
+            GlobalSemestre gl = new GlobalSemestre();
+            ArrayList<Inasistencia> arrayInasistencia = new ArrayList<Inasistencia>();
             Seccion seccion = new Seccion();
-            Ramo ramo = new Ramo();
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("index.jsp");
             } else {
@@ -44,10 +46,17 @@
                     rut = user.getRutUsuario();
                     alu = (new AlumnoDAO()).buscarDatos(rut);
                     if (alu != null) {
+                        System.out.println("1");
                         nombre = alu.getPnombre() + " " + alu.getSnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno();
-                        semestre = (new GlobalSemestre()).getSemestre();
-                        year = (new GlobalSemestre()).getAnio();
-                        arrayCursos = (new SeccionDAO()).seccionesAlumnoAnyoSemestre(alu.getIdAlumno(), semestre, year);
+                        gl = (GlobalSemestre)sesion.getAttribute("semestreActual");
+                        System.out.println("2" + nombre);
+                        arrayInasistencia = (new InasistenciaDAO()).inasistenciaAlumnoActual(alu.getIdAlumno(), gl.getSemestre(), gl.getAnio());
+                        System.out.println("4 = " + arrayInasistencia.isEmpty());
+                        if (!arrayInasistencia.isEmpty()) {
+                            encontrado = 1;
+                        } else {
+                            encontrado = 0;
+                        }
                     } else {
                         response.sendRedirect("index.jsp");
                     }
@@ -92,27 +101,87 @@
                                 <tr class="amber darken-3">
                                     <th>Nombre Asignatura</th>
                                     <th>Asignatura/sección</th>                                    
-                                    <th>Fecha</th>
-                                    <th></th>
+                                    <th>Fecha Inasistencia</th>
+                                    <th>Estado</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% if (arrayCursos.isEmpty()) {  %>
-                                <tr><td>No tienes cursos registrados<td></tr>
+                                <% if (encontrado == 0) {  %>
+                                <tr>                                    
+                                    <td></td>
+                                    <td>No tienes inasistencias registrados<td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>                                
                                 <%   } else {
-                                    for (Seccion xx : arrayCursos) {%>
-                            <td><%=(new RamoDAO()).buscar(xx.getCodRamo()).getNombreRamo()%></td> 
-                            <td><%=xx.getCodRamo()%></td> 
-                            <td><%=(new DocenteDAO()).buscarDatos(xx.getIdDocente())%></td>
-                            <td>0</td>
-                            <button 
-                                class="btn  color-Azul amber-text" 
-                                type="submit" 
-                                name="opcion" 
-                                value="j<%=xx.getIdSeccion()%>"> 
-                                Justificar 
-                            </button>
+                                    if (encontrado == 1) {
+                                        for (Inasistencia ina : arrayInasistencia) {
+                                            seccion = (new SeccionDAO()).buscar(ina.getIdSeccion());
+                                %>
+                            <tr>
+                            <td><%=(new RamoDAO()).buscar(seccion.getCodRamo()).getNombreRamo()%></td> 
+                            <td><%=seccion.getCodRamo()%></td> 
+                            <td><%=ina.getFechaInasistencia()%></td>
+                            <td>
+                                <%if (ina.getIdEstadoi() == 1) {%>
+                                <button class="btn amber waves-effect waves-light" 
+                                        type="submit" 
+                                        name="opcion" 
+                                        value="I<%=ina.getIdInasistencia()%>">
+                                    Pendiente
+                                </button>
+                                <%}%>
+                                <%if (ina.getIdEstadoi() == 2) {%>
+                                <button class="btn green waves-effect waves-light" 
+                                        type="submit" 
+                                        name="opcion" 
+                                        value="v<%=ina.getIdInasistencia()%>">
+                                    Ver justificación
+                                </button>
+                                <%}%>
+                                <%if (ina.getIdEstadoi() == 3) {%>
+                                <button class="btn blue darken-1 waves-effect waves-light" 
+                                        type="submit" 
+                                        name="opcion" 
+                                        value="v<%=ina.getIdInasistencia()%>">
+                                    Justificado por Secretaria
+                                </button>
+                                <%}%>
+                                <%if (ina.getIdEstadoi() == 4) {%>
+                                <button class="btn green waves-effect waves-light" 
+                                        type="submit" 
+                                        name="opcion" 
+                                        value="v<%=ina.getIdInasistencia()%>">
+                                    Aprobado por Docente
+                                </button>
+                                <%}%>
+                                <%if (ina.getIdEstadoi() == 5) {%>
+                                <button class="btn red waves-effect waves-light" 
+                                        type="submit" 
+                                        name="opcion" 
+                                        value="v<%=ina.getIdInasistencia()%>">
+                                    No Aprobado por Docente
+                                </button>
+                                <%}%>
+                                <%if (ina.getIdEstadoi() == 6) {%>
+                                <button class="btn green waves-effect waves-light" 
+                                        type="submit" 
+                                        name="opcion" 
+                                        value="v<%=ina.getIdInasistencia()%>">
+                                    Aprobado por Director
+                                </button>
+                                <%}%>
+                                <%if (ina.getIdEstadoi() == 7) {%>
+                                <button class="btn red waves-effect waves-light" 
+                                        type="submit" 
+                                        name="opcion" 
+                                        value="v<%=ina.getIdInasistencia()%>">
+                                    No Aprobado por Director
+                                </button>
+                                <%}%>
+                            </td>
                             <%
+                                        }
                                     }
                                 }
                             %>

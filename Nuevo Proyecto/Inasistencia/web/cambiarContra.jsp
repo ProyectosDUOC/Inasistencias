@@ -77,10 +77,24 @@
                     secre = (new SecretariaDAO()).buscarDatos(rut);
                     nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();
                     correo = secre.getEmail();
-                    sesion.setAttribute("rut",null);
+                    sesion.setAttribute("rut", null);
                 }
             }
         %>
+        <script>
+
+            function NumText(string) {//solo letras y numeros
+                var out = '';
+                //Se añaden las letras validas
+                var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
+
+                for (var i = 0; i < string.length; i++)
+                    if (filtro.indexOf(string.charAt(i)) != -1)
+                        out += string.charAt(i);
+                return out;
+            }
+
+        </script>
     </head>
     <body>
         <header class="color-Azul">
@@ -110,15 +124,15 @@
                         <table class="col s12 table-new-contract">
                             <tr>
                                 <td><strong>Contraseña Anterior:</strong></td>
-                                <td><input type="password" name="txtPassAnterior" required="" maxlength="10"/></td>                                
+                                <td><input type="password" name="txtPassAnterior" onkeyup="this.value = NumText(this.value)" required="" maxlength="10"/></td>                                
                             </tr> 
                             <tr>
                                 <td><strong>Contraseña Nueva:</strong></td>
-                                <td><input type="password" name="txtPassNueva1" required=""  maxlength="10"/></td>
+                                <td><input type="password" name="txtPassNueva1" onkeyup="this.value = NumText(this.value)" required=""  maxlength="10" /></td>
                             </tr> 
                             <tr>
                                 <td><strong>Contraseña Nueva:</strong></td>
-                                <td><input type="password" name="txtPassNueva2" required=""  maxlength="10"/></td>
+                                <td><input type="password" name="txtPassNueva2" onkeyup="this.value = NumText(this.value)" required=""  maxlength="10"/></td>
                             </tr> 
                             <tr>
                                 <td>

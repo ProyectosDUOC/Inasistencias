@@ -75,13 +75,7 @@
                         <br>
                     </div>
                     <div class="col s12">
-                        <a href="" class="btn waves-effect waves-light color-AzulClaro" > Checkeado por docente </a>
-                        <br>
-                        <br>
-                    </div>
-                    <div class="col s12">
-                        <a href="" class="btn waves-effect waves-light color-AzulClaro">  Reporte por Semestre</a>
-                        <br>
+                        <a href="Director/allJustificaciones.jsp" class="btn waves-effect waves-light color-AzulClaro" > Ver todos las justificaciones </a>
                         <br>
                         <br>
                     </div>
@@ -93,6 +87,8 @@
                         <br>
                         <br>                        
                         <br>
+                        <br>
+                        <br>                
                         <br>
                         <br>
                     </div>

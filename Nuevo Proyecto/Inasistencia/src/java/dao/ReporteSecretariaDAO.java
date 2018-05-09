@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import modelo.Ramo;
 import modelo.ReporteSecretaria;
 
 /**
@@ -244,6 +243,45 @@ public class ReporteSecretariaDAO implements GeneralReporteSDAO{
             System.out.println("Error: " + ex);
         }
         return results;
+    }
+
+    @Override
+    public ArrayList mostrarDatosAll(int idDirector, int semestre, int anio) {
+         ReporteSecretaria obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM reporte_secretaria where id_director="+idDirector+" and semestre="+semestre+" and anio="+anio+" order by id_justificacion asc, activo desc;";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+            
+            int id, idIna, idJus, idAlum,idSecr,idDire,idlum,semestre1,anio1,activo1;
+            
+      
+            arrayReportes.removeAll(arrayReportes);
+            while (results.next()) {
+                id = results.getInt("id_reporte");                
+                idIna = results.getInt("id_inasistencia");
+                idJus = results.getInt("id_justificacion");
+                idSecr = results.getInt("id_secretaria");
+                idDire = results.getInt("id_director");
+                idAlum = results.getInt("id_alumno");
+                semestre1 = results.getInt("semestre");                
+                anio1 = results.getInt("anio");                
+                activo1 = results.getInt("activo");
+                
+                obj = new ReporteSecretaria(id, idIna, idJus, idSecr, idDire, idAlum, semestre1, anio1, activo1);
+                arrayReportes.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayReportes;
     }
 
     

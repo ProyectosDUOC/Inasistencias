@@ -15,6 +15,7 @@ import modelo.ReporteSecretaria;
 public interface GeneralReporteSDAO {
     public abstract ArrayList mostrarDatos();    
     public abstract ArrayList mostrarDatosDirector(int idDirector, int semestre , int anio);
+     public abstract ArrayList mostrarDatosAll(int idDirector, int semestre , int anio);
     public abstract ReporteSecretaria buscarDatos(int idJ) ; 
     public abstract ReporteSecretaria buscarDatosReporte(int idR) ; 
     public abstract int actualizarActivo(int idR, int activo) ; 

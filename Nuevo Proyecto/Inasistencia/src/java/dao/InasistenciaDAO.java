@@ -167,9 +167,7 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
         } catch (java.lang.Exception ex) {
             System.out.println("Error: " + ex);
         }
-        return arrayInasistencia;
-        
-        
+        return arrayInasistencia;        
     }
 
     @Override
@@ -199,7 +197,7 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
                 idEstI = results.getInt("id_estadoi");
                 idEstC = results.getInt("id_estadoc");
 
-                obj = new Inasistencia(idEstC, fechIna, idSeccion, idAlu, idEstI, idEstC);
+                obj = new Inasistencia(idIna, fechIna, idSeccion, idAlu, idEstI, idEstC);
                 arrayInasistencia.add(obj);
             }
             connection.close();
@@ -255,18 +253,7 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
             return 0;
         }
     }
-        /*
-           CREATE TABLE inasistencia (
-           id_inasistencia      INT NOT NULL AUTO_INCREMENT,
-           fecha_inasistencia   DATE, 
-           id_seccion           INT NOT NULL,
-           id_alumno            INT NOT NULL,
-           id_estadoi           INT NOT NULL,
-           id_estadoc           INT NOT NULL,
-           PRIMARY KEY(id_inasistencia)
-       );
-
-           */
+        
     @Override
     public Inasistencia buscarIdCorreo(int idCorreo) {
          Inasistencia obj = null;
@@ -371,6 +358,36 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
         }
 
         return results;
+    }
+
+    @Override
+    public ArrayList inasistenciaAlumnoActual(int idAlumno, int semestre, int anio) {
+         Inasistencia obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+            Statement statement = connection.createStatement();
+            String consultaSQL = "SELECT * FROM inasistencia as ina JOIN seccion as secc ON ina.id_seccion=secc.id_seccion WHERE ina.id_alumno="+idAlumno+" and secc.semestre="+semestre+" and secc.anio="+anio+";";
+            ResultSet results = statement.executeQuery(consultaSQL);
+            int idIna, idSec, idAlu, idEstI,idEstC;
+            Date fechIna;
+            arrayInasistencia.removeAll(arrayInasistencia); 
+            while (results.next()) {
+                idIna = results.getInt("id_inasistencia");
+                fechIna = results.getDate("fecha_inasistencia");                
+                idSec= results.getInt("id_seccion");
+                idAlu = results.getInt("id_alumno");
+                idEstI = results.getInt("id_estadoi");
+                idEstC = results.getInt("id_estadoc");
+                obj = new Inasistencia(idIna, fechIna, idSec, idAlu, idEstI, idEstC);
+                arrayInasistencia.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayInasistencia;
     }
     
 }

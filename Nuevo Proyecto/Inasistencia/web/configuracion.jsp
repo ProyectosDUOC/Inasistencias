@@ -60,22 +60,22 @@
                 }
                 if (estado.equals("director")) {
                     dire = (new DirectorDAO()).buscarDatos(rut);
-                    nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();                   
+                    nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
                     correo = dire.getEmail();
                 }
                 if (estado.equals("administrador")) {
                     admin = (new AdministradorDAO()).buscarDatos(rut);
-                    nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();               
+                    nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     correo = admin.getEmail();
                 }
                 if (estado.equals("secretaria")) {
                     secre = (new SecretariaDAO()).buscarDatos(rut);
-                    nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();               
+                    nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();
                     correo = secre.getEmail();
-                    sesion.setAttribute("rut",null);
+                    sesion.setAttribute("rut", null);
                 }
             }
-        %>
+        %>       
     </head>
     <body>
         <header class="color-Azul">
@@ -120,7 +120,7 @@
                 </div>
             </div>
         </div>
-         <footer class="color-Azul">            
+        <footer class="color-Azul">            
             <div class="container">
                 <br>
                 <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>                                
