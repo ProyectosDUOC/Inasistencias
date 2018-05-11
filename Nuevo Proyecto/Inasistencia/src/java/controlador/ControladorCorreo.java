@@ -17,6 +17,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import modelo.Alumno;
+import modelo.Docente;
 import modelo.Inasistencia;
 import modelo.Justificacion;
 
@@ -75,9 +76,18 @@ public class ControladorCorreo {
     public String mensajeAprobadoAlumno(Alumno alum, Inasistencia ina, Justificacion justi ){
         String mensaje;
         
-        mensaje = "Estimado Alumno "+alum.getPnombre()+" "+alum.getAppaterno()+" <br>"+
+        mensaje = "<strong>Estimado Alumno </strong> "+alum.getPnombre()+" "+alum.getAppaterno()+" <br>"+
                 "La justificacion de inasistencia, enviada el dia "+parseHora.format(justi.getFechaJustificacion())+
                 " ha sido aprobada por el Director de carrera <br>";
+        return mensaje;
+    }
+     public String mensajeAprobadoDocente(Docente doce,Alumno alum, Inasistencia ina, Justificacion justi ){
+        String mensaje;
+        
+        mensaje = "<strong> Estimado Profesor </strong> "+doce.getPnombre()+" "+doce.getAppaterno()+" <br>"+
+                "La justificacion de inasistencia del alumno "+alum.getPnombre()+" "+alum.getAppaterno()+" rut: "+alum.getRutAlumno()+
+                " <br> ha sido aprobada por el Director de carrera <br>"+
+                " <br> <strong>Fecha Inasistencia </strong> : "+parseHora.format(ina.getFechaInasistencia());
         return mensaje;
     }
 }

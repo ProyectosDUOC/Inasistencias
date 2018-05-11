@@ -64,12 +64,14 @@ public class ControladorJustiS extends HttpServlet {
         ControlUsuario user = session.getAttribute("usuario") == null ? new ControlUsuario() : (ControlUsuario) session.getAttribute("usuario");
 
         String fechaInasistencia = request.getParameter("fecha");
+        String fechaInasistencia2 = "";
         String[] miselect;
         String opcion = request.getParameter("opcion");
         miselect = request.getParameterValues("motivo");
         String glosa = request.getParameter("glosa");
         String motivo = "", rutA = "", fechaActual = "", idSeccion = "", descripcion="";
 
+        
         SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String fechaHoy = parseador.format(date);
@@ -82,8 +84,10 @@ public class ControladorJustiS extends HttpServlet {
         ReporteSecretaria report = new ReporteSecretaria();
         GlobalSemestre semestreActual = new GlobalSemestre();
         Carrera carrera = new Carrera();
-        Part filePart = request.getPart("file");
-
+        Part filePart = request.getPart("file"); //img
+        String dias = request.getParameter("grupo1");
+        
+        
         if (opcion.charAt(0) == 'G') {
             idSeccion = opcion.substring(1);
 
@@ -92,24 +96,35 @@ public class ControladorJustiS extends HttpServlet {
                 motivo = miselect[i];
             }
             alum = (new AlumnoDAO()).buscarDatos(rutA);
-
-            inasistencia = new Inasistencia(0, fechaInasistencia, Integer.parseInt(idSeccion), alum.getIdAlumno(), 3, 7);
-            x = (new InasistenciaDAO()).agregar(inasistencia);
+            
+            if (dias.equals("1")) { //un solo dia
+                inasistencia = new Inasistencia(0, fechaInasistencia,fechaInasistencia, Integer.parseInt(idSeccion), alum.getIdAlumno(), 3, 7);
+                x = (new InasistenciaDAO()).agregarOnly(inasistencia);
+            }
+            if (dias.equals("2")) { //mas de un dia
+                fechaInasistencia2 = request.getParameter("fecha2");
+                inasistencia = new Inasistencia(0, fechaInasistencia,fechaInasistencia2, Integer.parseInt(idSeccion), alum.getIdAlumno(), 3, 7);
+                x = (new InasistenciaDAO()).agregar(inasistencia);
+            }
+            
             inasistencia = (new InasistenciaDAO()).buscarIdCorreo(7);
             justificacion = new Justificacion(0, inasistencia.getIdInasistencia(), fechaHoy, Integer.parseInt(motivo), glosa);
             x = (new InasistenciaDAO()).actualizarCorreoSecretaria(inasistencia.getIdInasistencia(), 0);
             x = (new JustificacionDAO()).agregar(justificacion);
             justificacion = (new JustificacionDAO()).buscarEspecifica(justificacion);
             
-            File file = File.createTempFile("foto-", ".jpg");
-            File file2 = new File(System.getenv("UPLOADS"), file.getName());
-            try (InputStream input = filePart.getInputStream()) {
-                Files.copy(input, file2.toPath());
+            if (request.getPart("file")!=null) {
+                File file = File.createTempFile("foto-", ".jpg");
+                File file2 = new File(System.getenv("UPLOADS"), file.getName());
+                try (InputStream input = filePart.getInputStream()) {
+                    Files.copy(input, file2.toPath());
+                }            
+                String nombreFile = file2.getName();
+                descripcion="idIna:"+inasistencia.getIdInasistencia()+" rut:"+rutA+" fecha:"+fechaInasistencia;
+                img = new JustificacionImagen(0, justificacion.getIdJustificacion(), nombreFile, descripcion);
+                x = (new ImagenDAO()).agregar(img);
             }            
-            String nombreFile = file2.getName();
-            descripcion="idIna:"+inasistencia.getIdInasistencia()+" rut:"+rutA+" fecha:"+fechaInasistencia;
-            img = new JustificacionImagen(0, justificacion.getIdJustificacion(), nombreFile, descripcion);
-            x = (new ImagenDAO()).agregar(img);
+           
             semestreActual = (GlobalSemestre) session.getAttribute("semestreActual");
             secre = (new SecretariaDAO()).buscarDatos(user.getRutUsuario());
             carrera = (new CarreraDAO()).buscar(alum.getIdCarrera());

@@ -53,20 +53,21 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
             ResultSet results = statement.executeQuery(query);
             
             int idIna, idSec, idAl, idEstI, idEstC ;
-            Date fechI;
+            Date fechI, fechI2;
             
             //int idDetSecc, idSecc, activo, idAlumno ;
 
             while (results.next()) {
                 idIna = results.getInt("id_inasistencia"); 
                 fechI = results.getDate("fecha_inasistencia");
+                fechI2 = results.getDate("fecha_inasistencia2");
                 idSec= results.getInt("id_seccion");
                 idAl = results.getInt("id_alumno");
                 idEstI = results.getInt("id_estadoi");
                 idEstC = results.getInt("id_estadoc");
                 
                 if (idIna == idInasistencia) {                   
-                    obj = new Inasistencia(idInasistencia, fechI, idSec, idAl, idEstI, idEstC);
+                    obj = new Inasistencia(idInasistencia, fechI,fechI2, idSec, idAl, idEstI, idEstC);
                    break;
                 }
             }
@@ -108,19 +109,20 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
             this.idEstadoc = idEstadoc;
             */
             int idIna, idSec, idAlu, idEstI,idEstC;
-            Date fechIna;
+            Date fechIna, fechI2;
 
             arrayInasistencia.removeAll(arrayInasistencia);
             
             while (results.next()) {
                 idIna = results.getInt("id_inasistencia");
-                fechIna = results.getDate("fecha_inasistencia");                
+                fechIna = results.getDate("fecha_inasistencia");                 
+                fechI2 = results.getDate("fecha_inasistencia2");
                 idSec= results.getInt("id_seccion");
                 idAlu = results.getInt("id_alumno");
                 idEstI = results.getInt("id_estadoi");
                 idEstC = results.getInt("id_estadoc");
 
-                obj = new Inasistencia(idEstC, fechIna, idSeccion, idAlu, idEstI, idEstC);
+                obj = new Inasistencia(idIna, fechIna,fechI2, idSeccion, idAlu, idEstI, idEstC);
                 arrayInasistencia.add(obj);
             }
             connection.close();
@@ -147,19 +149,20 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
           
            
             int idIna, idSec, idAlu, idEstI,idEstC;
-            Date fechIna;
+            Date fechIna, fechI2;
 
             arrayInasistencia.removeAll(arrayInasistencia);
             
             while (results.next()) {
                 idIna = results.getInt("id_inasistencia");
-                fechIna = results.getDate("fecha_inasistencia");                
+                fechIna = results.getDate("fecha_inasistencia");                  
+                fechI2 = results.getDate("fecha_inasistencia2");
                 idSec= results.getInt("id_seccion");
                 idAlu = results.getInt("id_alumno");
                 idEstI = results.getInt("id_estadoi");
                 idEstC = results.getInt("id_estadoc");
 
-                obj = new Inasistencia(idEstC, fechIna, idSec, idAlu, idEstI, idEstC);
+                obj = new Inasistencia(idEstC, fechIna, fechI2, idSec, idAlu, idEstI, idEstC);
                 arrayInasistencia.add(obj);
             }
             connection.close();
@@ -185,19 +188,20 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
             ResultSet results = statement.executeQuery(consultaSQL);
             
             int idIna, idSec, idAlu, idEstI,idEstC;
-            Date fechIna;
+            Date fechIna, fechI2;
 
             arrayInasistencia.removeAll(arrayInasistencia);
             
             while (results.next()) {
                 idIna = results.getInt("id_inasistencia");
-                fechIna = results.getDate("fecha_inasistencia");                
+                fechIna = results.getDate("fecha_inasistencia");
+                fechI2 = results.getDate("fecha_inasistencia2");                
                 idSec= results.getInt("id_seccion");
                 idAlu = results.getInt("id_alumno");
                 idEstI = results.getInt("id_estadoi");
                 idEstC = results.getInt("id_estadoc");
 
-                obj = new Inasistencia(idIna, fechIna, idSeccion, idAlu, idEstI, idEstC);
+                obj = new Inasistencia(idIna, fechIna,fechI2, idSeccion, idAlu, idEstI, idEstC);
                 arrayInasistencia.add(obj);
             }
             connection.close();
@@ -243,8 +247,8 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
             conn = new Conectar();
             Connection connection = conn.getConnection();
             Statement statement = connection.createStatement();
-            String agregarSQL = "INSERT INTO inasistencia(fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc)"
-                    + " VALUES('"+inasistencia.getFechaInaString()+"',"+inasistencia.getIdSeccion()+","+inasistencia.getIdAlumno()+","+inasistencia.getIdEstadoi()+","+inasistencia.getIdEstadoc()+");";
+            String agregarSQL = "INSERT INTO inasistencia(fecha_inasistencia,fecha_inasistencia2,id_seccion,id_alumno,id_estadoi,id_estadoc)"
+                    + " VALUES('"+inasistencia.getFechaInaString()+"','"+inasistencia.getFechaIna2()+"',"+inasistencia.getIdSeccion()+","+inasistencia.getIdAlumno()+","+inasistencia.getIdEstadoi()+","+inasistencia.getIdEstadoc()+");";
             int results = statement.executeUpdate(agregarSQL);
             connection.close();
             conn.desconectar();
@@ -253,6 +257,23 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
             return 0;
         }
     }
+    @Override
+    public int agregarOnly(Inasistencia inasistencia) {
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+            Statement statement = connection.createStatement();
+            String agregarSQL = "INSERT INTO inasistencia(fecha_inasistencia,fecha_inasistencia2,id_seccion,id_alumno,id_estadoi,id_estadoc)"
+                    + " VALUES('"+inasistencia.getFechaInaString()+"',null,"+inasistencia.getIdSeccion()+","+inasistencia.getIdAlumno()+","+inasistencia.getIdEstadoi()+","+inasistencia.getIdEstadoc()+");";
+            int results = statement.executeUpdate(agregarSQL);
+            connection.close();
+            conn.desconectar();
+            return results;
+        } catch (java.lang.Exception ex) {
+            return 0;
+        }
+    }
+        
         
     @Override
     public Inasistencia buscarIdCorreo(int idCorreo) {
@@ -282,20 +303,21 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
             ResultSet results = statement.executeQuery(query);
             
             int idIna, idSec, idAl, idEstI, idEstC ;
-            Date fechI;
+            Date fechI,fechI2;
             
             //int idDetSecc, idSecc, activo, idAlumno ;
 
             while (results.next()) {
                 idIna = results.getInt("id_inasistencia"); 
                 fechI = results.getDate("fecha_inasistencia");
+                fechI2 = results.getDate("fecha_inasistencia2");
                 idSec= results.getInt("id_seccion");
                 idAl = results.getInt("id_alumno");
                 idEstI = results.getInt("id_estadoi");
                 idEstC = results.getInt("id_estadoc");
                 
                 if (idEstC == idCorreo) {                   
-                    obj = new Inasistencia(idIna, fechI, idSec, idAl, idEstI, idEstC);
+                    obj = new Inasistencia(idIna, fechI,fechI2, idSec, idAl, idEstI, idEstC);
                    break;
                 }
             }
@@ -319,6 +341,7 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
 
             String agregarSQL = "UPDATE inasistencia SET  " + 
                     " fecha_inasistencia='" +inasistencia.getFechaInasistencia()+ 
+                    ",fecha_inasistencia2='" +inasistencia.getFechaInasistencia2()+ 
                     "', id_seccion="+ inasistencia.getIdSeccion()  +
                     ", id_alumno=" + inasistencia.getIdAlumno()+
                     ", id_estadoi=" + inasistencia.getIdEstadoi() +
@@ -370,16 +393,17 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
             String consultaSQL = "SELECT * FROM inasistencia as ina JOIN seccion as secc ON ina.id_seccion=secc.id_seccion WHERE ina.id_alumno="+idAlumno+" and secc.semestre="+semestre+" and secc.anio="+anio+";";
             ResultSet results = statement.executeQuery(consultaSQL);
             int idIna, idSec, idAlu, idEstI,idEstC;
-            Date fechIna;
+            Date fechIna,fechIna2;
             arrayInasistencia.removeAll(arrayInasistencia); 
             while (results.next()) {
                 idIna = results.getInt("id_inasistencia");
-                fechIna = results.getDate("fecha_inasistencia");                
+                fechIna = results.getDate("fecha_inasistencia");                 
+                fechIna2 = results.getDate("fecha_inasistencia2");   
                 idSec= results.getInt("id_seccion");
                 idAlu = results.getInt("id_alumno");
                 idEstI = results.getInt("id_estadoi");
                 idEstC = results.getInt("id_estadoc");
-                obj = new Inasistencia(idIna, fechIna, idSec, idAlu, idEstI, idEstC);
+                obj = new Inasistencia(idIna, fechIna,fechIna2, idSec, idAlu, idEstI, idEstC);
                 arrayInasistencia.add(obj);
             }
             connection.close();

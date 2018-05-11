@@ -98,12 +98,27 @@ ALTER TABLE estado_inasistencia ADD CONSTRAINT estado_inasistencia_pk PRIMARY KE
 
 CREATE TABLE inasistencia (
     id_inasistencia      INT NOT NULL AUTO_INCREMENT,
-    fecha_inasistencia   DATE, 
+    fecha_inasistencia   DATE,
+    fecha_inasistencia2  DATE, 
     id_seccion           INT NOT NULL,
     id_alumno            INT NOT NULL,
     id_estadoi           INT NOT NULL,
     id_estadoc           INT NOT NULL,
     PRIMARY KEY(id_inasistencia)
+);
+
+CREATE TABLE telefono_alumno(
+    id_tel              INT NOT NULL AUTO_INCREMENT,
+    id_alumno           INT,
+    telefono            INT,
+    PRIMARY KEY(id_tel)
+);
+
+CREATE TABLE jornada(
+    id_jornada INT NOT NULL AUTO_INCREMENT,
+    id_alumno  INT NOT NULL,
+    nombre_jornada VARCHAR(10),
+    PRIMARY KEY(id_jornada)
 );
 
 CREATE TABLE justificacion (
@@ -397,5 +412,5 @@ INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_
 INSERT INTO justificacion(id_inasistencia,fecha_justificacion,id_motivo,glosa) VALUES (5,'2018-05-02',5,'El profesor explico muy rapido y me puse al dia');
 
 INSERT INTO global_semestre VALUES(1,1,2018,'2018-03-05','2018-06-30');
-
+INSERT INTO telefono_alumno(id_alumno,telefono) VALUES(1,98299855);
 -- UPDATE global_semestre SET semestre=1 where id_global=1;

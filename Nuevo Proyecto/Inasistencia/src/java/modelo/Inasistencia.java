@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Inasistencia.findAll", query = "SELECT i FROM Inasistencia i")
     , @NamedQuery(name = "Inasistencia.findByIdInasistencia", query = "SELECT i FROM Inasistencia i WHERE i.idInasistencia = :idInasistencia")
     , @NamedQuery(name = "Inasistencia.findByFechaInasistencia", query = "SELECT i FROM Inasistencia i WHERE i.fechaInasistencia = :fechaInasistencia")
+    , @NamedQuery(name = "Inasistencia.findByFechaInasistencia2", query = "SELECT i FROM Inasistencia i WHERE i.fechaInasistencia2 = :fechaInasistencia2")
     , @NamedQuery(name = "Inasistencia.findByIdSeccion", query = "SELECT i FROM Inasistencia i WHERE i.idSeccion = :idSeccion")
     , @NamedQuery(name = "Inasistencia.findByIdAlumno", query = "SELECT i FROM Inasistencia i WHERE i.idAlumno = :idAlumno")
     , @NamedQuery(name = "Inasistencia.findByIdEstadoi", query = "SELECT i FROM Inasistencia i WHERE i.idEstadoi = :idEstadoi")
@@ -47,6 +48,9 @@ public class Inasistencia implements Serializable {
     @Column(name = "fecha_inasistencia")
     @Temporal(TemporalType.DATE)
     private Date fechaInasistencia;
+    @Column(name = "fecha_inasistencia2")
+    @Temporal(TemporalType.DATE)
+    private Date fechaInasistencia2;
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_seccion")
@@ -66,37 +70,34 @@ public class Inasistencia implements Serializable {
     
     private String fechaInaString;
 
-    public String getFechaInaString() {
-        return fechaInaString;
-    }
-
-    public void setFechaInaString(String fechaInaString) {
-        this.fechaInaString = fechaInaString;
-    }
-    
+    private String fechaIna2;
+  
     public Inasistencia() {
-    }
-    public Inasistencia(Integer idInasistencia, String fechaInaString, int idSeccion, int idAlumno, int idEstadoi, int idEstadoc) {
-        this.idInasistencia = idInasistencia;
-        this.fechaInaString = fechaInaString;
-        this.idSeccion = idSeccion;
-        this.idAlumno = idAlumno;
-        this.idEstadoi = idEstadoi;
-        this.idEstadoc = idEstadoc;
-    }
-    public Inasistencia(Integer idInasistencia, Date fechaInasistencia, int idSeccion, int idAlumno, int idEstadoi, int idEstadoc) {
-        this.idInasistencia = idInasistencia;
-        this.fechaInasistencia = fechaInasistencia;
-        this.idSeccion = idSeccion;
-        this.idAlumno = idAlumno;
-        this.idEstadoi = idEstadoi;
-        this.idEstadoc = idEstadoc;
     }
 
     public Inasistencia(Integer idInasistencia) {
         this.idInasistencia = idInasistencia;
     }
-
+    
+    public Inasistencia(Integer idInasistencia, String fechaInaString, String fechaIna2, int idSeccion, int idAlumno, int idEstadoi, int idEstadoc) {
+        this.idInasistencia = idInasistencia;
+        this.idSeccion = idSeccion;
+        this.idAlumno = idAlumno;
+        this.idEstadoi = idEstadoi;
+        this.idEstadoc = idEstadoc;
+        this.fechaInaString = fechaInaString;
+        this.fechaIna2 = fechaIna2;
+    }
+    public Inasistencia(Integer idInasistencia, Date fechaInasistencia, Date fechaInasistencia2, int idSeccion, int idAlumno, int idEstadoi, int idEstadoc) {
+        this.idInasistencia = idInasistencia;
+        this.fechaInasistencia = fechaInasistencia;
+        this.fechaInasistencia2 = fechaInasistencia2;
+        this.idSeccion = idSeccion;
+        this.idAlumno = idAlumno;
+        this.idEstadoi = idEstadoi;
+        this.idEstadoc = idEstadoc;
+    }    
+    
     public Inasistencia(Integer idInasistencia, int idSeccion, int idAlumno, int idEstadoi, int idEstadoc) {
         this.idInasistencia = idInasistencia;
         this.idSeccion = idSeccion;
@@ -104,7 +105,22 @@ public class Inasistencia implements Serializable {
         this.idEstadoi = idEstadoi;
         this.idEstadoc = idEstadoc;
     }
+    
+    public String getFechaIna2() {
+        return fechaIna2;
+    }
 
+    public void setFechaIna2(String fechaIna2) {
+        this.fechaIna2 = fechaIna2;
+    }
+    public String getFechaInaString() {
+        return fechaInaString;
+    }
+    
+    public void setFechaInaString(String fechaInaString) {
+        this.fechaInaString = fechaInaString;
+    }
+    
     public Integer getIdInasistencia() {
         return idInasistencia;
     }
@@ -119,6 +135,14 @@ public class Inasistencia implements Serializable {
 
     public void setFechaInasistencia(Date fechaInasistencia) {
         this.fechaInasistencia = fechaInasistencia;
+    }
+
+    public Date getFechaInasistencia2() {
+        return fechaInasistencia2;
+    }
+
+    public void setFechaInasistencia2(Date fechaInasistencia2) {
+        this.fechaInasistencia2 = fechaInasistencia2;
     }
 
     public int getIdSeccion() {

@@ -4,6 +4,8 @@
     Author     : benja
 --%>
 
+<%@page import="dao.TelefonoDAO"%>
+<%@page import="modelo.TelefonoAlumno"%>
 <%@page import="modelo.Docente"%>
 <%@page import="modelo.DetalleSeccion"%>
 <%@page import="dao.DetalleSeccionDAO"%>
@@ -43,7 +45,8 @@
 
             GlobalSemestre semestreActual = new GlobalSemestre();
             //variables de secretaria
-            String estado = "", rut = "", nombre = "", semestre = "";
+            String estado = "", rut = "", nombre = "", semestre = "", numero = "";
+            TelefonoAlumno tel = new TelefonoAlumno();
             //variables alumno
             String rutA = "", nombreA = "", carreraA = "", correoA = "";
             ArrayList<DetalleSeccion> arrayDetalleSeccionAlumno = new ArrayList<DetalleSeccion>();
@@ -73,6 +76,12 @@
                         carreraA = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
                         correoA = alum.getEmail();
                         alumnoEncontrado = 1;
+                        tel = (new TelefonoDAO()).buscarDatosAlum(alum.getIdAlumno());
+                        if (tel != null) {
+                            numero = tel.getTelefono().toString();
+                        } else {
+                            numero = "";
+                        }
 
                         //todos los detalle cursos que esta
                         arrayDetalleSeccionAlumno = (new DetalleSeccionDAO()).mostrarAlumno(alum.getIdAlumno(), semestreActual.getAnio(), semestreActual.getSemestre());
@@ -107,7 +116,6 @@
                         out += string.charAt(i);
                 return out;
             }
-
         </script>
     </head>
     <body>
@@ -129,54 +137,77 @@
                 </div>
             </div>                   
         </header>             
-        <div class="container">
+        <div class="container">            
             <div class="row">
                 <h4 class="color-Plomo color-Azul-text center-align" >Justificacion de inasistencia</h4>
-                <div class="col s12 m6 color-Azul-text">
-                    <h4 class="color-Plomo color-Azul-text center-align" >Ingreso de Alumno</h4> 
-                    <form method="post" action="ControladorSecretaria">
+
+                <form method="post" action="ControladorSecretaria">
+                    <div class="col s12 m6 color-Azul-text">
+                        <h4 class="color-Plomo color-Azul-text center-align" >Ingreso de Alumno</h4> 
+
                         <p><strong> Rut:</strong> <input type="text" name="txtRut" maxlength="10" placeholder="19000222 (Sin digito verificador y puntos)" onkeyup="this.value = validarRut(this.value)"/> </p>  
                         <input type="submit" name="opcion" value="Buscar" class="color-AzulClaro waves-effect waves-light btn"/>                                
                         <input type="submit" name="opcion" value="Nuevo" class="color-AzulClaro waves-effect waves-light btn"/>                                
-                    </form>
-                    <p> <%=semestre%> </p>
-                    <span class="red-text"> ${param.mensaje}</span>
-                </div>
-                <% if (alumnoEncontrado == 1) {%>
-                <div class="col s12 m6 color-Azul-text">
-                    <h4 class="color-Plomo color-Azul-text center-align" >Datos Alumno</h4>  
-                    <p><strong> Nombre :</strong> <span><%=nombreA%></span></p>
-                    <p><strong> Rut :</strong> <span><%=rutA%></span></p>
-                    <p><strong> Correo :</strong> <span><%=correoA%></span></p>                    
-                    <p><strong> Carrera :</strong> <span><%=carreraA%></span></p>
-                </div>
-                <div class="col s12 m12 color-Azul-text">
-                    <h4 class="color-Plomo color-Azul-text center-align" >Cursos del Alumno</h4> 
-                    <% if (cursosEncontrado == 0) { %>
-                    <p class="text-center">No tiene registro de cursos</p> 
-                    <% } else { %>
-                    <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
-                        <thead>
-                            <tr class="amber darken-3">
-                                <th>Nombre Asignatura</th>
-                                <th>Seccion</th>   
-                                <th>Nombre Profesor</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% for (Seccion sec : arraySeccionesAlumno) {
-                                    nombreAsig = (new RamoDAO()).buscar(sec.getCodRamo()).getNombreRamo();
-                                    nombreCod = sec.getCodSeccion();
-                                    doce = (new DocenteDAO()).buscarDatos(sec.getIdDocente());
-                                    nombreProfe = doce.getPnombre() + " " + doce.getAppaterno();
-                            %>
-                            <tr>
-                                <td><%=nombreAsig%></td>
-                                <td><%=nombreCod%></td>
-                                <td><%=nombreProfe%></td>
-                                <td>
-                                    <form action="ControladorSecretaria" method="post">
+                        <p> <%=semestre%> </p>
+                        <span class="red-text"> ${param.mensaje}</span>
+                    </div>
+
+
+                    <% if (alumnoEncontrado == 1) {%>
+                    <div class="col s12 m6 color-Azul-text">
+                        <h4 class="color-Plomo color-Azul-text center-align" >Datos Alumno</h4>  
+                        <p><strong> Nombre :</strong> <span><%=nombreA%></span></p>
+                        <p><strong> Rut :</strong> <span><%=rutA%></span></p>
+                        <p><strong> Correo :</strong> <span><%=correoA%></span></p>                    
+                        <p><strong> Carrera :</strong> <span><%=carreraA%></span></p>                                  
+                        <p><strong> Telefono :</strong>
+                            <input type="number" maxlength="9" name="txtTel" value="<%=numero%>" placeholder="Número de celular o casa (229993862)" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" /><i>(Máximo 8 dígitos)</i>
+                        </p>
+                        <%if (numero.length() > 0) {%>
+                        <button 
+                            class="amber waves-effect waves-light btn" 
+                            type="submit" 
+                            name="opcion" 
+                            value="x<%=tel.getIdTel()%>"> 
+                            Actualizar 
+                        </button>
+                        <% } else {%>
+                        <button 
+                            class="red waves-effect waves-light btn" 
+                            type="submit" 
+                            name="opcion" 
+                            value="y<%=alum.getIdAlumno()%>"> 
+                            Agregar
+                        </button>
+                        <% }%>
+
+                    </div>
+                    <div class="col s12 m12 color-Azul-text">
+                        <h4 class="color-Plomo color-Azul-text center-align" >Cursos del Alumno</h4> 
+                        <% if (cursosEncontrado == 0) { %>
+                        <p class="text-center">No tiene registro de cursos</p> 
+                        <% } else { %>
+                        <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
+                            <thead>
+                                <tr class="amber darken-3">
+                                    <th>Nombre Asignatura</th>
+                                    <th>Seccion</th>   
+                                    <th>Nombre Profesor</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (Seccion sec : arraySeccionesAlumno) {
+                                        nombreAsig = (new RamoDAO()).buscar(sec.getCodRamo()).getNombreRamo();
+                                        nombreCod = sec.getCodSeccion();
+                                        doce = (new DocenteDAO()).buscarDatos(sec.getIdDocente());
+                                        nombreProfe = doce.getPnombre() + " " + doce.getAppaterno();
+                                %>
+                                <tr>
+                                    <td><%=nombreAsig%></td>
+                                    <td><%=nombreCod%></td>
+                                    <td><%=nombreProfe%></td>
+                                    <td>
                                         <button 
                                             class="btn indigo darken-1" 
                                             type="submit" 
@@ -184,15 +215,15 @@
                                             value="s<%=sec.getIdSeccion()%>"> 
                                             Seleccionar 
                                         </button>
-                                    </form>                                  
-                                </td>                                
-                            </tr>                                
-                            <%}%>     
-                        </tbody>
-                    </table> 
-                    <% }
-                        }%>                    
-                </div>
+                                    </td>                                
+                                </tr>                                
+                                <%}%>     
+                            </tbody>
+                        </table> 
+                        <% }
+                            }%>                    
+                    </div>
+                </form> 
             </div>
         </div>                   
         <br>

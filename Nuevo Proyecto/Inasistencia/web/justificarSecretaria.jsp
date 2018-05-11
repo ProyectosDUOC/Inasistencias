@@ -94,6 +94,16 @@
                 }
             }
         %> 
+        <script>
+            function habilitar(value)
+            {
+                document.getElementById("fecha2").style.visibility = "visible";
+            }
+            function noHabilitar(value)
+            {
+                document.getElementById("fecha2").style.visibility = "hidden";
+            }            
+        </script>
     </head>
     <body>
         <header class="color-Azul">
@@ -135,8 +145,24 @@
                     <form action="ControladorJustiS" method="post" enctype="multipart/form-data">
                         <table class="color-Plomo color-Azul-text">
                             <tr>
-                                <td><p><strong>Fecha Inasistencia:</strong></td>
+                                <td><strong>Dias a Justificar</strong></td>
+                                <td>
+                                    <div>
+                                        <input type="radio" id="uno" value="1" name="grupo1" value="1" onclick="noHabilitar()" checked>
+                                        <label for="uno">Un dia</label>
+
+                                        <input type="radio" id="varios" value="2" name="grupo1" value="2" onclick="habilitar()">
+                                        <label for="varios">Varios dias</label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><p><strong>Fecha Faltada:</strong></td>
                                 <td><p><input type="date" id="fecha" name="fecha"  value="" required="" min="<%=semestreActual.getFechaInicio()%>" max="<%=fechaActual%>"></p></td>
+                            </tr>
+                            <tr id="fecha2" style="visibility: hidden;" >
+                                <td><p><strong>Fecha Termino:</strong></td>
+                                <td><p><input type="date" id="fecha2" name="fecha2"  value="" min="<%=semestreActual.getFechaInicio()%>" max="<%=fechaActual%>"></p></td>
                             </tr>
                             <tr>
                                 <td><strong>Motivo:</strong></td>
@@ -165,7 +191,7 @@
                         </table>
                         <br>
                         <div>
-                            <input type="file" name="file" required="" accept="image/*"/>
+                            <input type="file" name="file" accept="image/*"/>
                         </div>
                         <br>
                         <div>
@@ -183,5 +209,8 @@
                 <br>
             </div>
         </footer> 
+
+        <script src="js/jquery-3.3.1.min.js"></script>   
+        <script src="js/materialize.js"></script>
     </body>
 </html>
