@@ -102,9 +102,11 @@ public class ControladorJustiS extends HttpServlet {
                 x = (new InasistenciaDAO()).agregarOnly(inasistencia);
             }
             if (dias.equals("2")) { //mas de un dia
+                
                 fechaInasistencia2 = request.getParameter("fecha2");
                 inasistencia = new Inasistencia(0, fechaInasistencia,fechaInasistencia2, Integer.parseInt(idSeccion), alum.getIdAlumno(), 3, 7);
                 x = (new InasistenciaDAO()).agregar(inasistencia);
+                                
             }
             
             inasistencia = (new InasistenciaDAO()).buscarIdCorreo(7);
@@ -113,7 +115,8 @@ public class ControladorJustiS extends HttpServlet {
             x = (new JustificacionDAO()).agregar(justificacion);
             justificacion = (new JustificacionDAO()).buscarEspecifica(justificacion);
             
-            if (request.getPart("file")!=null) {
+            if (filePart.getSize()>0) {
+                System.out.println("Entramos ejejjejeje");
                 File file = File.createTempFile("foto-", ".jpg");
                 File file2 = new File(System.getenv("UPLOADS"), file.getName());
                 try (InputStream input = filePart.getInputStream()) {

@@ -41,7 +41,7 @@
             ReporteSecretaria reportes = new ReporteSecretaria();
             SimpleDateFormat parseador = new SimpleDateFormat("dd-MM-yyyy");
             ArrayList<ReporteSecretaria> arrayReportes = new ArrayList<ReporteSecretaria>();
-            String nombre = "", estado = "", rut = "";
+            String nombre = "", estado = "", rut = "", fecha2="";
             Inasistencia inasistencia = new Inasistencia();
             Ramo ramo = new Ramo();
             Seccion seccion = new Seccion();
@@ -88,7 +88,7 @@
 
         <div class="container">
             <div class="row">
-                <h4 class="color-Azul-text color-Plomo center-align">Justificaciones pendientes</h4>
+                <h4 class="color-Azul-text color-Plomo center-align">Todas las Justificaciones</h4>
                 <div class="col s12 m12" style="overflow-x:auto;">
                     <form action="../ControladorJustificacion" method="POST" >
                         <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
@@ -115,12 +115,17 @@
                                         inasistencia = (new InasistenciaDAO()).buscar(r.getIdInasistencia());
                                         seccion = (new SeccionDAO()).buscar(inasistencia.getIdSeccion());
                                         ramo = (new RamoDAO()).buscar(seccion.getCodRamo());
+
+                                        if(inasistencia.getFechaInasistencia2()!=null){
+                                            fecha2="  hasta  "+ parseador.format(inasistencia.getFechaInasistencia2());
+                                        }
                                 %>
                                 <tr>
                                     <td><%=ramo.getNombreRamo()%></td>
                                     <td><%=seccion.getCodSeccion()%></td>                                    
                                     <td><%=(new AlumnoDAO()).buscarDatosId(r.getIdAlumno()).getRutAlumno()%></td>
-                                    <td><%=parseador.format(inasistencia.getFechaInasistencia())%></td>
+                                    <td><%=parseador.format(inasistencia.getFechaInasistencia())+fecha2%></td>
+                                    <%fecha2="";%>
                                     <td>
                                     <%if(r.getActivo()==1){%>
                                         <button class="btn amber waves-effect waves-light" 

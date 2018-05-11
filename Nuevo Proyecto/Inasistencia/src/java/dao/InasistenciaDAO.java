@@ -341,7 +341,6 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO{
 
             String agregarSQL = "UPDATE inasistencia SET  " + 
                     " fecha_inasistencia='" +inasistencia.getFechaInasistencia()+ 
-                    ",fecha_inasistencia2='" +inasistencia.getFechaInasistencia2()+ 
                     "', id_seccion="+ inasistencia.getIdSeccion()  +
                     ", id_alumno=" + inasistencia.getIdAlumno()+
                     ", id_estadoi=" + inasistencia.getIdEstadoi() +

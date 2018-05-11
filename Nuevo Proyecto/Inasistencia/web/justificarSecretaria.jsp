@@ -98,10 +98,12 @@
             function habilitar(value)
             {
                 document.getElementById("fecha2").style.visibility = "visible";
+                document.getElementById("f").setAttribute("required",""); //agregar el requerido
             }
             function noHabilitar(value)
             {
                 document.getElementById("fecha2").style.visibility = "hidden";
+                document.getElementById("f").removeAttribute("required"); //sacar requerido
             }            
         </script>
     </head>
@@ -162,7 +164,8 @@
                             </tr>
                             <tr id="fecha2" style="visibility: hidden;" >
                                 <td><p><strong>Fecha Termino:</strong></td>
-                                <td><p><input type="date" id="fecha2" name="fecha2"  value="" min="<%=semestreActual.getFechaInicio()%>" max="<%=fechaActual%>"></p></td>
+                                <td><p><input type="date" id="f" name="fecha2"  value="" min="<%=semestreActual.getFechaInicio()%>" max="<%=fechaActual%>"></p></td>
+                                <span class="red-text"> ${param.mensaje}</span>
                             </tr>
                             <tr>
                                 <td><strong>Motivo:</strong></td>
