@@ -18,7 +18,7 @@ public class Conectar   {
     private static Connection conn;
     private static final String driver = "com.mysql.jdbc.Driver";    
     private static final String user = "root";    
-    private static final String password = "";     
+    private static final String password ="";     
     private static final String host = "localhost";
     private static final String puerto = "3306";   
     private static final String nombre_bd = "inasistencia";

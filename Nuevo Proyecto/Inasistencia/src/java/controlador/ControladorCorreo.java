@@ -17,6 +17,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import modelo.Alumno;
+import modelo.Director;
 import modelo.Docente;
 import modelo.Inasistencia;
 import modelo.Justificacion;
@@ -76,18 +77,29 @@ public class ControladorCorreo {
     public String mensajeAprobadoAlumno(Alumno alum, Inasistencia ina, Justificacion justi ){
         String mensaje;
         
-        mensaje = "<strong>Estimado Alumno </strong> "+alum.getPnombre()+" "+alum.getAppaterno()+" <br>"+
+        mensaje = "<strong>Estimado Alumno  "+alum.getPnombre()+" "+alum.getAppaterno()+" </strong> <br><br>"+
                 "La justificacion de inasistencia, enviada el dia "+parseHora.format(justi.getFechaJustificacion())+
-                " ha sido aprobada por el Director de carrera <br>";
+                " ha sido aprobada por el Director de carrera <br><br>";
         return mensaje;
     }
      public String mensajeAprobadoDocente(Docente doce,Alumno alum, Inasistencia ina, Justificacion justi ){
         String mensaje;
         
-        mensaje = "<strong> Estimado Profesor </strong> "+doce.getPnombre()+" "+doce.getAppaterno()+" <br>"+
-                "La justificacion de inasistencia del alumno "+alum.getPnombre()+" "+alum.getAppaterno()+" rut: "+alum.getRutAlumno()+
-                " <br> ha sido aprobada por el Director de carrera <br>"+
-                " <br> <strong>Fecha Inasistencia </strong> : "+parseHora.format(ina.getFechaInasistencia());
+        mensaje = "<strong> Estimado Profesor </strong> "+doce.getPnombre()+" "+doce.getAppaterno()+"<br><br>"+
+                "La justificacion de inasistencia del alumno <strong>"+alum.getPnombre()+" "+alum.getAppaterno()+"    rut "+alum.getRutAlumno()+
+                "</strong> <br><br>  ha sido aprobada por el Director de carrera <br>"+
+                " <br><br>  <strong>Fecha Inasistencia </strong> : "+parseHora.format(ina.getFechaInasistencia());
         return mensaje;
+    }
+    public String mensajeDirector(Director dire,Alumno alum){
+        String mensaje;
+        
+        mensaje = "<strong>Estimado Director </strong> "+dire.getPnombre()+" "+dire.getAppaterno()+" <br><br><br>"+
+                "Se ha solicitado una  justificacion de inasistencia del alumno <strong>"+alum.getPnombre()+" "+alum.getAppaterno()+"   rut: "+alum.getRutAlumno()+
+                "</strong> <br><br><br> <strong>Por favor justificar en <a href='http://www.cittsb.cl:8080/Inasistencia/'>www.inasistenciaduoc.cl</a></strong>";
+        return mensaje;
+        
+        
+        
     }
 }

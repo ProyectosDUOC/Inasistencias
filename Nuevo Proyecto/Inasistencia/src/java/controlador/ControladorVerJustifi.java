@@ -57,44 +57,30 @@ public class ControladorVerJustifi extends HttpServlet {
         int x;
         if (opcion.equals("Aprobar")) {
             reporte = (ReporteSecretaria)sesion.getAttribute("reporte");
-            System.out.println("1************");
             x= (new ReporteSecretariaDAO()).actualizarActivo(reporte.getIdReporte(),2);
-             System.out.println("2************");
             inasistencia=(new InasistenciaDAO()).buscar(reporte.getIdInasistencia());
-             System.out.println("3************");
             inasistencia.setIdEstadoi(6);
             (new InasistenciaDAO()).actualizar(inasistencia);
-             System.out.println("4************");
             seccion = (new SeccionDAO()).buscar(inasistencia.getIdSeccion());
-             System.out.println("5************");
             doce =(new DocenteDAO()).buscarDatos(seccion.getIdDocente());
-             System.out.println("6************");
             //JUSTI
             alum = (new AlumnoDAO()).buscarDatosId(inasistencia.getIdAlumno());
-             System.out.println("7************");
             justi = (new JustificacionDAO()).buscar(reporte.getIdJustificacion());
-             System.out.println("8************");
             //Enviar Correo Electronico
             mensaje = (new ControladorCorreo()).mensajeAprobadoAlumno(alum,inasistencia,justi);
-             System.out.println("9************");
-            asunto = "Justificacion Aprobada";    
-            
-            x = (new ControladorCorreo()).enviar(alum.getEmail(), mensaje, asunto);
-             System.out.println("10 ************");
-            
+            asunto = "Justificacion Aprobada";                
+            x = (new ControladorCorreo()).enviar(alum.getEmail(), mensaje,"Justificacion aprobada por director");
+            mensaje = (new ControladorCorreo()).mensajeAprobadoDocente(doce, alum, inasistencia, justi);
+            x= (new ControladorCorreo()).enviar(doce.getEmail(), mensaje, "Informe de justificacion alumno aprobada");
             
             response.sendRedirect("Director/justificaciones.jsp");
         }
         if (opcion.equals("Rechazar")) {
             reporte = (ReporteSecretaria)sesion.getAttribute("reporte");  
-             System.out.println("AAAAAAAAA");
             x= (new ReporteSecretariaDAO()).actualizarActivo(reporte.getIdReporte(),3);
-             System.out.println("bbbbbbbbbb");
             inasistencia=(new InasistenciaDAO()).buscar(reporte.getIdInasistencia());
-             System.out.println("CCCCCCCCCCCCCCCCCCCC");
             inasistencia.setIdEstadoi(7);
             (new InasistenciaDAO()).actualizar(inasistencia);
-             System.out.println("DDDDDDDDDDDDD");
             response.sendRedirect("Director/justificaciones.jsp");
         }
         

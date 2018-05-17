@@ -4,6 +4,7 @@
     Author     : benja
 --%>
 
+<%@page import="dao.JornadaDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="modelo.GlobalSemestre"%>
@@ -56,7 +57,7 @@
             GlobalSemestre semestreActual = new GlobalSemestre();
 
             String idSeccion = "", rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreDocente = "", nombreAsig = "", nombreCod = "";
-            String nombreDirector = "";
+            String nombreDirector = "", jornada="";
             ArrayList<Motivo> motivos = new MotivoDAO().mostrarDatos();
 
             if (session.getAttribute("usuario") == null) {
@@ -82,7 +83,8 @@
                             nombreAsig = (new RamoDAO()).buscar(seccion.getCodRamo()).getNombreRamo();
                             docente = (new DocenteDAO()).buscarDatos(seccion.getIdDocente());
                             nombreDocente = docente.getPnombre() + " " + docente.getSnombre() + " " + docente.getAppaterno() + " " + docente.getApmaterno();
-
+                            jornada = (new JornadaDAO()).buscar(alum.getActivo()).getNombreJornada();
+                         
                         } else {
                             response.sendRedirect("secretaria.jsp?mensaje=No se encontro curso");
                         }
@@ -131,15 +133,16 @@
                 <h4 class="color-Plomo color-Azul-text center-align"></h4>
                 <div class="col s12 m6 color-Azul-text">                    
                     <h4 class="color-Plomo center-align">Asignatura</h4>  
-                    <p><strong>Nombre Asignatura :</strong> <span><%=nombreAsig%></span></p>
-                    <p><strong>Sección :</strong> <span><%=seccion.getCodRamo()%></span></p>
+                    <p><strong>Nombre Asignatura : </strong> <span><%=nombreAsig%></span></p>
+                    <p><strong>Sección : </strong> <span><%=seccion.getCodRamo()%></span></p>
                     <p><strong>Profesor : </strong><span><%=nombreDocente%></span></p>
                     <h4 class="color-Plomo center-align">Alumno</h4>  
-                    <p><strong>Nombre Alumno :</strong> <span><%=nombreA%></span></p>
-                    <p><strong>Carrera :</strong> <span><%=carreraA%></span></p>
-                    <p><strong>Correo :</strong><span><%=alum.getEmail()%></span></p>
+                    <p><strong>Nombre Alumno : </strong> <span><%=nombreA%></span></p>
+                    <p><strong>Carrera : </strong> <span><%=carreraA%></span></p>
+                    <p><strong>Correo : </strong><span><%=alum.getEmail()%></span></p>                    
+                    <p><strong>Jornada : </strong><span><%=jornada%></span></p>
                     <h4 class="color-Plomo center-align">Director de Carrera</h4>  
-                    <p><strong>Nombre Director :</strong> <span><%=nombreDirector%></span></p>
+                    <p><strong>Nombre Director : </strong> <span><%=nombreDirector%></span></p>
                     <br>
                 </div>
                 <div class="col s12 m6 color-Azul-text">

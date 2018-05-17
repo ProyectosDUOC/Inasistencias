@@ -6591,6 +6591,7 @@ textarea.materialize-textarea.validate + label:not(.label-icon).active {
   border: 2px solid transparent;
 }
 
+/*
 [type="radio"]:checked + label:after,
 [type="radio"].with-gap:checked + label:before,
 [type="radio"].with-gap:checked + label:after {
@@ -6600,6 +6601,18 @@ textarea.materialize-textarea.validate + label:not(.label-icon).active {
 [type="radio"]:checked + label:after,
 [type="radio"].with-gap:checked + label:after {
   background-color: #26a69a;
+} */
+
+
+[type="radio"]:checked + label:after,
+[type="radio"].with-gap:checked + label:after {
+  background-color: #D29524 !important;
+}
+
+[type="radio"]:checked + label:after,
+[type="radio"].with-gap:checked + label:before,
+[type="radio"].with-gap:checked + label:after {
+  border: 2px solid #D29524 !important;
 }
 
 [type="radio"]:checked + label:after {

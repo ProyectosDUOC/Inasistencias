@@ -4,6 +4,7 @@
     Author     : benja
 --%>
 
+<%@page import="dao.JornadaDAO"%>
 <%@page import="dao.TelefonoDAO"%>
 <%@page import="modelo.TelefonoAlumno"%>
 <%@page import="modelo.Docente"%>
@@ -48,7 +49,7 @@
             String estado = "", rut = "", nombre = "", semestre = "", numero = "";
             TelefonoAlumno tel = new TelefonoAlumno();
             //variables alumno
-            String rutA = "", nombreA = "", carreraA = "", correoA = "";
+            String rutA = "", nombreA = "", carreraA = "", correoA = "", jornada="";
             ArrayList<DetalleSeccion> arrayDetalleSeccionAlumno = new ArrayList<DetalleSeccion>();
             ArrayList<Seccion> arraySeccionesAlumno = new ArrayList<Seccion>();
             int alumnoEncontrado = 0; //0 no encontrado, 1 se encontro, 2 no tiene ramos
@@ -76,6 +77,7 @@
                         carreraA = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
                         correoA = alum.getEmail();
                         alumnoEncontrado = 1;
+                        jornada = (new JornadaDAO()).buscar(alum.getActivo()).getNombreJornada();
                         tel = (new TelefonoDAO()).buscarDatosAlum(alum.getIdAlumno());
                         if (tel != null) {
                             numero = tel.getTelefono().toString();
@@ -159,7 +161,8 @@
                         <p><strong> Nombre :</strong> <span><%=nombreA%></span></p>
                         <p><strong> Rut :</strong> <span><%=rutA%></span></p>
                         <p><strong> Correo :</strong> <span><%=correoA%></span></p>                    
-                        <p><strong> Carrera :</strong> <span><%=carreraA%></span></p>                                  
+                        <p><strong> Carrera :</strong> <span><%=carreraA%></span></p>    
+                        <p><strong> Jornada :</strong> <span><%=jornada%></span></p>  
                         <p><strong> Telefono :</strong>
                             <input type="number" maxlength="9" name="txtTel" value="<%=numero%>" placeholder="Número de celular o casa (229993862)" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" /><i>(Máximo 8 dígitos)</i>
                         </p>

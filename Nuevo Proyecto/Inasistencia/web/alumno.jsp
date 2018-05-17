@@ -144,7 +144,7 @@
                                         type="submit" 
                                         name="opcion" 
                                         value="v<%=ina.getIdInasistencia()%>">
-                                    Justificado por Secretaria
+                                    Enviado por Secretaria
                                 </button>
                                 <%}%>
                                 <%if (ina.getIdEstadoi() == 4) {%>

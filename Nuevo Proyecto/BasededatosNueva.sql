@@ -115,8 +115,7 @@ CREATE TABLE telefono_alumno(
 );
 
 CREATE TABLE jornada(
-    id_jornada INT NOT NULL AUTO_INCREMENT,
-    id_alumno  INT NOT NULL,
+    id_jornada INT NOT NULL,
     nombre_jornada VARCHAR(10),
     PRIMARY KEY(id_jornada)
 );
@@ -137,6 +136,8 @@ CREATE TABLE justificacion_imagen (
     descripcion            VARCHAR(100),
     PRIMARY KEY(id_justificacion_img)
 );
+
+
 
 CREATE TABLE motivo (
     id_motivo       INT NOT NULL,
@@ -403,14 +404,10 @@ INSERT INTO estado_inasistencia VALUES(6,'Aprobado por Director');
 INSERT INTO estado_inasistencia VALUES(7,'No Aprobado por Director');
 INSERT INTO estado_inasistencia VALUES(8,'Apelado por alumno');
 
-
-INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-12',2,1,1,1);
-INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-10',2,2,1,1);
-INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-09',2,3,1,1);
-INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-03-12',2,1,1,1);
-INSERT INTO inasistencia (fecha_inasistencia,id_seccion,id_alumno,id_estadoi,id_estadoc) VALUES ('2018-04-10',2,2,2,1);
-INSERT INTO justificacion(id_inasistencia,fecha_justificacion,id_motivo,glosa) VALUES (5,'2018-05-02',5,'El profesor explico muy rapido y me puse al dia');
-
 INSERT INTO global_semestre VALUES(1,1,2018,'2018-03-05','2018-06-30');
 INSERT INTO telefono_alumno(id_alumno,telefono) VALUES(1,98299855);
+
+INSERT INTO jornada(id_jornada,nombre_jornada) VALUES(1,'Diurno');
+INSERT INTO jornada(id_jornada,nombre_jornada) VALUES(2,'Vespertino');
+
 -- UPDATE global_semestre SET semestre=1 where id_global=1;

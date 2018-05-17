@@ -7,6 +7,7 @@ package controlador;
 
 import dao.AlumnoDAO;
 import dao.CarreraDAO;
+import dao.DirectorDAO;
 import dao.ImagenDAO;
 import dao.InasistenciaDAO;
 import dao.JustificacionDAO;
@@ -33,6 +34,7 @@ import javax.servlet.http.Part;
 import modelo.Alumno;
 import modelo.Carrera;
 import modelo.ControlUsuario;
+import modelo.Director;
 import modelo.GlobalSemestre;
 import modelo.Inasistencia;
 import modelo.Justificacion;
@@ -69,7 +71,7 @@ public class ControladorJustiS extends HttpServlet {
         String opcion = request.getParameter("opcion");
         miselect = request.getParameterValues("motivo");
         String glosa = request.getParameter("glosa");
-        String motivo = "", rutA = "", fechaActual = "", idSeccion = "", descripcion="";
+        String motivo = "", rutA = "", fechaActual = "", idSeccion = "", descripcion="", mensaje="";
 
         
         SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,6 +88,7 @@ public class ControladorJustiS extends HttpServlet {
         Carrera carrera = new Carrera();
         Part filePart = request.getPart("file"); //img
         String dias = request.getParameter("grupo1");
+        Director dire = new Director();
         
         
         if (opcion.charAt(0) == 'G') {
@@ -116,7 +119,6 @@ public class ControladorJustiS extends HttpServlet {
             justificacion = (new JustificacionDAO()).buscarEspecifica(justificacion);
             
             if (filePart.getSize()>0) {
-                System.out.println("Entramos ejejjejeje");
                 File file = File.createTempFile("foto-", ".jpg");
                 File file2 = new File(System.getenv("UPLOADS"), file.getName());
                 try (InputStream input = filePart.getInputStream()) {
@@ -134,6 +136,9 @@ public class ControladorJustiS extends HttpServlet {
             
             report = new ReporteSecretaria(0,justificacion.getIdInasistencia(),justificacion.getIdJustificacion(),secre.getIdSecretaria(),carrera.getIdDirector(), alum.getIdAlumno(), semestreActual.getSemestre(), semestreActual.getAnio(), 1);
             x = (new ReporteSecretariaDAO()).agregar(report);
+            dire = (new DirectorDAO()).buscarDatos(carrera.getIdDirector());
+            mensaje= (new ControladorCorreo()).mensajeDirector(dire, alum);
+            x =(new ControladorCorreo()).enviar(dire.getEmail(), mensaje, "Justificar Inasistencia");
             System.out.println("todo x :"+ x);
             session.setAttribute("rut", null);
             response.sendRedirect("secretaria.jsp?mensaje=Se ha enviado exitosamente");

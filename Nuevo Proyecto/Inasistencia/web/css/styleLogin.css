@@ -192,3 +192,15 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
   filter: grayscale(10%);
   transition: 0.5s;
 }
+
+[type="radio"]:checked + label:after,
+[type="radio"].with-gap:checked + label:after {
+  background-color: #D29524 !important;
+}
+
+[type="radio"]:checked + label:after,
+[type="radio"].with-gap:checked + label:before,
+[type="radio"].with-gap:checked + label:after {
+  border: 2px solid #D29524 !important;
+}
+

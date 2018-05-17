@@ -4,6 +4,7 @@
     Author     : benja
 --%>
 
+<%@page import="dao.JornadaDAO"%>
 <%@page import="dao.ImagenDAO"%>
 <%@page import="dao.JustificacionDAO"%>
 <%@page import="dao.InasistenciaDAO"%>
@@ -65,7 +66,7 @@
             Date date = new Date();
             
             String fechaA = "", glosa = "", rut = "", fechaJ = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreDocente = "", nombreAsig = "", nombreCod = "", motivo = "";
-            String nombreDirector = "", fecha2="";
+            String nombreDirector = "", fecha2="",jornada="";
             int id = 0, activo = 0, isImg=0;
 
             if (session.getAttribute("usuario") == null) {
@@ -101,6 +102,7 @@
                         fechaA = parseador.format(ina.getFechaInasistencia());
                         sesion.setAttribute("reporte", reporte);
                         activo = reporte.getActivo();
+                        jornada = (new JornadaDAO()).buscar(alum.getActivo()).getNombreJornada();
                         fechaJ = justi.getFechaJustificacion().toString();
                         if (ina.getFechaInasistencia2() != null) {
                             fecha2 = parseador.format(ina.getFechaInasistencia2());
@@ -142,13 +144,14 @@
                 <h4 class="color-Plomo color-Azul-text center-align"></h4>
                 <div class="col s12 m6 color-Azul-text">                    
                     <h4 class="color-Plomo center-align">Asignatura</h4>  
-                    <p><strong>Nombre Asignatura :</strong> <span><%=nombreAsig%></span></p>
-                    <p><strong>Sección :</strong> <span><%=seccion.getCodRamo()%></span></p>
+                    <p><strong>Nombre Asignatura : </strong> <span><%=nombreAsig%></span></p>
+                    <p><strong>Sección : </strong> <span><%=seccion.getCodRamo()%></span></p>
                     <p><strong>Profesor : </strong><span><%=nombreDocente%></span></p>
                     <h4 class="color-Plomo center-align">Alumno</h4>  
-                    <p><strong>Nombre Alumno :</strong> <span><%=nombreA%></span></p>
-                    <p><strong>Carrera :</strong> <span><%=carreraA%></span></p>
-                    <p><strong>Correo :</strong><span><%=alum.getEmail()%></span></p>
+                    <p><strong>Nombre Alumno : </strong> <span><%=nombreA%></span></p>
+                    <p><strong>Carrera : </strong> <span><%=carreraA%></span></p>
+                    <p><strong>Correo : </strong><span><%=alum.getEmail()%></span></p>
+                    <p><strong>Jornada : </strong><span><%=jornada%></span></p>
                     <h4 class="color-Plomo center-align">Director de Carrera</h4>  
                     <p><strong>Nombre Director :</strong> <span><%=nombreDirector%></span></p>
                     <br>

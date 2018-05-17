@@ -77,28 +77,31 @@ public class Login extends HttpServlet {
                     semestreActual = (new GlobalSemestreDAO()).buscar();
                     sesion.setAttribute("semestreActual", semestreActual);
                     switch (tipousuario) {
+                         /*
                         case 1:
                             sesion.setAttribute("tipoUsuario", "alumno");
                             response.sendRedirect("alumno.jsp");
                             break;
+                           
                         case 2:
                             sesion.setAttribute("tipoUsuario", "docente");
                             doce = (new DocenteDAO()).buscarDatos(ingreso.getRutUsuario());
                             sesion.setAttribute("login",doce);
                             response.sendRedirect("docente.jsp");
-                            break;
+                            break; */
                         case 3:
                             sesion.setAttribute("tipoUsuario", "director");
                             dire = (new DirectorDAO()).buscarDatos(ingreso.getRutUsuario());
                             sesion.setAttribute("login",dire);
                             response.sendRedirect("director.jsp");
                             break;
+                            /*
                         case 4:
                             sesion.setAttribute("tipoUsuario", "administrador");
                             admin= (new AdministradorDAO()).buscarDatos(ingreso.getRutUsuario());
                             sesion.setAttribute("login",admin);
                             response.sendRedirect("administrador.jsp");                            
-                            break;
+                            break; */
                         case 5:
                             sesion.setAttribute("tipoUsuario", "secretaria");
                             secre = (new SecretariaDAO()).buscarDatos(ingreso.getRutUsuario()); 
