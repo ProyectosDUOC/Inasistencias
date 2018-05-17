@@ -120,7 +120,7 @@ public class ControladorJustiS extends HttpServlet {
             
             if (filePart.getSize()>0) {
                 File file = File.createTempFile("foto-", ".jpg");
-                File file2 = new File(System.getenv("UPLOADS"), file.getName());
+                File file2 = new File(System.getenv("HOME"), "public_html/"+file.getName());
                 try (InputStream input = filePart.getInputStream()) {
                     Files.copy(input, file2.toPath());
                 }            

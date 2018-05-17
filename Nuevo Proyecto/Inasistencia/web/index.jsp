@@ -70,16 +70,7 @@
                         </div>
                         <span class="red-text"> ${param.mensaje}</span>
                     </div>
-                    <div class="col s12 m6">     
-                        <div>
-                            <h5 class="color-AzulClaro-text"><strong>Datos</strong></h5>
-                            <p> <strong>Administrador:</strong> 4002   1234 </p>
-                            <p> <strong>Secretaria:</strong>     1001   1234   ok </p>
-                            <p> <strong>Docente:</strong>       2002   1234 </p>
-                            <p> <strong>Director:</strong>       3000   1234 </p>
-                            <p> <strong>Alumno:</strong>         10-30     1234 </p>
-                            <br>
-                        </div>
+                    <div class="col s12 m6">
                     </div>
                 </div>
             </div>
