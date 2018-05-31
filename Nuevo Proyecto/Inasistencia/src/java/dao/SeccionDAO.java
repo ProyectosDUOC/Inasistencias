@@ -271,5 +271,40 @@ public class SeccionDAO implements GeneralSeccionDAO{
         }
         return arraySeccion;
     }
+
+    public Seccion buscarCod(String code) {
+          Seccion obj = null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM seccion WHERE cod_seccion='" + code + "';";
+
+            ResultSet results = statement.executeQuery(query);
+            
+            int idSecc, idDoc, semes, anyo;
+            String codSecc, codRamo;
+            
+
+            while (results.next()) {
+                idSecc = results.getInt("id_seccion"); 
+                codSecc = results.getString("cod_seccion");
+                idDoc = results.getInt("id_docente");
+                semes= results.getInt("semestre");
+                anyo= results.getInt("anio");
+                codRamo = results.getString("cod_ramo");
+                                
+                if (codSecc.equals(code)) {                   
+                    obj = new Seccion(idSecc, codSecc, codRamo, idDoc, semes, anyo);
+                   break;
+                }
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return obj; }
     
 }

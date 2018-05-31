@@ -43,13 +43,13 @@ public class DetalleSeccionDAO implements GeneralDetalleSeccionDAO{
             ResultSet results = statement.executeQuery(query);
 
             int idDetSecc, idSecc, activo, idAlumno ;
-
+            String rut;
             while (results.next()) {
                 idDetSecc = results.getInt("id_detalle_secc"); 
                 idSecc = results.getInt("id_seccion");
                 activo = results.getInt("activo");
-                idAlumno = results.getInt("id_alumno");
-                
+                idAlumno = results.getInt("id_alumno");                
+                rut = results.getString("rut_alumno");
                 
                 if (idDetSecc == idDetalleSecc) {                   
                     obj = new DetalleSeccion(idDetalleSecc, idSecc, activo, idAlumno);
@@ -81,7 +81,7 @@ public class DetalleSeccionDAO implements GeneralDetalleSeccionDAO{
             ResultSet results = statement.executeQuery(consultaSQL);
           
             int idDetSec, idSec, activo, idAlu;
-
+            
             arrayDetalleS.removeAll(arrayDetalleS);
             
             while (results.next()) {
@@ -102,7 +102,7 @@ public class DetalleSeccionDAO implements GeneralDetalleSeccionDAO{
     }
 
     @Override
-    public ArrayList buscarDetalleAlumno(int idAlumno) {
+    public ArrayList buscarDetalleAlumno(String rut) {
         DetalleSeccion obj =null;
         try {
             conn = new Conectar();
@@ -110,7 +110,7 @@ public class DetalleSeccionDAO implements GeneralDetalleSeccionDAO{
 
             Statement statement = connection.createStatement();
 
-            String consultaSQL = "SELECT * FROM detalle_seccion WHERE id_alumno= "+ idAlumno +";";
+            String consultaSQL = "SELECT * FROM detalle_seccion WHERE rut_alumno='"+ rut +"';";
 
             ResultSet results = statement.executeQuery(consultaSQL);
           

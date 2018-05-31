@@ -21,7 +21,7 @@ public class Conectar   {
     private static final String password ="";     
     private static final String host = "localhost";
     private static final String puerto = "3306";   
-    private static final String nombre_bd = "inasistencia";
+    private static final String nombre_bd = "Inasistencia";
     
     public static int cont = 0;
     

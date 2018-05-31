@@ -5,6 +5,8 @@
  */
 package controlador;
 
+import dao.RamoDAO;
+import dao.SeccionDAO;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -75,20 +77,38 @@ public class ControladorCorreo {
     
     //Predeterminado 
     public String mensajeAprobadoAlumno(Alumno alum, Inasistencia ina, Justificacion justi ){
-        String mensaje;
+        String mensaje;        
+        String fecha2="", nombreAsignatura="", seccion="";
+           if (ina.getFechaInasistencia2()!=null) {
+            fecha2=" hasta "+ parseHora.format(ina.getFechaInasistencia2());
+        }
+        nombreAsignatura = (new RamoDAO()).buscar((new SeccionDAO()).buscar(ina.getIdSeccion()).getCodRamo()).getNombreRamo();
+        seccion=(new SeccionDAO()).buscar(ina.getIdSeccion()).getCodSeccion();
         
         mensaje = "<strong>Estimado Alumno  "+alum.getPnombre()+" "+alum.getAppaterno()+" </strong> <br><br>"+
                 "La justificacion de inasistencia, enviada el dia "+parseHora.format(justi.getFechaJustificacion())+
-                " ha sido aprobada por el Director de carrera <br><br>";
+                " ha sido aprobada por el Director de carrera<br><br>"+
+                " <br><br><strong>Detalle Justificacion</strong><br><br>"+
+                "<strong>Fecha Inasistencia </strong> : "+parseHora.format(ina.getFechaInasistencia())+fecha2+
+                " <br><br>  <strong>Nombre Asignatura </strong> : "+nombreAsignatura+
+                " <br><br>  <strong>Seccion </strong> : "+seccion;;
         return mensaje;
     }
      public String mensajeAprobadoDocente(Docente doce,Alumno alum, Inasistencia ina, Justificacion justi ){
         String mensaje;
+        String fecha2="", nombreAsignatura="", seccion="";
         
+        if (ina.getFechaInasistencia2()!=null) {
+            fecha2=" hasta "+ parseHora.format(ina.getFechaInasistencia2());
+        }
+        nombreAsignatura = (new RamoDAO()).buscar((new SeccionDAO()).buscar(ina.getIdSeccion()).getCodRamo()).getNombreRamo();
+        seccion=(new SeccionDAO()).buscar(ina.getIdSeccion()).getCodSeccion();
         mensaje = "<strong> Estimado Profesor </strong> "+doce.getPnombre()+" "+doce.getAppaterno()+"<br><br>"+
                 "La justificacion de inasistencia del alumno <strong>"+alum.getPnombre()+" "+alum.getAppaterno()+"    rut "+alum.getRutAlumno()+
                 "</strong> <br><br>  ha sido aprobada por el Director de carrera <br>"+
-                " <br><br>  <strong>Fecha Inasistencia </strong> : "+parseHora.format(ina.getFechaInasistencia());
+                " <br><br>  <strong>Fecha Inasistencia </strong> : "+parseHora.format(ina.getFechaInasistencia())+fecha2+
+                " <br><br>  <strong>Nombre Asignatura </strong> : "+nombreAsignatura+
+                " <br><br>  <strong>Seccion </strong> : "+seccion;
         return mensaje;
     }
     public String mensajeDirector(Director dire,Alumno alum){

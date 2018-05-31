@@ -42,19 +42,41 @@ public class Ramo implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "nombre_ramo")
     private String nombreRamo;
-
+    
+    private String codCarrare;
+    private String sigla;
+    
     public Ramo() {
+    }
+
+    public Ramo(String codRamo, String nombreRamo, String codCarrare, String sigla) {
+        this.codRamo = codRamo;
+        this.nombreRamo = nombreRamo;
+        this.codCarrare = codCarrare;
+        this.sigla = sigla;
     }
 
     public Ramo(String codRamo) {
         this.codRamo = codRamo;
     }
 
-    public Ramo(String codRamo, String nombreRamo) {
-        this.codRamo = codRamo;
-        this.nombreRamo = nombreRamo;
+    public String getCodCarrare() {
+        return codCarrare;
     }
 
+    public void setCodCarrare(String codCarrare) {
+        this.codCarrare = codCarrare;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
+    }
+
+    
     public String getCodRamo() {
         return codRamo;
     }

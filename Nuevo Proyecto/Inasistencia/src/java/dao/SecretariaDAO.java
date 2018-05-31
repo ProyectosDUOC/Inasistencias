@@ -179,7 +179,19 @@ public class SecretariaDAO implements GeneralSecretariaDAO{
 
     @Override
     public int agregar(Secretaria secretaria) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+            Statement statement = connection.createStatement();
+            String agregarSQL = "INSERT INTO secretaria(rut_secretaria,pnombre,snombre,appaterno,apmaterno,email,activo)"
+                    + " VALUES('" + secretaria.getRutSecretaria()+ "','" + secretaria.getPnombre() + "','" + secretaria.getSnombre() + "','" + secretaria.getAppaterno() + "','" + secretaria.getApmaterno() + "','" + secretaria.getEmail() + "'," + secretaria.getActivo()+ ");";
+            int results = statement.executeUpdate(agregarSQL);
+            connection.close();
+            conn.desconectar();
+            return results;
+        } catch (java.lang.Exception ex) {
+            return 0;
+        }
     }
 
     @Override

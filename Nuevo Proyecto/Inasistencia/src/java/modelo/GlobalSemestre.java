@@ -55,7 +55,9 @@ public class GlobalSemestre implements Serializable {
     @Column(name = "fecha_termino")
     @Temporal(TemporalType.DATE)
     private Date fechaTermino;
-
+    private String fechaIni;
+    private String fechaTer;
+    
     public GlobalSemestre() {
     }
 
@@ -72,6 +74,30 @@ public class GlobalSemestre implements Serializable {
         this.anio = anio;
         this.fechaInicio = fechaInicio;
         this.fechaTermino = fechaTermino;
+    }
+
+    public GlobalSemestre(int idGlobal, Integer semestre, int anio, String fechaIni, String fechaTer) {
+        this.idGlobal = idGlobal;
+        this.semestre = semestre;
+        this.anio = anio;
+        this.fechaIni = fechaIni;
+        this.fechaTer = fechaTer;
+    }
+
+    public String getFechaIni() {
+        return fechaIni;
+    }
+
+    public void setFechaIni(String fechaIni) {
+        this.fechaIni = fechaIni;
+    }
+
+    public String getFechaTer() {
+        return fechaTer;
+    }
+
+    public void setFechaTer(String fechaTer) {
+        this.fechaTer = fechaTer;
     }
 
     public GlobalSemestre(Integer semestre) {

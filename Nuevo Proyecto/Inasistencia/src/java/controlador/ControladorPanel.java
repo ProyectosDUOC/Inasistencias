@@ -81,6 +81,11 @@ public class ControladorPanel extends HttpServlet {
             session.setAttribute("xCrud", "5");
             response.sendRedirect("Admin/askUser.jsp");
         }
+        if (opcion.equals("Semestre")) {
+            response.sendRedirect("Admin/cambiarSemestre.jsp");
+        }
+         
+        
         
     }
 

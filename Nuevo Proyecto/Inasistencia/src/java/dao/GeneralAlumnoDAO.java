@@ -16,6 +16,7 @@ public interface GeneralAlumnoDAO {
     public abstract ArrayList mostrarDatos();
     public abstract Alumno buscarDatos(String rut) ;
     
+    public abstract ArrayList buscarAlumnoR(String rut);
     public abstract Alumno buscarDatosId(int id) ;
     public abstract Alumno buscarDatosCorreo(String correo) ;
     public abstract int agregar(Alumno alumno);

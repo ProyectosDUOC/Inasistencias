@@ -4,6 +4,7 @@
     Author     : benja
 --%>
 
+<%@page import="modelo.Docente"%>
 <%@page import="dao.InasistenciaDAO"%>
 <%@page import="modelo.Inasistencia"%>
 <%@page import="dao.DocenteDAO"%>
@@ -46,12 +47,9 @@
                     rut = user.getRutUsuario();
                     alu = (new AlumnoDAO()).buscarDatos(rut);
                     if (alu != null) {
-                        System.out.println("1");
                         nombre = alu.getPnombre() + " " + alu.getSnombre() + " " + alu.getAppaterno() + " " + alu.getApmaterno();
-                        gl = (GlobalSemestre)sesion.getAttribute("semestreActual");
-                        System.out.println("2" + nombre);
-                        arrayInasistencia = (new InasistenciaDAO()).inasistenciaAlumnoActual(alu.getIdAlumno(), gl.getSemestre(), gl.getAnio());
-                        System.out.println("4 = " + arrayInasistencia.isEmpty());
+                        gl = (GlobalSemestre) sesion.getAttribute("semestreActual");
+                        arrayInasistencia = (new InasistenciaDAO()).inasistenciaAlumnoActualRUT(alu.getRutAlumno(), gl.getSemestre(), gl.getAnio());
                         if (!arrayInasistencia.isEmpty()) {
                             encontrado = 1;
                         } else {
@@ -89,18 +87,16 @@
         <div class="container">
             <div class="row">
                 <h4 class="color-Azul-text color-Plomo center-align">Centro de Notificaciones Duoc</h4>
-                <form action="index.jsp" method="post" >
+                <form action="ControladorAlumno" method="post" >
                     <div class="col s12 m12">
-                        <button class="btn waves-effect waves-light red left" type="submit" name="opcion" value="Salir">
-                            Cerrar Sesion
-                        </button>
+                        <a href="index.jsp" class="btn waves-effect waves-light red left" >Cerrar Sesión</a>
                     </div>
                     <div class="col s12 m12" style="overflow-x:auto;">
                         <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
                             <thead>
                                 <tr class="amber darken-3">
                                     <th>Nombre Asignatura</th>
-                                    <th>Asignatura/sección</th>                                    
+                                    <th>Asignatura/sección</th>                    
                                     <th>Fecha Inasistencia</th>
                                     <th>Estado</th>
                                 </tr>
@@ -111,80 +107,79 @@
                                     <td></td>
                                     <td>No tienes inasistencias registrados<td>
                                     <td></td>
-                                    <td></td>
                                 </tr>                                
                                 <%   } else {
                                     if (encontrado == 1) {
                                         for (Inasistencia ina : arrayInasistencia) {
                                             seccion = (new SeccionDAO()).buscar(ina.getIdSeccion());
                                 %>
-                            <tr>
-                            <td><%=(new RamoDAO()).buscar(seccion.getCodRamo()).getNombreRamo()%></td> 
-                            <td><%=seccion.getCodRamo()%></td> 
-                            <td><%=ina.getFechaInasistencia()%></td>
-                            <td>
-                                <%if (ina.getIdEstadoi() == 1) {%>
-                                <button class="btn amber waves-effect waves-light" 
-                                        type="submit" 
-                                        name="opcion" 
-                                        value="I<%=ina.getIdInasistencia()%>">
-                                    Pendiente
-                                </button>
-                                <%}%>
-                                <%if (ina.getIdEstadoi() == 2) {%>
-                                <button class="btn green waves-effect waves-light" 
-                                        type="submit" 
-                                        name="opcion" 
-                                        value="v<%=ina.getIdInasistencia()%>">
-                                    Ver justificación
-                                </button>
-                                <%}%>
-                                <%if (ina.getIdEstadoi() == 3) {%>
-                                <button class="btn blue darken-1 waves-effect waves-light" 
-                                        type="submit" 
-                                        name="opcion" 
-                                        value="v<%=ina.getIdInasistencia()%>">
-                                    Enviado por Secretaria
-                                </button>
-                                <%}%>
-                                <%if (ina.getIdEstadoi() == 4) {%>
-                                <button class="btn green waves-effect waves-light" 
-                                        type="submit" 
-                                        name="opcion" 
-                                        value="v<%=ina.getIdInasistencia()%>">
-                                    Aprobado por Docente
-                                </button>
-                                <%}%>
-                                <%if (ina.getIdEstadoi() == 5) {%>
-                                <button class="btn red waves-effect waves-light" 
-                                        type="submit" 
-                                        name="opcion" 
-                                        value="v<%=ina.getIdInasistencia()%>">
-                                    No Aprobado por Docente
-                                </button>
-                                <%}%>
-                                <%if (ina.getIdEstadoi() == 6) {%>
-                                <button class="btn green waves-effect waves-light" 
-                                        type="submit" 
-                                        name="opcion" 
-                                        value="v<%=ina.getIdInasistencia()%>">
-                                    Aprobado por Director
-                                </button>
-                                <%}%>
-                                <%if (ina.getIdEstadoi() == 7) {%>
-                                <button class="btn red waves-effect waves-light" 
-                                        type="submit" 
-                                        name="opcion" 
-                                        value="v<%=ina.getIdInasistencia()%>">
-                                    No Aprobado por Director
-                                </button>
-                                <%}%>
-                            </td>
-                            <%
+                                <tr>
+                                    <td><%=(new RamoDAO()).buscar(seccion.getCodRamo()).getNombreRamo()%></td> 
+                                    <td><%=seccion.getCodSeccion()%></td> 
+                                    <td><%=ina.getFechaInasistencia()%></td>
+                                    <td>
+                                        <%if (ina.getIdEstadoi() == 1) {%>
+                                        <button class="btn amber waves-effect waves-light" 
+                                                type="submit" 
+                                                name="opcion" 
+                                                value="I<%=ina.getIdInasistencia()%>">
+                                            Pendiente
+                                        </button>
+                                        <%}%>
+                                        <%if (ina.getIdEstadoi() == 2) {%>
+                                        <button class="btn green waves-effect waves-light" 
+                                                type="submit" 
+                                                name="opcion" 
+                                                value="v<%=ina.getIdInasistencia()%>">
+                                            Ver justificación
+                                        </button>
+                                        <%}%>
+                                        <%if (ina.getIdEstadoi() == 3) {%>
+                                        <button class="btn blue darken-1 waves-effect waves-light" 
+                                                type="submit" 
+                                                name="opcion" 
+                                                value="v<%=ina.getIdInasistencia()%>">
+                                            Enviado por Secretaria
+                                        </button>
+                                        <%}%>
+                                        <%if (ina.getIdEstadoi() == 4) {%>
+                                        <button class="btn green waves-effect waves-light" 
+                                                type="submit" 
+                                                name="opcion" 
+                                                value="v<%=ina.getIdInasistencia()%>">
+                                            Aprobado por Docente
+                                        </button>
+                                        <%}%>
+                                        <%if (ina.getIdEstadoi() == 5) {%>
+                                        <button class="btn red waves-effect waves-light" 
+                                                type="submit" 
+                                                name="opcion" 
+                                                value="v<%=ina.getIdInasistencia()%>">
+                                            No Aprobado por Docente
+                                        </button>
+                                        <%}%>
+                                        <%if (ina.getIdEstadoi() == 6) {%>
+                                        <button class="btn green waves-effect waves-light" 
+                                                type="submit" 
+                                                name="opcion" 
+                                                value="v<%=ina.getIdInasistencia()%>">
+                                            Aprobado por Director
+                                        </button>
+                                        <%}%>
+                                        <%if (ina.getIdEstadoi() == 7) {%>
+                                        <button class="btn red waves-effect waves-light" 
+                                                type="submit" 
+                                                name="opcion" 
+                                                value="v<%=ina.getIdInasistencia()%>">
+                                            No Aprobado por Director
+                                        </button>
+                                        <%}%>
+                                    </td>
+                                    <%
+                                                }
+                                            }
                                         }
-                                    }
-                                }
-                            %>
+                                    %>
                             </tbody>
                         </table>  
                     </div>

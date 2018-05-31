@@ -32,6 +32,22 @@
         <servlet-name>ControladorVerJustifi</servlet-name>
         <servlet-class>controlador.ControladorVerJustifi</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorSemestre</servlet-name>
+        <servlet-class>controlador.ControladorSemestre</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControladorAlumno</servlet-name>
+        <servlet-class>controlador.ControladorAlumno</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControladorSubirInasistencia</servlet-name>
+        <servlet-class>controlador.ControladorSubirInasistencia</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControladorSubirInasistenciaC</servlet-name>
+        <servlet-class>controlador.ControladorSubirInasistenciaC</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -63,6 +79,22 @@
     <servlet-mapping>
         <servlet-name>ControladorVerJustifi</servlet-name>
         <url-pattern>/ControladorVerJustifi</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorSemestre</servlet-name>
+        <url-pattern>/ControladorSemestre</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorAlumno</servlet-name>
+        <url-pattern>/ControladorAlumno</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorSubirInasistencia</servlet-name>
+        <url-pattern>/ControladorSubirInasistencia</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorSubirInasistenciaC</servlet-name>
+        <url-pattern>/ControladorSubirInasistenciaC</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

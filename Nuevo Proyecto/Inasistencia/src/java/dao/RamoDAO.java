@@ -37,15 +37,17 @@ public class RamoDAO implements GeneralRamoDAO{
             String query = "SELECT * FROM ramo WHERE cod_ramo ='"+codRamo+"';";
 
             ResultSet results = statement.executeQuery(query);            
-            String cod, nomMot;
+            String cod, nomRamo, sigla, codCarrera;
 
             while (results.next()) {
                 cod = results.getString("cod_ramo"); 
-                nomMot = results.getString("nombre_ramo");
+                nomRamo = results.getString("nombre_ramo");
+                sigla = results.getString("sigla");
+                codCarrera = results.getString("cod_carrera");
                 
-                
-                if (cod.equals(codRamo)) {                   
-                    obj = new Ramo(codRamo, nomMot);
+                if (cod.equals(codRamo)) {                 
+                    
+                    obj = new Ramo(codRamo, nomRamo,codCarrera,sigla);
                    break;
                 }
             }
@@ -71,7 +73,7 @@ public class RamoDAO implements GeneralRamoDAO{
             String consultaSQL = "SELECT * FROM ramo;";
 
             ResultSet results = statement.executeQuery(consultaSQL);
-            String cod, nomMot;
+            String cod, nomRamo, sigla, codCarrera;
             
             /*
                 d_ramo       VARCHAR(30) NOT NULL,
@@ -80,10 +82,12 @@ public class RamoDAO implements GeneralRamoDAO{
             */
             arrayRamos.removeAll(arrayRamos);
             while (results.next()) {
-                cod = results.getString("cod_ramo"); 
-                nomMot = results.getString("nombre_ramo");
                 
-                obj = new Ramo(cod, nomMot);
+                cod = results.getString("cod_ramo"); 
+                nomRamo = results.getString("nombre_ramo");
+                sigla = results.getString("sigla");
+                codCarrera = results.getString("cod_carrera");
+                 obj = new Ramo(cod, nomRamo,codCarrera,sigla);
                 arrayRamos.add(obj);
             }
             connection.close();

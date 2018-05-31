@@ -25,7 +25,7 @@
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             String nombre = "", estado = "";
             if (user == null) {
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("../index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 if (estado.equals("administrador")) {
@@ -35,7 +35,7 @@
                     admin = (new AdministradorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                 } else {
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("../index.jsp");
                 }
 
             }
@@ -62,19 +62,20 @@
         </header>  
         <div class="container">
             <div class="row">
-                <h4 class="color-Plomo color-Azul-text center-align" >Men Control</h4>
+                <h4 class="color-Plomo color-Azul-text center-align" >Menu Control</h4>
                 <form method="POST" action="../ControladorPanel">   
                     <div class="col s12 m6 color-Azul-text">
                         <h4 class="color-Plomo color-Azul-text center-align" >Usuarios</h4>  
-                        <button type="submit" value="Alumno" name="opcion" class="btn waves-effect waves-light color-AzulClaro" >Alumno</button>
+                 <!--       <button type="submit" value="Alumno" name="opcion" class="btn waves-effect waves-light color-AzulClaro" >Alumno</button>
                         <button type="submit" value="Docente" name="opcion"  class="btn waves-effect waves-light color-AzulClaro" >Docente</button>
                         <button type="submit" value="Director" name="opcion"  class="btn waves-effect waves-light color-AzulClaro">Director</button>
-                        <br><br> 
+                        <br><br>    --> 
                         <button type="submit" value="Secretaria" name="opcion"  class="btn waves-effect waves-light color-AzulClaro" >Secretaria</button>
-                        <button type="submit" value="Administrador" name="opcion"  class="btn waves-effect waves-light color-AzulClaro" >Administrador</button>
+                        <!--<button type="submit" value="Administrador" name="opcion"  class="btn waves-effect waves-light color-AzulClaro" >Administrador</button> -->
                         <br><br> <br> <br> <br>
                         <a  class="white-text btn  waves-effect waves-light  red" href="../<%=estado%>.jsp">Volver</a>
                     </div>
+                    <!--
                     <div class="col s12 m6 color-Azul-text">
                         <h4 class="color-Plomo center-align">Registro</h4>     
                         <div class="input-field">                                
@@ -83,6 +84,12 @@
                             <br> <br>
                             <button type="submit" value="Carrera" name="opcion"  class="btn waves-effect waves-light color-AzulClaro" >Carrera</button>
                             <button type="submit" value="Ramo" name="opcion"  class="btn waves-effect waves-light color-AzulClaro" >Ramo</button>
+                        </div>
+                    </div> -->
+                     <div class="col s12 m6 color-Azul-text">
+                        <h4 class="color-Plomo center-align">Datos Globales</h4>     
+                        <div class="input-field">                                
+                            <button type="submit" value="Semestre" name="opcion"  class="btn waves-effect waves-light color-AzulClaro" >Cambiar Semestre y Año</button>
                         </div>
                     </div>
                 </form>

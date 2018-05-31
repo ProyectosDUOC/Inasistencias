@@ -6,54 +6,58 @@ CREATE Database inasistencia;
 use inasistencia;
 
 CREATE TABLE administrador (
-    id_administrador    INT NOT NULL AUTO_INCREMENT,
-    rut_administrador   VARCHAR(30) NOT NULL,
+    id_administrador    INT(11) NOT NULL AUTO_INCREMENT,
+    rut_administrador   VARCHAR(10) NOT NULL,
     pnombre             VARCHAR(30),
     snombre             VARCHAR(30),
     appaterno           VARCHAR(30),
     apmaterno           VARCHAR(30),
     email               VARCHAR(50) NOT NULL,
-    activo              INT,
+    activo              INT(1),
     PRIMARY KEY(id_administrador)
 );
 
 
 CREATE TABLE alumno (
-    id_alumno    INT NOT NULL AUTO_INCREMENT,
-    rut_alumno   VARCHAR(30) NOT NULL,
+    id_alumno    INT(11) NOT NULL AUTO_INCREMENT,
+    rut_alumno   VARCHAR(10) NOT NULL,
     pnombre      VARCHAR(30),
     snombre      VARCHAR(30),
     appaterno    VARCHAR(30),
     apmaterno    VARCHAR(30),
+    sexo         VARCHAR(10),
+    telefono     VARCHAR(12),
+    celular      VARCHAR(12)
     email        VARCHAR(50) NOT NULL,
-    id_carrera   INT NOT NULL,
-    activo       INT,
+    id_carrera   INT(11) NOT NULL,
+    jornada      VARCHAR(1),
+    activo       INT(1),
     PRIMARY KEY(id_alumno)
 );
 
 CREATE TABLE carrera (
-    id_carrera       INT NOT NULL AUTO_INCREMENT,
+    id_carrera       INT(11) NOT NULL AUTO_INCREMENT,
     cod_carrera      VARCHAR(30) NOT NULL,
     nombre_carrera   VARCHAR(300) NOT NULL,
-    id_director      INT NOT NULL,
+    id_director      INT(11) NOT NULL,
     PRIMARY KEY(id_carrera)
 );
 
 
 CREATE TABLE control_usuario (
-    id_controlu   INT NOT NULL AUTO_INCREMENT,
+    id_controlu   INT(11) NOT NULL AUTO_INCREMENT,
     usuario       VARCHAR(30) NOT NULL,
     clave         VARCHAR(30) NOT NULL,
     rut_usuario   VARCHAR(30) NULL,
-    id_tipou      INT NOT NULL,
-    activo        INT NOT NULL,
+    id_tipou      INT(11) NOT NULL,
+    activo        INT(1) NOT NULL,
     PRIMARY KEY(id_controlu)
 );
 
 CREATE TABLE detalle_seccion (
-    id_detalle_secc   INT NOT NULL AUTO_INCREMENT,
-    id_seccion        INT NOT NULL,
-    activo            INT NOT NULL,
+    id_detalle_secc   INT(11) NOT NULL AUTO_INCREMENT,
+    id_seccion        INT(11) NOT NULL,
+    activo            INT(11) NOT NULL,
     id_alumno         INT NOT NULL,
     PRIMARY KEY(id_detalle_secc)
 );
@@ -107,15 +111,8 @@ CREATE TABLE inasistencia (
     PRIMARY KEY(id_inasistencia)
 );
 
-CREATE TABLE telefono_alumno(
-    id_tel              INT NOT NULL AUTO_INCREMENT,
-    id_alumno           INT,
-    telefono            INT,
-    PRIMARY KEY(id_tel)
-);
-
 CREATE TABLE jornada(
-    id_jornada INT NOT NULL,
+    jornada VARCHAR(),
     nombre_jornada VARCHAR(10),
     PRIMARY KEY(id_jornada)
 );
@@ -147,12 +144,12 @@ CREATE TABLE motivo (
 ALTER TABLE motivo ADD CONSTRAINT motivo_pk PRIMARY KEY ( id_motivo );
 
 CREATE TABLE seccion (
-    id_seccion    INT NOT NULL AUTO_INCREMENT,
+    id_seccion    INT(11) NOT NULL AUTO_INCREMENT,
     cod_seccion   VARCHAR(30),
     cod_ramo      VARCHAR(30),
-    id_docente    INT NOT NULL,
-    semestre      INT,
-    anio          INT,
+    id_docente    INT(11) NOT NULL,
+    semestre      INT(11),
+    anio          INT(1),
     PRIMARY KEY(id_seccion)
 );
 
@@ -405,9 +402,8 @@ INSERT INTO estado_inasistencia VALUES(7,'No Aprobado por Director');
 INSERT INTO estado_inasistencia VALUES(8,'Apelado por alumno');
 
 INSERT INTO global_semestre VALUES(1,1,2018,'2018-03-05','2018-06-30');
-INSERT INTO telefono_alumno(id_alumno,telefono) VALUES(1,98299855);
 
-INSERT INTO jornada(id_jornada,nombre_jornada) VALUES(1,'Diurno');
-INSERT INTO jornada(id_jornada,nombre_jornada) VALUES(2,'Vespertino');
+INSERT INTO jornada VALUES('D','Diurno');
+INSERT INTO jornada VALUES('V','Vespertino');
 
 -- UPDATE global_semestre SET semestre=1 where id_global=1;

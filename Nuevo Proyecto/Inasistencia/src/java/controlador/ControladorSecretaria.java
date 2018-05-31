@@ -6,7 +6,6 @@
 package controlador;
 
 import dao.AlumnoDAO;
-import dao.TelefonoDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Alumno;
-import modelo.TelefonoAlumno;
 
 /**
  *
@@ -38,50 +36,65 @@ public class ControladorSecretaria extends HttpServlet {
         HttpSession sesion = request.getSession(true);
         String rut = request.getParameter("txtRut");
         String opcion = request.getParameter("opcion");
-        String tel = request.getParameter("txtTel");
+        String cel = request.getParameter("txtCel");
         String idSeccion = "", mensaje = "";
         int x = -1;
+        Alumno alumno = new Alumno();
+        String idAlumno="";
 
         if (opcion.equals("Buscar")) {
             if (rut.length() > 0) {
                 Alumno alum = (new AlumnoDAO()).buscarDatos(rut);
                 if (alum != null) {
+                    sesion.setAttribute("idAlumno", null);
                     sesion.setAttribute("rut", rut);
                     response.sendRedirect("secretaria.jsp");
-                } else {
+                } else {                    
+                    sesion.setAttribute("idAlumno", null);
                     sesion.setAttribute("rut", null);
                     response.sendRedirect("secretaria.jsp?mensaje=Alumno no encontrado");
                 }
-            } else {
+            } else {                
+                sesion.setAttribute("idAlumno", null);
                 sesion.setAttribute("rut", null);
                 response.sendRedirect("secretaria.jsp?mensaje=Alumno no encontrado");
             }
         }
         if (opcion.equals("Nuevo")) {
             sesion.setAttribute("rut", null);
+            sesion.setAttribute("idAlumno", null);
+            response.sendRedirect("secretaria.jsp");
+        }
+        if (opcion.charAt(0) == 'C') {  //Actualizo
+            idAlumno = opcion.substring(1);  //id para actualizar
+            sesion.setAttribute("idAlumno", idAlumno);
             response.sendRedirect("secretaria.jsp");
         }
         if (opcion.charAt(0) == 's') {
             idSeccion = opcion.substring(1);
             sesion.setAttribute("idSeccion", idSeccion);
             response.sendRedirect("justificarSecretaria.jsp");
-        }
+        }        
         if (opcion.charAt(0) == 'x') {  //Actualizo
             idSeccion = opcion.substring(1);  //id para actualizar
-            if (tel.length() > 0) {
-                mensaje = "Telefono actualizada";
-                x = (new TelefonoDAO()).actualizar(Integer.parseInt(idSeccion), Integer.parseInt(tel));
-
+            if (cel.length() > 0) {
+                alumno = (new AlumnoDAO()).buscarDatosId(Integer.parseInt(idSeccion));
+                alumno.setCelular(cel);
+                x = (new AlumnoDAO()).actualizar(alumno);
+                mensaje = "Telefono actualizado";
             } else {
                 mensaje = "Ingrese telefono";
             }
             response.sendRedirect("secretaria.jsp?mensaje=" + mensaje);
         }
+        
         if (opcion.charAt(0) == 'y') {  //Agrego numero
             idSeccion = opcion.substring(1);  //id del alumno para guardar
-            if (tel.length() > 0) {
+            if (cel.length() > 0) {
                 mensaje = "Telefono agregado";
-                x = (new TelefonoDAO()).agregar(new TelefonoAlumno(0, Integer.parseInt(idSeccion), Integer.parseInt(tel)));
+                alumno = (new AlumnoDAO()).buscarDatosId(Integer.parseInt(idSeccion));
+                alumno.setCelular(cel);
+                x = (new AlumnoDAO()).actualizar(alumno);
             } else {
                 mensaje = "Ingrese telefono";
             }

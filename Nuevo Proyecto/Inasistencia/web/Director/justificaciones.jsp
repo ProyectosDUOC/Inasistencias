@@ -4,6 +4,7 @@
     Author     : benja
 --%>
 
+<%@page import="dao.AlumnoDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="dao.SeccionDAO"%>
 <%@page import="modelo.Seccion"%>
@@ -40,7 +41,7 @@
             ReporteSecretaria reportes = new ReporteSecretaria();
             SimpleDateFormat parseador = new SimpleDateFormat("dd-MM-yyyy");
             ArrayList<ReporteSecretaria> arrayReportes = new ArrayList<ReporteSecretaria>();
-            String nombre = "", estado = "", rut = "", fecha2="";
+            String nombre = "", estado = "", rut = "", fecha2="", rutA="";
             Inasistencia inasistencia = new Inasistencia();
             Ramo ramo = new Ramo();
             Seccion seccion = new Seccion();
@@ -93,7 +94,8 @@
                             <thead>
                                 <tr class="amber darken-3">
                                     <th>Nombre Asignatura</th>
-                                    <th>Asignatura/sección</th>                                    
+                                    <th>Asignatura/sección</th>  
+                                    <th>Rut Alumno</th>                                    
                                     <th>Fecha Inasistencia</th>
                                     <th>Acción</th>
                                 </tr>
@@ -105,6 +107,7 @@
                                     <td>No se han encontrados nuevos registros</td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                 </tr>
                                 <% } else {
                                     for (ReporteSecretaria r : arrayReportes) {
@@ -114,10 +117,12 @@
                                         if(inasistencia.getFechaInasistencia2()!=null){
                                             fecha2="  hasta  "+ parseador.format(inasistencia.getFechaInasistencia2());
                                         }
+                                        rutA= (new AlumnoDAO()).buscarDatosId(r.getIdAlumno()).getRutAlumno();
                                 %>
                                 <tr>
                                     <td><%=ramo.getNombreRamo()%></td>
-                                    <td><%=seccion.getCodSeccion()%></td>
+                                    <td><%=seccion.getCodSeccion()%></td>                                    
+                                    <td><%=rutA%></td>
                                     <td><%=parseador.format(inasistencia.getFechaInasistencia())+fecha2%></td>
                                     <%fecha2=""; //para que no se repita%>
                                     <td>

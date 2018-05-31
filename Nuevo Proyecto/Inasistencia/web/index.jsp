@@ -20,7 +20,6 @@
         <%
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-
             if (user != null) {
                 sesion.invalidate();
             }
@@ -57,29 +56,18 @@
                                     </tr>
                                     <tr>
                                         <td>Contraseña:</td>
-                                        <td><input type="password" name="txtPass" required="" maxlength="10" placeholder="********" /></td>
-                                    </tr>                                    
+                                        <td><input type="password" name="txtPass" id="pass1" required="" maxlength="10" placeholder="********" /></td>
+                                    </tr>    
                                 </table>
                                 <div >
                                     <input type="submit" name="opcion" value="Entrar" class="color-Azul-text"/>                                
                                 </div>                            
                             </form>
                             <br>
-                            <a href="recuperarClave.jsp" class="color-Azul-text right">¿Olvidaste tu contraseña? </a>
+                            <!--<a href="recuperarClave.jsp" class="color-Azul-text right">¿Olvidaste tu contraseña? </a>-->
                             <br>
                         </div>
                         <span class="red-text"> ${param.mensaje}</span>
-                    </div>
-                    <div class="col s12 m6">     
-                        <div>
-                            <h5 class="color-AzulClaro-text"><strong>Datos</strong></h5>
-                            <p> <strong>Administrador:</strong> 4002   1234 </p>
-                            <p> <strong>Secretaria:</strong>     1001   1234   ok </p>
-                            <p> <strong>Docente:</strong>       2002   1234 </p>
-                            <p> <strong>Director:</strong>       3000   1234 </p>
-                            <p> <strong>Alumno:</strong>         10-30     1234 </p>
-                            <br>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -94,6 +82,6 @@
                 <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo  <a href="acerca.jsp" class="color-Plomo-text">ver</a></p>                                
                 <br>
             </div>
-        </footer>
+        </footer>        
     </body>
 </html>

@@ -75,8 +75,8 @@ public class GlobalSemestreDAO implements GeneralGlobalSemestreDAO{
             String agregarSQL = "UPDATE global_semestre SET"
                     + " semestre = " + globalSemestre.getSemestre()+
                     ", anio = "+globalSemestre.getAnio()+
-                    ", fecha_inicio = '"+globalSemestre.getFechaInicio()+
-                    "', fecha_termino = '"+globalSemestre.getFechaTermino()+"' where id_global = 1 "; 
+                    ", fecha_inicio = '"+globalSemestre.getFechaIni()+
+                    "', fecha_termino = '"+globalSemestre.getFechaTer()+"' where id_global = 1 "; 
             
             results = statement.executeUpdate(agregarSQL);
             connection.close();

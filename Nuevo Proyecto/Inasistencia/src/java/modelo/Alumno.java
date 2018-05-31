@@ -74,12 +74,65 @@ public class Alumno implements Serializable {
     private int idCarrera;
     @Column(name = "activo")
     private Integer activo;
-
+    
+    private String sexo;
+    private String telefono;
+    private String celular;
+    private String jornada;
+    
     public Alumno() {
     }
 
     public Alumno(Integer idAlumno) {
         this.idAlumno = idAlumno;
+    }
+
+    public Alumno(Integer idAlumno, String rutAlumno, String pnombre, String snombre, String appaterno, String apmaterno, String email, int idCarrera, Integer activo, String sexo, String telefono, String celular, String jornada) {
+        this.idAlumno = idAlumno;
+        this.rutAlumno = rutAlumno;
+        this.pnombre = pnombre;
+        this.snombre = snombre;
+        this.appaterno = appaterno;
+        this.apmaterno = apmaterno;
+        this.email = email;
+        this.idCarrera = idCarrera;
+        this.activo = activo;
+        this.sexo = sexo;
+        this.telefono = telefono;
+        this.celular = celular;
+        this.jornada = jornada;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public String getJornada() {
+        return jornada;
+    }
+
+    public void setJornada(String jornada) {
+        this.jornada = jornada;
     }
 
     public Alumno(Integer idAlumno, String rutAlumno, String pnombre, String snombre, String appaterno, String apmaterno, String email, int idCarrera, Integer activo) {

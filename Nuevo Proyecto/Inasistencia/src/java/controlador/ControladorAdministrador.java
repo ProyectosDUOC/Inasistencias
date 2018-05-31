@@ -7,6 +7,7 @@ package controlador;
 
 import dao.AdministradorDAO;
 import dao.AlumnoDAO;
+import dao.ControlUsuarioDAO;
 import dao.DirectorDAO;
 import dao.DocenteDAO;
 import dao.SecretariaDAO;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Administrador;
 import modelo.Alumno;
+import modelo.ControlUsuario;
 import modelo.Director;
 import modelo.Docente;
 import modelo.Secretaria;
@@ -49,6 +51,9 @@ public class ControladorAdministrador extends HttpServlet {
         String apat = request.getParameter("txtApaterno");
         String amat = request.getParameter("txtAmaterno");
         String mail = request.getParameter("txtEmail");
+        
+        String usuario = request.getParameter("txtUsuario");        
+        String contra = request.getParameter("txtContra");
            
         String xCrud = "";
         
@@ -160,7 +165,7 @@ public class ControladorAdministrador extends HttpServlet {
             }
             if (xCrud.equals("4")) {
                 //admin = (new AdministradorDAO()).buscarDatos(rut);
-                admin = new Administrador(0, carrera, pnom, snom, apat, amat, mail, 1);
+                admin = new Administrador(0, rut, pnom, snom, apat, amat, mail, 1);
                 x = (new AdministradorDAO()).agregar(admin);
                 if (x != 0) {
                     response.sendRedirect("index.jsp?mensaje=Agregado"+x);
@@ -168,8 +173,9 @@ public class ControladorAdministrador extends HttpServlet {
             }
             if (xCrud.equals("5")) {
                 //secr = (new SecretariaDAO()).buscarDatos(rut);
-                secr = new Secretaria(0, carrera, pnom, snom, apat, amat, mail, 1);
+                secr = new Secretaria(0, rut, pnom, snom, apat, amat, mail, 1);
                 x = (new SecretariaDAO()).agregar(secr);                
+                x = (new ControlUsuarioDAO()).agregar(new ControlUsuario(0, usuario,contra, rut, 5, 1));
                 if (x != 0) {
                     response.sendRedirect("index.jsp?mensaje=Agregado"+x);
                 }
@@ -210,7 +216,7 @@ public class ControladorAdministrador extends HttpServlet {
                 }
             }
             if (xCrud.equals("5")) {
-                secr = new Secretaria(0, carrera, pnom, snom, apat, amat, mail, 1);
+                secr = new Secretaria(0, rut, pnom, snom, apat, amat, mail, 1);
                 x = (new SecretariaDAO()).actualizar(secr);                
                 if (x != 0) {
                     response.sendRedirect("index.jsp?mensaje=Actualizado "+x);

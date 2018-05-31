@@ -26,13 +26,13 @@
             }
         %>
     </head>
-    <body>
+    <body class="text-center">
         <header class="color-Azul">
             <div class="container">
                 <div class="row">                    
                     <div class="center-align">
                         <br>
-                        <h5 class="white-text"><strong>Team</strong></h5>
+                        <h5 class="white-text"><strong>NOSOTROS</strong></h5>
                         <br>
                     </div>
                 </div>
@@ -40,54 +40,35 @@
         </header>   
         <div class="container">
             <div class="center-align">
-                <p class="color-Plomo-text color-Plomo">-------</p>
-            </div>
-        </div>
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col s12 m4">     
-                        <div class="center-align text-center">
-                            <h5 class="color-AzulClaro-text"><strong>Desarrollado</strong></h5>                           
-                            <table>
-                                <tr>
-                                    <td>Carlos Orellana</td>
-                                </tr>
-                                <tr>
-                                    <td>Benjamin Mora</td>
-                                </tr> 
-                                <tr>
-                                    <td>Sebastian Orellana</td>
-                                </tr> 
-                            </table>                           
-                            <br>
-                            <br>
-                        </div>
+                <p class="color-Plomo">Desarollodo por Estudiantes Duoc San Bernardo 2018</p>
+
+                <div class="col s12 m4">     
+                    <div>
+                        <h5 class="color-AzulClaro-text"><strong>Desarrolladores</strong></h5>    
+                        <p><strong>Carlos Orellana</strong></p>
+                        <p><strong>Sebastian Orrego</strong></p>
+                        <p><strong>Benjamin Mora</strong></p>                          
+                        <br>                        
+                        <h5 class="color-AzulClaro-text"><strong>Profesor Cristian Garcia</strong></h5> 
+                        <br>                   
                     </div>
-                    <div class="col s12 m4">
-                         <h5 class="color-AzulClaro-text"><strong>Profesor</strong></h5>                           
-                            <table>
-                                <tr>
-                                    <td>Profesor Cristian Garcia</td>
-                                </tr> 
-                            </table>
-                            <div >
-                                <a href="index.jsp" class="red-text btn">Volver</a>                                
-                            </div>   
-                    </div>
-                    
+                    <div>
+                        <a class="white-text btn  waves-effect waves-light  red" href="index.jsp">Volver</a>
+                    </div>   
                 </div>
             </div>
-            <br>
-            <br>
-            <br>
-            <br>
-        </section>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         <br>
         <footer class="color-Azul">            
             <div class="container">
                 <br>
-                <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo  <a href="acerca.jsp" class="color-Plomo-text">ver</a></p>                                
+                <br>
+                <br>
                 <br>
             </div>
         </footer>

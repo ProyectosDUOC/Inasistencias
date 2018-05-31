@@ -101,11 +101,11 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <div class="col s6 offset-s6">
-                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>                            
-                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
+                            <a href="../<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>                            
+                            <a href="../<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
-                                <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
-                                <a class="waves-effect waves-light" href="index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         
+                                <a class="waves-effect waves-light" href="../configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
+                                <a class="waves-effect waves-light" href="../index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         
                             </div>                            
                         </div>
                     </div>
@@ -167,7 +167,7 @@
                         </div>
                         <br>
                         <div>
-                            <a class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
+                            <a class="white-text btn  waves-effect waves-light  red" href="../<%=estado%>.jsp">Volver</a>
                             <button class="btn amber waves-effect waves-light" type="submit" name="opcion" value="G<%=idSeccion%>">Guardar</button>
                         </div>
                     </form>

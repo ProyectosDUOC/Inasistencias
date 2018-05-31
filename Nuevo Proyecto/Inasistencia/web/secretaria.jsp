@@ -3,10 +3,6 @@
     Created on : 03-may-2018, 10:36:28
     Author     : benja
 --%>
-
-<%@page import="dao.JornadaDAO"%>
-<%@page import="dao.TelefonoDAO"%>
-<%@page import="modelo.TelefonoAlumno"%>
 <%@page import="modelo.Docente"%>
 <%@page import="modelo.DetalleSeccion"%>
 <%@page import="dao.DetalleSeccionDAO"%>
@@ -46,14 +42,14 @@
 
             GlobalSemestre semestreActual = new GlobalSemestre();
             //variables de secretaria
-            String estado = "", rut = "", nombre = "", semestre = "", numero = "";
-            TelefonoAlumno tel = new TelefonoAlumno();
+            String estado = "", rut = "", nombre = "", semestre = "", numero = "", tel = "", celu = "", idAlumno = "";
             //variables alumno
-            String rutA = "", nombreA = "", carreraA = "", correoA = "", jornada="";
+            String rutA = "", nombreA = "", carreraA = "", correoA = "", jornada = "";
             ArrayList<DetalleSeccion> arrayDetalleSeccionAlumno = new ArrayList<DetalleSeccion>();
             ArrayList<Seccion> arraySeccionesAlumno = new ArrayList<Seccion>();
+            ArrayList<Alumno> arrayAlumno = new ArrayList<Alumno>();
             int alumnoEncontrado = 0; //0 no encontrado, 1 se encontro, 2 no tiene ramos
-            int cursosEncontrado = 0;
+            int cursosEncontrado = 0, encontroCarrera = 0;
 
             //Variables de cursos
             String nombreAsig = "", nombreCod = "", nombreProfe = "";
@@ -72,32 +68,48 @@
                     // si encuentra a un alumno con el rut
                     if (sesion.getAttribute("rut") != null) {
                         rutA = session.getAttribute("rut").toString();
-                        alum = (new AlumnoDAO()).buscarDatos(rutA);
-                        nombreA = alum.getPnombre() + " " + alum.getSnombre() + " " + alum.getAppaterno() + " " + alum.getApmaterno();
-                        carreraA = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
-                        correoA = alum.getEmail();
-                        alumnoEncontrado = 1;
-                        jornada = (new JornadaDAO()).buscar(alum.getActivo()).getNombreJornada();
-                        tel = (new TelefonoDAO()).buscarDatosAlum(alum.getIdAlumno());
-                        if (tel != null) {
-                            numero = tel.getTelefono().toString();
-                        } else {
-                            numero = "";
-                        }
 
-                        //todos los detalle cursos que esta
-                        arrayDetalleSeccionAlumno = (new DetalleSeccionDAO()).mostrarAlumno(alum.getIdAlumno(), semestreActual.getAnio(), semestreActual.getSemestre());
-                        if (arrayDetalleSeccionAlumno.isEmpty()) {
-                            //en caso que no tenga cursos
-                            cursosEncontrado = 0;
-                        } else {
-                            arraySeccionesAlumno = (new SeccionDAO()).mostrarAlumno(alum.getIdAlumno(), semestreActual.getAnio(), semestreActual.getSemestre());
-                            if (arraySeccionesAlumno.isEmpty()) {
-                                cursosEncontrado = 0;
+                        //Busca al alumno en caso si hay mucho en otras carrera                        
+                        if (encontroCarrera == 0 && sesion.getAttribute("idAlumno") == null) {
+                            arrayAlumno = (new AlumnoDAO()).buscarAlumnoR(rutA);
+                            if (!arrayAlumno.isEmpty()) {
+                                encontroCarrera = 1;
                             } else {
-                                cursosEncontrado = 1;
+                                encontroCarrera = -1;
                             }
                         }
+
+                        if (sesion.getAttribute("idAlumno") != null) {
+                            encontroCarrera = 2;                      
+                            idAlumno = sesion.getAttribute("idAlumno").toString();
+                            alum = (new AlumnoDAO()).buscarDatosId(Integer.parseInt(idAlumno));
+                            nombreA = alum.getPnombre() + " " + alum.getSnombre() + " " + alum.getAppaterno() + " " + alum.getApmaterno();
+                            carreraA = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
+                            correoA = alum.getEmail();
+                            alumnoEncontrado = 1;
+                            jornada = alum.getJornada();
+                            if (jornada.equals("D")) {
+                                jornada = "Diurno";
+                            } else {
+                                jornada = "Vespertino";
+                            }
+                            celu = alum.getCelular();
+
+                            //todos los detalle cursos que esta
+                            arrayDetalleSeccionAlumno = (new DetalleSeccionDAO()).mostrarAlumno(alum.getIdAlumno(), semestreActual.getAnio(), semestreActual.getSemestre());
+                            if (arrayDetalleSeccionAlumno.isEmpty()) {
+                                //en caso que no tenga cursos
+                                cursosEncontrado = 0;
+                            } else {
+                                arraySeccionesAlumno = (new SeccionDAO()).mostrarAlumno(alum.getIdAlumno(), semestreActual.getAnio(), semestreActual.getSemestre());
+                                if (arraySeccionesAlumno.isEmpty()) {
+                                    cursosEncontrado = 0;
+                                } else {
+                                    cursosEncontrado = 1;
+                                }
+                            }
+                        }
+
                     } else {
                         alumnoEncontrado = 0;
                     }
@@ -111,7 +123,7 @@
             function validarRut(string) {//solo letras y numeros
                 var out = '';
                 //Se añaden las letras validas
-                var filtro = '1234567890k';//Caracteres validos
+                var filtro = '1234567890kK';//Caracteres validos
 
                 for (var i = 0; i < string.length; i++)
                     if (filtro.indexOf(string.charAt(i)) != -1)
@@ -147,11 +159,45 @@
                     <div class="col s12 m6 color-Azul-text">
                         <h4 class="color-Plomo color-Azul-text center-align" >Ingreso de Alumno</h4> 
 
-                        <p><strong> Rut:</strong> <input type="text" name="txtRut" maxlength="10" placeholder="19000222 (Sin digito verificador y puntos)" onkeyup="this.value = validarRut(this.value)"/> </p>  
+                        <p><strong> Rut:</strong> <input type="text" value="<%=rutA%>" name="txtRut" maxlength="10" placeholder="19000222 (Sin digito verificador y puntos)" onkeyup="this.value = validarRut(this.value)"/> </p>  
                         <input type="submit" name="opcion" value="Buscar" class="color-AzulClaro waves-effect waves-light btn"/>                                
                         <input type="submit" name="opcion" value="Nuevo" class="color-AzulClaro waves-effect waves-light btn"/>                                
                         <p> <%=semestre%> </p>
                         <span class="red-text"> ${param.mensaje}</span>
+                        <%if (encontroCarrera == 1) {%>
+                        <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
+                            <thead>
+                                <tr class="amber darken-3">
+                                    <th>Nombre Carrera</th>
+                                    <th>Jornada</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%for (Alumno alu : arrayAlumno) {
+                                        carreraA = (new CarreraDAO()).buscar(alu.getIdCarrera()).getNombreCarrera();
+                                        jornada = alu.getJornada();
+                                %>
+                                <tr>
+                                    <td><%=carreraA%></td>
+                                    <td><%=jornada%></td>                                      
+                                    <td>
+                                        <button 
+                                            class="btn indigo darken-1" 
+                                            type="submit" 
+                                            name="opcion" 
+                                            value="C<%=alu.getIdAlumno()%>"> 
+                                            Seleccionar 
+                                        </button>
+
+                                    </td>
+                                </tr>
+                                <%}%>
+                            </tbody>
+                        </table>                        
+                        <%} if(encontroCarrera==-1) {%>
+                        <span class="red-text">No se encontro carreras asignadas</span>
+                        <%}%>
                     </div>
 
 
@@ -163,15 +209,15 @@
                         <p><strong> Correo :</strong> <span><%=correoA%></span></p>                    
                         <p><strong> Carrera :</strong> <span><%=carreraA%></span></p>    
                         <p><strong> Jornada :</strong> <span><%=jornada%></span></p>  
-                        <p><strong> Telefono :</strong>
-                            <input type="number" maxlength="9" name="txtTel" value="<%=numero%>" placeholder="Número de celular o casa (229993862)" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" /><i>(Máximo 8 dígitos)</i>
+                        <p><strong> Celular :</strong>
+                            <input type="number" id="nul" maxlength="9" name="txtCel" value="<%=celu%>" placeholder="Número de celular o casa (229993862)" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" /><i>(Máximo 8 dígitos)</i>
                         </p>
-                        <%if (numero.length() > 0) {%>
+                        <%if (celu.length() > 0) {%>
                         <button 
                             class="amber waves-effect waves-light btn" 
                             type="submit" 
                             name="opcion" 
-                            value="x<%=tel.getIdTel()%>"> 
+                            value="x<%=alum.getIdAlumno()%>"> 
                             Actualizar 
                         </button>
                         <% } else {%>
@@ -202,7 +248,7 @@
                             <tbody>
                                 <% for (Seccion sec : arraySeccionesAlumno) {
                                         nombreAsig = (new RamoDAO()).buscar(sec.getCodRamo()).getNombreRamo();
-                                        nombreCod = sec.getCodSeccion();
+                                        nombreCod = (new RamoDAO()).buscar(sec.getCodRamo()).getSigla();
                                         doce = (new DocenteDAO()).buscarDatos(sec.getIdDocente());
                                         nombreProfe = doce.getPnombre() + " " + doce.getAppaterno();
                                 %>

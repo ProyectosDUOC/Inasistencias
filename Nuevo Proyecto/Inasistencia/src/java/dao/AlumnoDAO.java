@@ -16,26 +16,26 @@ import modelo.Alumno;
  *
  * @author benja
  */
-public class AlumnoDAO implements GeneralAlumnoDAO{
+public class AlumnoDAO implements GeneralAlumnoDAO {
 
     private ArrayList<Alumno> arrayAlumnos = new ArrayList<>();
     Conectar conn;
-    
+
     @Override
     public ArrayList mostrarDatos() {
-        Alumno obj =null;
+        Alumno obj = null;
         try {
             conn = new Conectar();
             Connection connection = conn.getConnection();
 
             Statement statement = connection.createStatement();
 
-            String consultaSQL = "SELECT * FROM alumno;";
+            String consultaSQL = "SELECT * FROM alumno where activo=1;";
 
             ResultSet results = statement.executeQuery(consultaSQL);
 
             int id, idCarrera, activo;
-            String rut, pnombre, snombre, appaterno, apmaterno, email;
+            String rut, pnombre, snombre, appaterno, apmaterno, email, sexo, tele, celular, jornada;
 
             /* id_alumno    INT NOT NULL AUTO_INCREMENT,
                 rut_almuno   VARCHAR(30) NOT NULL,
@@ -55,10 +55,14 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
                 appaterno = results.getString("appaterno");
                 apmaterno = results.getString("apmaterno");
                 email = results.getString("email");
-                idCarrera = results.getInt("id_carrera");                
+                idCarrera = results.getInt("id_carrera");
+                jornada = results.getString("jornada");
+                sexo = results.getString("sexo");
+                celular = results.getString("celular");
+                tele = results.getString("telefono");
                 activo = results.getInt("activo");
-                
-                obj = new Alumno(id, rut, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo);
+
+                obj = new Alumno(id, rut, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo, sexo, tele, celular, jornada);
                 arrayAlumnos.add(obj);
             }
             connection.close();
@@ -68,21 +72,71 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
         }
         return arrayAlumnos;
     }
+    
+     public ArrayList mostrarDatosEspecificos() {
+        Alumno obj = null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
 
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = " SELECT * FROM alumno alum left JOIN control_usuario con ON alum.rut_alumno=con.rut_usuario WHERE con.usuario is null  group by alum.rut_alumno;";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+
+            int id, idCarrera, activo;
+            String rut, pnombre, snombre, appaterno, apmaterno, email, sexo, tele, celular, jornada;
+
+            /* id_alumno    INT NOT NULL AUTO_INCREMENT,
+                rut_almuno   VARCHAR(30) NOT NULL,
+                pnombre      VARCHAR(30),
+                snombre      VARCHAR(30),
+                appaterno    VARCHAR(30),
+                apmaterno    VARCHAR(30),
+                email        VARCHAR(50) NOT NULL,
+                id_carrera   INT NOT NULL,
+                activo       INT,*/
+            arrayAlumnos.removeAll(arrayAlumnos);
+            while (results.next()) {
+                id = results.getInt("id_alumno");
+                rut = results.getString("rut_alumno");
+                pnombre = results.getString("pnombre");
+                snombre = results.getString("snombre");
+                appaterno = results.getString("appaterno");
+                apmaterno = results.getString("apmaterno");
+                email = results.getString("email");
+                idCarrera = results.getInt("id_carrera");
+                jornada = results.getString("jornada");
+                sexo = results.getString("sexo");
+                celular = results.getString("celular");
+                tele = results.getString("telefono");
+                activo = results.getInt("activo");
+
+                obj = new Alumno(id, rut, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo, sexo, tele, celular, jornada);
+                arrayAlumnos.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayAlumnos;
+    }
     @Override
     public Alumno buscarDatos(String rut) {
         Alumno obj = null;
         try {
             conn = new Conectar();
             Connection connection = conn.getConnection();
-            
+
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM alumno WHERE rut_alumno='" + rut + "';";
+            String query = "SELECT * FROM alumno WHERE rut_alumno='" + rut + "' and activo=1;";
 
             ResultSet results = statement.executeQuery(query);
 
             int id, idCarrera, activo;
-            String rut1, pnombre, snombre, appaterno, apmaterno, email;
+            String rut1, pnombre, snombre, appaterno, apmaterno, email, jornada, sexo, celular, tele;
 
             while (results.next()) {
                 id = results.getInt("id_alumno");
@@ -92,12 +146,16 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
                 appaterno = results.getString("appaterno");
                 apmaterno = results.getString("apmaterno");
                 email = results.getString("email");
-                idCarrera = results.getInt("id_carrera");                
+                idCarrera = results.getInt("id_carrera");
+                jornada = results.getString("jornada");
+                sexo = results.getString("sexo");
+                celular = results.getString("celular");
+                tele = results.getString("telefono");
                 activo = results.getInt("activo");
 
                 if (rut1.equals(rut)) {
-                    obj = new Alumno(id, rut, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo);
-                   break;
+                    obj = new Alumno(id, rut, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo, sexo, tele, celular, jornada);
+                    break;
                 }
             }
             connection.close();
@@ -114,14 +172,14 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
         try {
             conn = new Conectar();
             Connection connection = conn.getConnection();
-            
+
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM alumno WHERE email='" + correo + "';";
 
             ResultSet results = statement.executeQuery(query);
 
             int id, idCarrera, activo;
-            String rut, pnombre, snombre, appaterno, apmaterno, email;
+            String rut, pnombre, snombre, appaterno, apmaterno, email, jornada, sexo, celular, tele;
 
             while (results.next()) {
                 id = results.getInt("id_alumno");
@@ -130,13 +188,18 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
                 snombre = results.getString("snombre");
                 appaterno = results.getString("appaterno");
                 apmaterno = results.getString("apmaterno");
+                jornada = results.getString("jornada");
+                sexo = results.getString("sexo");
+                celular = results.getString("celular");
+                tele = results.getString("telefono");
                 email = results.getString("email");
-                idCarrera = results.getInt("id_carrera");                
+                idCarrera = results.getInt("id_carrera");
                 activo = results.getInt("activo");
 
                 if (email.equals(correo)) {
-                    obj = new Alumno(id, rut, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo);
-                   break;
+
+                    obj = new Alumno(id, rut, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo, sexo, tele, celular, jornada);
+                    break;
                 }
             }
             connection.close();
@@ -153,8 +216,9 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
             conn = new Conectar();
             Connection connection = conn.getConnection();
             Statement statement = connection.createStatement();
-            String agregarSQL = "INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo)"
-                    + " VALUES('"+alumno.getRutAlumno()+"','"+alumno.getPnombre()+"','"+alumno.getSnombre()+"','"+alumno.getAppaterno()+"','"+alumno.getApmaterno()+"','"+alumno.getEmail()+"',"+alumno.getIdCarrera()+","+alumno.getActivo()+");";
+            String agregarSQL = "INSERT INTO alumno(rut_alumno,pnombre,snombre,appaterno,apmaterno,email,id_carrera,activo,sexo,telefono,celular,jornada)"
+                    + " VALUES('" + alumno.getRutAlumno() + "','" + alumno.getPnombre() + "','" + alumno.getSnombre() + "','" + alumno.getAppaterno() + "','" + alumno.getApmaterno() + "','" + alumno.getEmail() + "'," + alumno.getIdCarrera() + "," + alumno.getActivo()
+                    + ",'" + alumno.getSexo() + "','" + alumno.getTelefono() + "','" + alumno.getCelular() + "','" + alumno.getJornada() + "');";
             int results = statement.executeUpdate(agregarSQL);
             connection.close();
             conn.desconectar();
@@ -171,23 +235,42 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
 
     @Override
     public int actualizar(Alumno alumno) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int results = 0;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+            Statement statement = connection.createStatement();
+
+            String agregarSQL = "UPDATE alumno SET  "
+                    + " telefono='" + alumno.getTelefono()
+                    + "', celular='" + alumno.getCelular()
+                    + "', email='" + alumno.getEmail()+ "' where id_alumno="+alumno.getIdAlumno()+";";
+            results = statement.executeUpdate(agregarSQL);
+            connection.close();
+            conn.desconectar();
+
+        } //catching excepcion
+        catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return results;
     }
-    
-     @Override
+
+    @Override
     public Alumno buscarDatosId(int id) {
         Alumno obj = null;
         try {
             conn = new Conectar();
             Connection connection = conn.getConnection();
-            
+
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM alumno WHERE id_alumno=" + id + ";";
 
             ResultSet results = statement.executeQuery(query);
 
             int id1, idCarrera, activo;
-            String rut1, pnombre, snombre, appaterno, apmaterno, email;
+            String rut1, pnombre, snombre, appaterno, apmaterno, email, jornada, sexo, celular, tele;
 
             while (results.next()) {
                 id1 = results.getInt("id_alumno");
@@ -197,12 +280,15 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
                 appaterno = results.getString("appaterno");
                 apmaterno = results.getString("apmaterno");
                 email = results.getString("email");
-                idCarrera = results.getInt("id_carrera");                
+                idCarrera = results.getInt("id_carrera");
                 activo = results.getInt("activo");
-
+                jornada = results.getString("jornada");
+                sexo = results.getString("sexo");
+                celular = results.getString("celular");
+                tele = results.getString("telefono");
                 if (id == id1) {
-                    obj = new Alumno(id1, rut1, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo);
-                   break;
+                    obj = new Alumno(id, rut1, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo, sexo, tele, celular, jornada);
+                    break;
                 }
             }
             connection.close();
@@ -211,5 +297,57 @@ public class AlumnoDAO implements GeneralAlumnoDAO{
             System.out.println("Error: " + ex);
         }
         return obj;
+    }
+
+    @Override
+    public ArrayList buscarAlumnoR(String rut) {
+        Alumno obj = null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM alumno where rut_alumno='"+rut+"';";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+
+            int id, idCarrera, activo;
+            String rut1, pnombre, snombre, appaterno, apmaterno, email, sexo, tele, celular, jornada;
+
+            /* id_alumno    INT NOT NULL AUTO_INCREMENT,
+                rut_almuno   VARCHAR(30) NOT NULL,
+                pnombre      VARCHAR(30),
+                snombre      VARCHAR(30),
+                appaterno    VARCHAR(30),
+                apmaterno    VARCHAR(30),
+                email        VARCHAR(50) NOT NULL,
+                id_carrera   INT NOT NULL,
+                activo       INT,*/
+            arrayAlumnos.removeAll(arrayAlumnos);
+            while (results.next()) {
+                id = results.getInt("id_alumno");
+                rut = results.getString("rut_alumno");
+                pnombre = results.getString("pnombre");
+                snombre = results.getString("snombre");
+                appaterno = results.getString("appaterno");
+                apmaterno = results.getString("apmaterno");
+                email = results.getString("email");
+                idCarrera = results.getInt("id_carrera");
+                jornada = results.getString("jornada");
+                sexo = results.getString("sexo");
+                celular = results.getString("celular");
+                tele = results.getString("telefono");
+                activo = results.getInt("activo");
+
+                obj = new Alumno(id, rut, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo, sexo, tele, celular, jornada);
+                arrayAlumnos.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayAlumnos;
     }
 }

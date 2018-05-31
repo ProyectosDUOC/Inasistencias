@@ -60,11 +60,11 @@
         </header>  
         <div class="container">
             <div class="row">
-                <h4 class="color-Plomo color-Azul-text center-align" >Menu Coordinador</h4>
+                <h4 class="color-Plomo color-Azul-text center-align" >Menu Administrador</h4>
                 <table border="1">
                     <tr>
                         <td>
-                            <a class="btn-large waves-effect waves-light color-AzulClaro" >Subir Inasistencias</a>
+                            <a class="btn-large waves-effect waves-light color-AzulClaro" href="Admin/subirInasistencia.jsp" >Subir Inasistencias</a>
                         </td>
                     </tr>
                     <tr>
