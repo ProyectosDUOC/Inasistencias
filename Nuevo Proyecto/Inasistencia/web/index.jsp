@@ -1,4 +1,4 @@
-<%-- 
+﻿<%-- 
     Document   : index
     Created on : 02-may-2018, 12:50:09
     Author     : benja
@@ -69,11 +69,6 @@
                         </div>
                         <span class="red-text"> ${param.mensaje}</span>
                     </div>
-<<<<<<< HEAD
-=======
-                    <div class="col s12 m6">
-                    </div>
->>>>>>> e30f711ae197a58e83ed063f118442615c0b0a31
                 </div>
             </div>
             <br>
