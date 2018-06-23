@@ -13,6 +13,7 @@ import dao.InasistenciaDAO;
 import dao.JustificacionDAO;
 import dao.ReporteSecretariaDAO;
 import dao.SecretariaDAO;
+import dao.SubdirectorDAO;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,6 +42,7 @@ import modelo.Justificacion;
 import modelo.JustificacionImagen;
 import modelo.ReporteSecretaria;
 import modelo.Secretaria;
+import modelo.Subdirector;
 
 /**
  *
@@ -71,13 +73,13 @@ public class ControladorJustiS extends HttpServlet {
         String opcion = request.getParameter("opcion");
         miselect = request.getParameterValues("motivo");
         String glosa = request.getParameter("glosa");
-        String motivo = "", rutA = "", fechaActual = "", idSeccion = "", descripcion="", mensaje="";
+        String motivo = "", rutA = "", fechaActual = "", idSeccion = "", descripcion="", mensaje="", correo="";
 
         
         SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String fechaHoy = parseador.format(date);
-        int x = 0;
+        int x = 0, estadoIna=3;
         Alumno alum = new Alumno();
         Secretaria secre = new Secretaria();
         Justificacion justificacion = new Justificacion();
@@ -89,7 +91,7 @@ public class ControladorJustiS extends HttpServlet {
         Part filePart = request.getPart("file"); //img
         String dias = request.getParameter("grupo1");
         Director dire = new Director();
-        
+        Subdirector subd = new Subdirector();
         
         if (opcion.charAt(0) == 'G') {
             idSeccion = opcion.substring(1);
@@ -100,14 +102,18 @@ public class ControladorJustiS extends HttpServlet {
             }
             alum = (new AlumnoDAO()).buscarDatos(rutA);
             
+            if (Integer.parseInt(motivo)==3 || Integer.parseInt(motivo)==11) {
+                estadoIna=9;
+            }
+            
             if (dias.equals("1")) { //un solo dia
-                inasistencia = new Inasistencia(0, fechaInasistencia,fechaInasistencia, Integer.parseInt(idSeccion), alum.getIdAlumno(), 3, 7);
+                inasistencia = new Inasistencia(0, fechaInasistencia,fechaInasistencia, Integer.parseInt(idSeccion), alum.getIdAlumno(), estadoIna, 7);
                 x = (new InasistenciaDAO()).agregarOnly(inasistencia);
             }
             if (dias.equals("2")) { //mas de un dia
                 
                 fechaInasistencia2 = request.getParameter("fecha2");
-                inasistencia = new Inasistencia(0, fechaInasistencia,fechaInasistencia2, Integer.parseInt(idSeccion), alum.getIdAlumno(), 3, 7);
+                inasistencia = new Inasistencia(0, fechaInasistencia,fechaInasistencia2, Integer.parseInt(idSeccion), alum.getIdAlumno(), estadoIna, 7);
                 x = (new InasistenciaDAO()).agregar(inasistencia);
                                 
             }
@@ -120,7 +126,7 @@ public class ControladorJustiS extends HttpServlet {
             
             if (filePart.getSize()>0) {
                 File file = File.createTempFile("foto-", ".jpg");
-                File file2 = new File(System.getenv("HOME"), "public_html/"+file.getName());
+                File file2 = new File(System.getenv("UPLOADS"), file.getName());
                 try (InputStream input = filePart.getInputStream()) {
                     Files.copy(input, file2.toPath());
                 }            
@@ -136,10 +142,24 @@ public class ControladorJustiS extends HttpServlet {
             
             report = new ReporteSecretaria(0,justificacion.getIdInasistencia(),justificacion.getIdJustificacion(),secre.getIdSecretaria(),carrera.getIdDirector(), alum.getIdAlumno(), semestreActual.getSemestre(), semestreActual.getAnio(), 1);
             x = (new ReporteSecretariaDAO()).agregar(report);
-            dire = (new DirectorDAO()).buscarDatos(carrera.getIdDirector());
-            mensaje= (new ControladorCorreo()).mensajeDirector(dire, alum);
-            x =(new ControladorCorreo()).enviar(dire.getEmail(), mensaje, "Justificar Inasistencia");
-            System.out.println("todo x :"+ x);
+            
+            if (Integer.parseInt(motivo)==3 || Integer.parseInt(motivo)==11) {
+                subd = (new SubdirectorDAO()).buscarDatosSolo();
+                mensaje= (new ControladorCorreo()).mensajeSubdirector(subd, alum);
+                correo=subd.getEmail();
+            }else{
+                dire = (new DirectorDAO()).buscarDatos(carrera.getIdDirector());
+                mensaje= (new ControladorCorreo()).mensajeDirector(dire, alum);
+                correo = dire.getEmail();
+            }
+            
+          
+            //Correo
+            x =(new ControladorCorreo()).enviar(correo,secre.getEmail(), mensaje, "Justificar Inasistencia",1);
+            //Correo alumno
+            mensaje = (new ControladorCorreo()).mensajeConfirmacionEnvio(secre, alum);
+            x = (new ControladorCorreo()).enviar(alum.getEmail(),secre.getEmail(),mensaje,"Informe de solicitud enviada",1);
+            
             session.setAttribute("rut", null);
             response.sendRedirect("secretaria.jsp?mensaje=Se ha enviado exitosamente");
         }

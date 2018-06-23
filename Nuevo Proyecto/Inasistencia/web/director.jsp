@@ -4,6 +4,10 @@
     Author     : carlos
 --%>
 
+<%@page import="dao.SubdirectorDAO"%>
+<%@page import="dao.SubSecretariaDAO"%>
+<%@page import="modelo.SecretariaSda"%>
+<%@page import="modelo.Subdirector"%>
 <%@page import="modelo.GlobalSemestre"%>
 <%@page import="dao.DirectorDAO"%>
 <%@page import="modelo.ControlUsuario"%>
@@ -24,19 +28,38 @@
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             Director dire = new Director();
+            Subdirector subdire = new Subdirector();
+            SecretariaSda secreSDA = new SecretariaSda();
             GlobalSemestre semestreActual = new GlobalSemestre();
-            String nombre = "", estado = "", rut = "";
+            String nombre = "", estado = "", rut = "", link="", texto="";
             if (user == null) {
                 response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
+                rut = user.getRutUsuario();
+                semestreActual = (GlobalSemestre) session.getAttribute("semestreActual");
                 if (estado.equals("director")) {
-                    semestreActual = (GlobalSemestre) session.getAttribute("semestreActual");
-                    rut = user.getRutUsuario();
                     dire = (new DirectorDAO()).buscarDatos(rut);
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
+                    link="director";
+                    texto="Director de carrera";
                 } else {
-                    response.sendRedirect("index.jsp");
+                    if (estado.equals("secretariaSDA")) {
+                        secreSDA = (new SubSecretariaDAO()).buscarDatos(rut);
+                        nombre = secreSDA.getPnombre() + " " + secreSDA.getSnombre() + " " + secreSDA.getAppaterno() + " " + secreSDA.getApmaterno();
+                        link="director";
+                        texto="Secretaria Subdirector Academico";
+                    } else {
+                        if (estado.equals("subdirector")) {
+                            subdire = (new SubdirectorDAO()).buscarDatos(rut);
+                            nombre = subdire.getPnombre() + " " + subdire.getSnombre() + " " + subdire.getAppaterno() + " " + subdire.getApmaterno();                            sesion.setAttribute("rut", null);
+                            link="director";
+                            texto="Subdirector Academico";
+                        } else {
+                            response.sendRedirect("index.jsp");
+                        }
+                    }
+
                 }
 
             }
@@ -50,8 +73,8 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <div class="col s6 offset-s6">
-                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>  
-                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
+                            <a href="<%=link%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>  
+                            <a href="<%=link%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
                                 <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
                                 <a class="waves-effect waves-light" href="index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         
@@ -64,22 +87,36 @@
 
         <div class="container">
             <div class="row">
-                <h4 class="color-Plomo color-Azul-text center-align" >Menu Director de carrera</h4>
+                <h4 class="color-Plomo color-Azul-text center-align" >Menu <%=texto%></h4>
 
 
                 <div class="col s12 m6 color-Azul-text">
-                    <h4 class="color-Plomo color-Azul-text center-align" ></h4>                   
-                    <div class="col s12">
-                        <a href="Director/justificaciones.jsp" class="btn waves-effect waves-light color-AzulClaro" > Inasistencias Justificadas</a>
+                    <h4 class="color-Plomo color-Azul-text center-align" ></h4>   
+                    <%if (estado.equals("director")) { %>
+                    <div class="col s12">                        
+                        <a href="Director/justificaciones.jsp" class="btn waves-effect waves-light color-AzulClaro" > Nuevas Justificaciones</a>
                         <br>
                         <br>
                     </div>
                     <div class="col s12">
-                        <a href="Director/allJustificaciones.jsp" class="btn waves-effect waves-light color-AzulClaro" > Ver todos las justificaciones </a>
+                        <a href="Director/allJustificaciones.jsp" class="btn waves-effect waves-light color-AzulClaro" > Ver todas las justificaciones </a>
                         <br>
                         <br>
                     </div>
-                     <div class="col s12">
+                    <%    }else{ %>                        
+                    <div class="col s12">                        
+                        <a href="Subdirector/subjustificaciones.jsp" class="btn waves-effect waves-light color-AzulClaro" > Nuevas Justificaciones</a>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="col s12">
+                        <a href="Subdirector/suballJustificaciones.jsp" class="btn waves-effect waves-light color-AzulClaro" > Ver todas las justificaciones </a>
+                        <br>
+                        <br>
+                    </div>
+                      <% }
+                    %>
+                    <div class="col s12">
                         <a  class="white-text btn  waves-effect waves-light  red" href="index.jsp">Salir</a>
                         <br>
                         <br>

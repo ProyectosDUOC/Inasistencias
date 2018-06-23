@@ -10,7 +10,6 @@ import dao.DocenteDAO;
 import dao.InasistenciaDAO;
 import dao.SeccionDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -21,6 +20,7 @@ import modelo.Alumno;
 import modelo.Docente;
 import modelo.Inasistencia;
 import modelo.Seccion;
+import modelo.Secretaria;
 
 /**
  *
@@ -47,6 +47,7 @@ public class ControladorSubirInasistenciaC extends HttpServlet {
         ArrayList<Inasistencia> arrayAlumnoIna= new ArrayList<Inasistencia>();
         Alumno alum = new Alumno();
         Seccion seccion = new Seccion();
+        Secretaria secre = new Secretaria();
         Docente docente = new Docente();
         String mensaje = "";        
         SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
@@ -77,7 +78,8 @@ public class ControladorSubirInasistenciaC extends HttpServlet {
                     x = (new InasistenciaDAO()).actualizar(ina);
                     
                 }
-                x = (new ControladorCorreo()).enviar(alum.getEmail(), mensaje, "Justificacar Inasistencia");
+                
+                x = (new ControladorCorreo()).enviar(alum.getEmail(),"", mensaje, "Justificacar Inasistencia",1);
                 if (x!=-1) {
                     System.out.println("No Enviado "+alum.getEmail());
                 }else{

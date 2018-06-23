@@ -26,21 +26,6 @@ public class JustificacionDAO implements GeneralJustificacionDAO{
         try {
             conn = new Conectar();
             Connection connection = conn.getConnection();
-
-            /*
-                id_justificacion      INT NOT NULL AUTO_INCREMENT,
-                id_inasistencia       INT NOT NULL,
-                fecha_justificacion   DATE NOT NULL,
-                id_motivo             INT NOT NULL,
-                glosa                 VARCHAR(300),
-            
-                this.idJustificacion = idJustificacion;
-                this.idInasistencia = idInasistencia;
-                this.fechaJustificacion = fechaJustificacion;
-                this.idMotivo = idMotivo;
-                this.glosa = glosa;
-            */
-            
             
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM justificacion WHERE id_justificacion  =" + idJustificacion + ";";
@@ -103,15 +88,8 @@ public class JustificacionDAO implements GeneralJustificacionDAO{
                 id_inasistencia       INT NOT NULL,
                 fecha_justificacion   DATE NOT NULL,
                 id_motivo             INT NOT NULL,
-                glosa                 VARCHAR(300),
-            
-                this.idJustificacion = idJustificacion;
-                this.idInasistencia = idInasistencia;
-                this.fechaJustificacion = fechaJustificacion;
-                this.idMotivo = idMotivo;
-                this.glosa = glosa;
-            */
-            
+                glosa                 VARCHAR(300),            
+            */     
             
             Statement statement = connection.createStatement();
             String query = "SELECT * FROM justificacion WHERE id_inasistencia="+jus.getIdInasistencia()+" and id_motivo="+jus.getIdMotivo()+" and glosa='"+jus.getGlosa()+"';";
@@ -142,5 +120,39 @@ public class JustificacionDAO implements GeneralJustificacionDAO{
         }
         return obj;
     }
-    
+    public Justificacion buscarSubdirector(int idIna) {
+        Justificacion obj = null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM justificacion WHERE id_inasistencia="+idIna+";";
+
+            ResultSet results = statement.executeQuery(query);
+            
+            int id, idInaa, idMot;
+            String glos;
+            Date fechaJ;
+
+            while (results.next()) {
+                id = results.getInt("id_justificacion"); 
+                idInaa = results.getInt("id_inasistencia"); 
+                fechaJ = results.getDate("fecha_justificacion"); 
+                idMot = results.getInt("id_motivo"); 
+                glos = results.getString("glosa");
+                
+                
+                if (idIna == idIna ) {                   
+                    obj = new Justificacion(id, idIna, fechaJ, idMot, glos);
+                   break;
+                }
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return obj;
+    }
 }

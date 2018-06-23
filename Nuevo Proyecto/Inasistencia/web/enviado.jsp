@@ -24,7 +24,7 @@
                 response.sendRedirect("index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
-                if (estado.equals("director") || estado.equals("alumno")) {
+                if (estado.equals("director") || estado.equals("alumno") ||  estado.equals("subdirector") ||  estado.equals("secretariaSDA")) {
                     
                 }else{
                      response.sendRedirect("index.jsp");

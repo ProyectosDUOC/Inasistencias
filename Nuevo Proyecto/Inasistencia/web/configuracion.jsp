@@ -4,6 +4,10 @@
     Author     : benja
 --%>
 
+<%@page import="dao.SubdirectorDAO"%>
+<%@page import="dao.SubSecretariaDAO"%>
+<%@page import="modelo.SecretariaSda"%>
+<%@page import="modelo.Subdirector"%>
 <%@page import="dao.DocenteDAO"%>
 <%@page import="dao.DirectorDAO"%>
 <%@page import="dao.AdministradorDAO"%>
@@ -36,9 +40,11 @@
             Director dire = new Director();
             Docente doce = new Docente();
             Alumno alum = new Alumno();
+            Subdirector subdire = new Subdirector();
+            SecretariaSda secreSDA = new SecretariaSda();
             Administrador admin = new Administrador();
             String nombre = "", correo = "", usuario = "", clave = "", carrera = "", rut = "";
-            String estado = "";
+            String estado = "", link="";
 
             if (user == null) {
                 response.sendRedirect("index.jsp");
@@ -52,28 +58,47 @@
                     nombre = alum.getPnombre() + " " + alum.getSnombre() + " " + alum.getAppaterno() + " " + alum.getApmaterno();
                     correo = alum.getEmail();
                     carrera = (new CarreraDAO()).buscar(alum.getIdCarrera()).getNombreCarrera();
+                    link=estado;
                 }
                 if (estado.equals("docente")) {
                     doce = (new DocenteDAO()).buscarDatos(rut);
                     nombre = doce.getPnombre() + " " + doce.getSnombre() + " " + doce.getAppaterno() + " " + doce.getApmaterno();
                     correo = doce.getEmail();
+                    link=estado;
                 }
                 if (estado.equals("director")) {
                     dire = (new DirectorDAO()).buscarDatos(rut);
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
                     correo = dire.getEmail();
+                    link=estado;
                 }
                 if (estado.equals("administrador")) {
                     admin = (new AdministradorDAO()).buscarDatos(rut);
                     nombre = admin.getPnombre() + " " + admin.getSnombre() + " " + admin.getAppaterno() + " " + admin.getApmaterno();
                     correo = admin.getEmail();
+                    link=estado;
                 }
                 if (estado.equals("secretaria")) {
                     secre = (new SecretariaDAO()).buscarDatos(rut);
                     nombre = secre.getPnombre() + " " + secre.getSnombre() + " " + secre.getAppaterno() + " " + secre.getApmaterno();
                     correo = secre.getEmail();
                     sesion.setAttribute("rut", null);
+                    link=estado;
                 }
+                if (estado.equals("secretariaSDA")) {
+                    secreSDA = (new SubSecretariaDAO()).buscarDatos(rut);
+                    nombre = secreSDA.getPnombre() + " " + secreSDA.getSnombre() + " " + secreSDA.getAppaterno() + " " + secreSDA.getApmaterno();
+                    correo = secreSDA.getEmail();
+                    sesion.setAttribute("rut", null);
+                    link="director";
+                }
+                if (estado.equals("subdirector")) {
+                    subdire = (new SubdirectorDAO()).buscarDatos(rut);
+                    nombre = subdire.getPnombre() + " " + subdire.getSnombre() + " " + subdire.getAppaterno() + " " + subdire.getApmaterno();
+                    correo = subdire.getEmail();
+                    link="director";
+                }
+
             }
         %>       
     </head>
@@ -85,8 +110,8 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <div class="col s6 offset-s6">
-                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>  
-                            <a href="<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
+                            <a href="<%=link%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>  
+                            <a href="<%=link%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
                                 <a class="waves-effect waves-light" href="configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
                                 <a class="waves-effect waves-light" href="index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         
@@ -109,7 +134,7 @@
                     <%
                         }
                     %>
-                    <a  class="white-text btn  waves-effect waves-light  red" href="<%=estado%>.jsp">Volver</a>
+                    <a  class="white-text btn  waves-effect waves-light  red" href="<%=link%>.jsp">Volver</a>
                 </div>
                 <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo center-align">Usuario</h4>     

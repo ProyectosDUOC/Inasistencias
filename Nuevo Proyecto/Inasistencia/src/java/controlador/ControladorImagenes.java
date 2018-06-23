@@ -28,7 +28,7 @@ public class ControladorImagenes extends HttpServlet {
         throws ServletException, IOException
     {
         String filename = URLDecoder.decode(request.getPathInfo().substring(1), "UTF-8");
-        File file = new File(System.getenv("HOME"),"public_html/"+filename);
+        File file = new File(System.getenv("UPLOADS"),filename);
         response.setHeader("Content-Type", getServletContext().getMimeType(filename));
         response.setHeader("Content-Length", String.valueOf(file.length()));
         response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");

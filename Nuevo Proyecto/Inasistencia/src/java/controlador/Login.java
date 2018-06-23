@@ -14,6 +14,8 @@ import dao.DocenteDAO;
 import dao.GlobalSemestreDAO;
 import dao.SeccionDAO;
 import dao.SecretariaDAO;
+import dao.SubSecretariaDAO;
+import dao.SubdirectorDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -31,6 +33,8 @@ import modelo.Docente;
 import modelo.GlobalSemestre;
 import modelo.Seccion;
 import modelo.Secretaria;
+import modelo.SecretariaSda;
+import modelo.Subdirector;
 
 /**
  *
@@ -61,6 +65,8 @@ public class Login extends HttpServlet {
         Docente doce = new Docente();
         Secretaria secre = new Secretaria();
         Director dire = new Director();
+        Subdirector subdire = new Subdirector();
+        SecretariaSda secreSDA = new SecretariaSda();
         Administrador admin = new Administrador();
         ArrayList<Seccion> arraySecciones = new ArrayList<Seccion>();
         ArrayList<Carrera> arrayCarreras = new ArrayList<Carrera>();
@@ -77,18 +83,23 @@ public class Login extends HttpServlet {
                     semestreActual = (new GlobalSemestreDAO()).buscar();
                     sesion.setAttribute("semestreActual", semestreActual);
                     switch (tipousuario) {
-                     
+                    
                         case 1:
                             sesion.setAttribute("tipoUsuario", "alumno");
-                            response.sendRedirect("alumno.jsp");
+                            if (ingreso.getUsuario().equals("alumDemo")) {
+                                response.sendRedirect("alumno.jsp");
+                                break;
+                            }
+                            response.sendRedirect("index.jsp");                           
                             break;
-                           
-                          /*  case 2:
+                    /*       
+                        case 2:
                             sesion.setAttribute("tipoUsuario", "docente");
                             doce = (new DocenteDAO()).buscarDatos(ingreso.getRutUsuario());
                             sesion.setAttribute("login",doce);
                             response.sendRedirect("docente.jsp");
-                            break; */
+                            break;
+                    */
                         case 3:
                             sesion.setAttribute("tipoUsuario", "director");
                             dire = (new DirectorDAO()).buscarDatos(ingreso.getRutUsuario());
@@ -118,9 +129,21 @@ public class Login extends HttpServlet {
                                     response.sendRedirect("secretaria.jsp");
                                     break;
                                 }                               
-                            }                            
+                            }
+                        case 6:
+                            sesion.setAttribute("tipoUsuario", "secretariaSDA");
+                            secreSDA= (new SubSecretariaDAO()).buscarDatos(ingreso.getRutUsuario());
+                            sesion.setAttribute("login",subdire);
+                            response.sendRedirect("director.jsp");                            
+                            break;
+                        case 7:
+                            sesion.setAttribute("tipoUsuario", "subdirector");
+                            subdire= (new SubdirectorDAO()).buscarDatos(ingreso.getRutUsuario());
+                            sesion.setAttribute("login",subdire);
+                            response.sendRedirect("director.jsp");                            
+                            break;   
                         default:
-                            response.sendRedirect("error.jsp");
+                            response.sendRedirect("index.jsp?mensaje=Error");
                             break;
                     }
 

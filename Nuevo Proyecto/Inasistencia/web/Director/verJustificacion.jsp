@@ -60,13 +60,13 @@
             Justificacion justi = new Justificacion();
             ReporteSecretaria reporte = new ReporteSecretaria();
             JustificacionImagen justiImg = new JustificacionImagen();
-            
+
             SimpleDateFormat parseador = new SimpleDateFormat("dd-MM-yyyy");
             Date date = new Date();
-            
+
             String fechaA = "", glosa = "", rut = "", fechaJ = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreDocente = "", nombreAsig = "", nombreCod = "", motivo = "";
-            String nombreDirector = "", fecha2="",jornada="", telefono="";
-            int id = 0, activo = 0, isImg=0;
+            String nombreDirector = "", fecha2 = "", jornada = "", telefono = "";
+            int id = 0, activo = 0, isImg = 0;
 
             if (session.getAttribute("usuario") == null) {
                 response.sendRedirect("../index.jsp");
@@ -101,19 +101,19 @@
                         fechaA = parseador.format(ina.getFechaInasistencia());
                         sesion.setAttribute("reporte", reporte);
                         activo = reporte.getActivo();
-                        telefono= alum.getCelular();
+                        telefono = alum.getCelular();
                         jornada = alum.getJornada();
-                            if (jornada.equals("D")) {
-                                jornada = "Diurno";
-                            } else {
-                                jornada = "Vespertino";
-                            }
+                        if (jornada.equals("D")) {
+                            jornada = "Diurno";
+                        } else {
+                            jornada = "Vespertino";
+                        }
                         fechaJ = justi.getFechaJustificacion().toString();
                         if (ina.getFechaInasistencia2() != null) {
                             fecha2 = parseador.format(ina.getFechaInasistencia2());
                         }
-                        if (justiImg!=null) {
-                            isImg=1;
+                        if (justiImg != null) {
+                            isImg = 1;
                         }
                     } else {
                         response.sendRedirect("../index.jsp");
@@ -161,13 +161,18 @@
                     <h4 class="color-Plomo center-align">Director de Carrera</h4>  
                     <p><strong>Nombre Director :</strong> <span><%=nombreDirector%></span></p>
                     <br>
-                    <%if (activo == 1) { %>
-                    <a class="white-text btn  waves-effect waves-light  red" href="justificaciones.jsp">Volver</a>
-                    <%    }
-                    %>
-                    <%if (activo != 1) { %>
-                    <a class="white-text btn  waves-effect waves-light  red" href="allJustificaciones.jsp">Volver</a>
-                    <%    }
+                    <% if (justi.getIdMotivo()==11 || justi.getIdMotivo()==3) {
+                            %>
+                                <a class="white-text btn  waves-effect waves-light  red" href="allJustificaciones.jsp">Volver</a>
+                          <%
+                        }else{
+                            if (activo == 1) { %>
+                                <a class="white-text btn  waves-effect waves-light  red" href="justificaciones.jsp">Volver</a>
+                          <%}
+                            if (activo != 1) { %>
+                                <a class="white-text btn  waves-effect waves-light  red" href="allJustificaciones.jsp">Volver</a>
+                          <%}
+                        }                    
                     %>
                 </div>
 
@@ -179,14 +184,14 @@
                                 <td><p><strong>Fecha Inasistencia:</strong></td>
                                 <td><p><%=fechaA%></p></td>
                             </tr>
-                            <%if (!fecha2.isEmpty()) { %>
+                            <%if (!fecha2.isEmpty()) {%>
                             <tr>
                                 <td><p><strong>Hasta </strong></td>
                                 <td><p><%=fecha2%></p></td>
                             </tr>     
                             <%    }
                             %>
-                            
+
                             <tr>
                                 <td><strong>Motivo:</strong></td>
                                 <td><p><%=motivo%></p></td>
@@ -197,30 +202,33 @@
                             </tr>
                         </table>
                         <br>  
-                        <%if (isImg==1) {
+                        <%if (isImg == 1) {
                         %>
                         <div> 
                             <a href="../enviado.jsp?file=<%=justiImg.getNombreImagen()%>" target="_blank" class="btn green" ><strong>Ver Archivo <i class="material-icons">folder_open</i></strong></a>
                         </div>
-                        <%}%>
-                        <!--<div class="gallery">                       
-                            <a href="files/" data-lightbox="mygallery" alt="Galer" data-title="Justificacion">
-                            <img src="files/" alt="Justificacion alumno" class="circle" width="100" height="100"></a>
-                        </div> -->    
+                        <%}%>  
                         <br>
                         <div>
-                            <%if (activo == 1) {%>
+                            <%if (activo == 1 && justi.getIdMotivo() != 11 && justi.getIdMotivo() != 3) {%>
                             <button class="btn waves-effect waves-light blue" type="submit" name="opcion" value="Rechazar"><strong>Rechazar</strong></button>
                             <button class="btn waves-effect waves-light blue" type="submit" name="opcion" value="Aprobar"><strong>Aprobar</strong></button>
                             <%  }
-                            %>
-                            <%if (activo == 2) {%>
+                                if (activo == 2) {
+                                    if (justi.getIdMotivo() == 11 || justi.getIdMotivo() == 3) { %>
+                            <h3 class="black-text green btn">Aprobado por Subdirector Académico</h3>   
+                            <%   } else { %>
                             <h3 class="black-text green btn">Aprobado</h3>
                             <%  }
-                            %>
-                            <%if (activo == 3) {%>
+                                }
+                                if (activo == 3) {
+                                    if (justi.getIdMotivo() == 11 || justi.getIdMotivo() == 3) {%>
+                            <h3 class="black-text red btn">Rechazado por Subdirector Académico</h3>
+
+                            <%   } else { %>
                             <h3 class="black-text red btn">Rechazado</h3>
-                            <%  }
+                            <%}
+                                }
                             %>
                         </div> 
                     </form>

@@ -4,8 +4,13 @@
     Author     : benja
 --%>
 
+<%@page import="dao.MotivoDAO"%>
 <%@page import="dao.JustificacionDAO"%>
 <%@page import="modelo.Justificacion"%>
+<%@page import="dao.SubSecretariaDAO"%>
+<%@page import="dao.SubdirectorDAO"%>
+<%@page import="modelo.Subdirector"%>
+<%@page import="modelo.SecretariaSda"%>
 <%@page import="dao.AlumnoDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="dao.SeccionDAO"%>
@@ -39,35 +44,44 @@
         <%
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-            Director dire = new Director();
-            ReporteSecretaria reportes = new ReporteSecretaria();
-            SimpleDateFormat parseador = new SimpleDateFormat("dd-MM-yyyy");
-            ArrayList<ReporteSecretaria> arrayReportes = new ArrayList<ReporteSecretaria>();
-            String nombre = "", estado = "", rut = "", fecha2 = "";
-            Inasistencia inasistencia = new Inasistencia();
+
+            Subdirector subdire = new Subdirector();
+            SecretariaSda secreSDA = new SecretariaSda();
             Justificacion justificacion = new Justificacion();
+            Inasistencia inasistencia = new Inasistencia();
+            SimpleDateFormat parseador = new SimpleDateFormat("dd-MM-yyyy");
+            ArrayList<ReporteSecretaria> arrayReporte = new ArrayList<ReporteSecretaria>();
+            String nombre = "", estado = "", rut = "", fecha2 = "", rutA = "", motivo="";
+
             Ramo ramo = new Ramo();
             Seccion seccion = new Seccion();
-            int idMotivo = -1;
             GlobalSemestre semestreActual = new GlobalSemestre();
+            int estadoIna=0;
             if (user == null) {
                 response.sendRedirect("../index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
-                if (estado.equals("director")) {
-                    rut = user.getRutUsuario();
-                    dire = (new DirectorDAO()).buscarDatos(rut);
+                semestreActual = (new GlobalSemestreDAO()).buscar();
+                rut = user.getRutUsuario();
+                if (estado.equals("subdirector")) {
+                    subdire = (new SubdirectorDAO()).buscarDatos(rut);
+                    nombre = subdire.getPnombre() + " " + subdire.getSnombre() + " " + subdire.getAppaterno() + " " + subdire.getApmaterno();
+                    arrayReporte = (new ReporteSecretariaDAO()).mostrarDatosSubdirector(semestreActual.getSemestre(), semestreActual.getAnio());
 
-                    semestreActual = (new GlobalSemestreDAO()).buscar();
-                    System.out.println(semestreActual.getAnio() + " " + semestreActual.getSemestre());
-                    nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
-                    arrayReportes = (new ReporteSecretariaDAO()).mostrarDatosAll(dire.getIdDirector(), semestreActual.getSemestre(), semestreActual.getAnio());
-                    sesion.setAttribute("reporte", null);
                 } else {
-                    response.sendRedirect("../index.jsp");
+                    if (estado.equals("secretariaSDA")) {
+                        secreSDA = (new SubSecretariaDAO()).buscarDatos(rut);
+                        nombre = secreSDA.getPnombre() + " " + secreSDA.getAppaterno();
+                        arrayReporte = (new ReporteSecretariaDAO()).mostrarDatosSubdirector(semestreActual.getSemestre(), semestreActual.getAnio());
+
+                    } else {
+                        response.sendRedirect("index.jsp");
+                    }
                 }
 
             }
+
+
         %>
     </head>
     <body>
@@ -78,8 +92,8 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <div class="col s6 offset-s6">
-                            <a href="../<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>  
-                            <a href="../<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
+                            <a href="../director.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>  
+                            <a href="../director.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
                                 <a class="waves-effect waves-light" href="../configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
                                 <a class="waves-effect waves-light" href="../index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         
@@ -92,103 +106,78 @@
 
         <div class="container">
             <div class="row">
-                <h4 class="color-Azul-text color-Plomo center-align">Todas las Justificaciones</h4>
+                <h4 class="color-Azul-text color-Plomo center-align">Justificaciones pendientes</h4>
                 <div class="col s12 m12" style="overflow-x:auto;">
-                    <form action="../ControladorJustificacion" method="POST" >
+                    <form action="../ControladorSubdirector" method="POST" >
                         <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
                             <thead>
                                 <tr class="amber darken-3">
                                     <th>Nombre Asignatura</th>
-                                    <th>Asignatura/sección</th>
-                                    <th>Rut Alumno</th>
+                                    <th>Asignatura/sección</th>  
+                                    <th>Motivo</th>        
+                                    <th>Rut Alumno</th>                                    
                                     <th>Fecha Inasistencia</th>
                                     <th>Acción</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <%if (arrayReportes.isEmpty()) { %>
+                                <%if (arrayReporte.isEmpty()) { %>
                                 <tr>
                                     <td></td>                                    
                                     <td></td>
                                     <td>No se han encontrados nuevos registros</td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                 </tr>
                                 <% } else {
-                                    for (ReporteSecretaria r : arrayReportes) {
-                                        justificacion = (new JustificacionDAO()).buscar(r.getIdJustificacion());
-                                        idMotivo = justificacion.getIdMotivo();
+                                    for (ReporteSecretaria r : arrayReporte) {
                                         inasistencia = (new InasistenciaDAO()).buscar(r.getIdInasistencia());
-                                        seccion = (new SeccionDAO()).buscar(inasistencia.getIdSeccion());
-                                        ramo = (new RamoDAO()).buscar(seccion.getCodRamo());
-                                        if (inasistencia.getFechaInasistencia2() != null) {
-                                            fecha2 = "  hasta  " + parseador.format(inasistencia.getFechaInasistencia2());
-                                        }
-
-                                        if (idMotivo != 3 && idMotivo != 11) {%>
+                                        justificacion = (new JustificacionDAO()).buscarSubdirector(inasistencia.getIdInasistencia());
+                                        if (justificacion.getIdMotivo() == 11 || justificacion.getIdMotivo() == 3) {
+                                            seccion = (new SeccionDAO()).buscar(inasistencia.getIdSeccion());
+                                            ramo = (new RamoDAO()).buscar(seccion.getCodRamo());
+                                            if (inasistencia.getFechaInasistencia2() != null) {
+                                                fecha2 = "  hasta  " + parseador.format(inasistencia.getFechaInasistencia2());
+                                            }
+                                            rutA = (new AlumnoDAO()).buscarDatosId(inasistencia.getIdAlumno()).getRutAlumno();
+                                            motivo =(new MotivoDAO()).buscar(justificacion.getIdMotivo()).getNombreMotivo();
+                                            estadoIna = inasistencia.getIdEstadoi();
+                                %>
                                 <tr>
                                     <td><%=ramo.getNombreRamo()%></td>
-                                    <td><%=seccion.getCodSeccion()%></td>                                    
-                                    <td><%=(new AlumnoDAO()).buscarDatosId(r.getIdAlumno()).getRutAlumno()%></td>
+                                    <td><%=seccion.getCodSeccion()%></td>                                         
+                                    <td><%=motivo%></td>  
+                                    <td><%=rutA%></td>
                                     <td><%=parseador.format(inasistencia.getFechaInasistencia()) + fecha2%></td>
-                                    <%fecha2 = "";%>
+                                    <%fecha2 = ""; //para que no se repita%>
                                     <td>
-                                        <%if (r.getActivo() == 1) {%>
+                                        <%if (estadoIna == 9) {%>
                                         <button class="btn amber waves-effect waves-light" 
                                                 type="submit" 
                                                 name="opcion" 
-                                                value="V<%=r.getIdJustificacion()%>">Pendiente</button>
-                                        <%}%>
-                                        <%if (r.getActivo() == 2) {%>
-                                        <button class="btn green waves-effect waves-light" 
-                                                type="submit" 
-                                                name="opcion" 
-                                                value="V<%=r.getIdJustificacion()%>">Aprobado</button>
-                                        <%}%>
-                                        <%if (r.getActivo() == 3) {%>
-                                        <button class="btn red waves-effect waves-light" 
-                                                type="submit" 
-                                                name="opcion" 
-                                                value="V<%=r.getIdJustificacion()%>">Rechazado</button>
-                                        <%}%>
-                                    </td>
-                                </tr>         
-                                <%} else {%>
-                                <tr>
-                                    <td><%=ramo.getNombreRamo()%></td>
-                                    <td><%=seccion.getCodSeccion()%></td>                                    
-                                    <td><%=(new AlumnoDAO()).buscarDatosId(r.getIdAlumno()).getRutAlumno()%></td>
-                                    <td><%=parseador.format(inasistencia.getFechaInasistencia()) + fecha2%></td>
-                                    <%fecha2 = "";%>
-                                    <td>
-                                        <%if (r.getActivo() == 1) {%>
+                                                value="V<%=justificacion.getIdJustificacion()%>">
+                                           Ver
+                                        </button>
+                                        <%}
+                                        if (estadoIna == 10) {%>
                                         <button class="btn blue waves-effect waves-light" 
                                                 type="submit" 
                                                 name="opcion" 
-                                                value="V<%=r.getIdJustificacion()%>">SDA</button>
-                                        <%}%>
-                                        <%if (r.getActivo() == 2) {%>
-                                        <button class="btn green waves-effect waves-light" 
-                                                type="submit" 
-                                                name="opcion" 
-                                                value="V<%=r.getIdJustificacion()%>">SDA-Aprobado</button>
-                                        <%}%>
-                                        <%if (r.getActivo() == 3) {%>
-                                        <button class="btn red waves-effect waves-light" 
-                                                type="submit" 
-                                                name="opcion" 
-                                                value="V<%=r.getIdJustificacion()%>">SDA-Rechazado</button>
+                                                value="V<%=justificacion.getIdJustificacion()%>">
+                                            Revisado
+                                        </button>
                                         <%}%>
                                     </td>
                                 </tr>       
-                                <% }
-                                }
-                            }%>                        
+                                <%}
+                                            }
+                                        }%>                        
                             </tbody>
                         </table> 
                     </form>
                 </div>
-                <a class="btn  waves-effect waves-light  red" href="../<%=estado%>.jsp">Volver</a>     
+                <a class="btn  waves-effect waves-light  red" href="../director.jsp">Volver</a>     
             </div>
         </div>             
         <footer class="color-Azul">            

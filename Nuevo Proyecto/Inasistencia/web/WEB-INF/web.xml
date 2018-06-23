@@ -48,6 +48,10 @@
         <servlet-name>ControladorSubirInasistenciaC</servlet-name>
         <servlet-class>controlador.ControladorSubirInasistenciaC</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorSubdirector</servlet-name>
+        <servlet-class>controlador.ControladorSubdirector</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>ControladorSubirInasistenciaC</servlet-name>
         <url-pattern>/ControladorSubirInasistenciaC</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorSubdirector</servlet-name>
+        <url-pattern>/ControladorSubdirector</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

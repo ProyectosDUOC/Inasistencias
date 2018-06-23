@@ -177,7 +177,7 @@ public class ControladorAdministrador extends HttpServlet {
                 x = (new SecretariaDAO()).agregar(secr);                
                 x = (new ControlUsuarioDAO()).agregar(new ControlUsuario(0, usuario,contra, rut, 5, 1));
                 if (x != 0) {
-                    response.sendRedirect("index.jsp?mensaje=Agregado"+x);
+                    response.sendRedirect("Admin/panelControl.jsp?mensaje=Secretaria Ingresada");
                 }
             }
         }

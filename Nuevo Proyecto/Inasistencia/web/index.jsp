@@ -52,7 +52,7 @@
                                 <table>
                                     <tr>
                                         <td>Usuario:</td>
-                                        <td><input type="text" name="txtUser" required="" maxlength="10" placeholder="Usuario"/></td>
+                                        <td><input type="text" name="txtUser" required="" maxlength="15" placeholder="Usuario"/></td>
                                     </tr>
                                     <tr>
                                         <td>Contraseña:</td>

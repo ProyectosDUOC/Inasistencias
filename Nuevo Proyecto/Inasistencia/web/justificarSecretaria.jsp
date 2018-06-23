@@ -56,7 +56,7 @@
             GlobalSemestre semestreActual = new GlobalSemestre();
 
             String idSeccion = "", rut = "", idAlumno = "", rutA="", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreDocente = "", nombreAsig = "", nombreCod = "";
-            String nombreDirector = "", jornada="", seccionA="";
+            String nombreDirector = "", jornada="", seccionA="", correoDocente="";
             ArrayList<Motivo> motivos = new MotivoDAO().mostrarDatos();
             int x=0;
             if (session.getAttribute("usuario") == null) {
@@ -83,6 +83,7 @@
                             nombreAsig = (new RamoDAO()).buscar(seccion.getCodRamo()).getNombreRamo();
                             docente = (new DocenteDAO()).buscarDatos(seccion.getIdDocente());
                             nombreDocente = docente.getPnombre() + " " + docente.getAppaterno();
+                            correoDocente=docente.getEmail();
                             jornada = alum.getJornada();
                             if (jornada.equals("D")) {
                                 jornada = "Diurno";
@@ -141,6 +142,7 @@
                     <p><strong>Nombre Asignatura : </strong> <span><%=nombreAsig%></span></p>
                     <p><strong>Sección : </strong> <span><%=seccionA%></span></p>
                     <p><strong>Profesor : </strong><span><%=nombreDocente%></span></p>
+                    <p><strong>Correo : </strong><span><%=correoDocente%></span></p>
                     <h4 class="color-Plomo center-align">Alumno</h4>  
                     <p><strong>Nombre Alumno : </strong> <span><%=nombreA%></span></p>
                     <p><strong>Carrera : </strong> <span><%=carreraA%></span></p>
@@ -167,12 +169,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><p><strong>Fecha Faltada:</strong></td>
+                                <td><p><strong>Fecha a Justificar:</strong></td>
                                 <td><p><input type="date" id="fecha" name="fecha"  value="" required="" min="<%=semestreActual.getFechaInicio()%>" max="<%=fechaActual%>"></p></td>
                             </tr>
                             <tr id="fecha2" style="visibility: hidden;" >
                                 <td><p><strong>Fecha Termino:</strong></td>
-                                <td><p><input type="date" id="f" name="fecha2"  value="" min="<%=semestreActual.getFechaInicio()%>" max="<%=fechaActual%>"></p></td>
+                                <td><p><input type="date" name="fecha2"  value="" min="<%=semestreActual.getFechaInicio()%>"></p></td>
                                 <span class="red-text"> ${param.mensaje}</span>
                             </tr>
                             <tr>
@@ -202,7 +204,7 @@
                         </table>
                         <br>
                         <div>
-                            <input type="file" name="file" accept="image/*"/>
+                            <input type="file" name="file" accept="image/*;capture=camera"/>
                         </div>
                         <br>
                         <div>

@@ -4,6 +4,8 @@
     Author     : benja
 --%>
 
+<%@page import="dao.JustificacionDAO"%>
+<%@page import="modelo.Justificacion"%>
 <%@page import="dao.AlumnoDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="dao.SeccionDAO"%>
@@ -41,10 +43,12 @@
             ReporteSecretaria reportes = new ReporteSecretaria();
             SimpleDateFormat parseador = new SimpleDateFormat("dd-MM-yyyy");
             ArrayList<ReporteSecretaria> arrayReportes = new ArrayList<ReporteSecretaria>();
-            String nombre = "", estado = "", rut = "", fecha2="", rutA="";
+            String nombre = "", estado = "", rut = "", fecha2 = "", rutA = "";
             Inasistencia inasistencia = new Inasistencia();
             Ramo ramo = new Ramo();
+            Justificacion justi = new Justificacion();
             Seccion seccion = new Seccion();
+            int idMotivo = -1;
             GlobalSemestre semestreActual = new GlobalSemestre();
             if (user == null) {
                 response.sendRedirect("../index.jsp");
@@ -53,7 +57,6 @@
                 if (estado.equals("director")) {
                     rut = user.getRutUsuario();
                     dire = (new DirectorDAO()).buscarDatos(rut);
-
                     semestreActual = (new GlobalSemestreDAO()).buscar();
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
                     arrayReportes = (new ReporteSecretariaDAO()).mostrarDatosDirector(dire.getIdDirector(), semestreActual.getSemestre(), semestreActual.getAnio());
@@ -61,7 +64,6 @@
                 } else {
                     response.sendRedirect("../index.jsp");
                 }
-
             }
         %>
     </head>
@@ -110,33 +112,35 @@
                                     <td></td>
                                 </tr>
                                 <% } else {
-                                    for (ReporteSecretaria r : arrayReportes) {
-                                        inasistencia = (new InasistenciaDAO()).buscar(r.getIdInasistencia());
-                                        seccion = (new SeccionDAO()).buscar(inasistencia.getIdSeccion());
-                                        ramo = (new RamoDAO()).buscar(seccion.getCodRamo());
-                                        if(inasistencia.getFechaInasistencia2()!=null){
-                                            fecha2="  hasta  "+ parseador.format(inasistencia.getFechaInasistencia2());
-                                        }
-                                        rutA= (new AlumnoDAO()).buscarDatosId(r.getIdAlumno()).getRutAlumno();
-                                %>
-                                <tr>
-                                    <td><%=ramo.getNombreRamo()%></td>
-                                    <td><%=seccion.getCodSeccion()%></td>                                    
-                                    <td><%=rutA%></td>
-                                    <td><%=parseador.format(inasistencia.getFechaInasistencia())+fecha2%></td>
-                                    <%fecha2=""; //para que no se repita%>
-                                    <td>
-
-                                        <button class="btn amber waves-effect waves-light" 
-                                                type="submit" 
-                                                name="opcion" 
-                                                value="J<%=r.getIdJustificacion()%>">
-                                            Ver
-                                        </button>
-                                    </td>
-                                </tr>       
-                                <%     }
-
+                                    for (ReporteSecretaria r : arrayReportes) {                                        
+                                        justi = (new JustificacionDAO()).buscar(r.getIdJustificacion());
+                                        idMotivo = justi.getIdMotivo();
+                                        if (idMotivo!=3 && idMotivo!=11) {
+                                            inasistencia = (new InasistenciaDAO()).buscar(r.getIdInasistencia());
+                                            seccion = (new SeccionDAO()).buscar(inasistencia.getIdSeccion());
+                                            ramo = (new RamoDAO()).buscar(seccion.getCodRamo());
+                                            if (inasistencia.getFechaInasistencia2() != null) {
+                                                fecha2 = "  hasta  " + parseador.format(inasistencia.getFechaInasistencia2());
+                                            }
+                                            rutA = (new AlumnoDAO()).buscarDatosId(r.getIdAlumno()).getRutAlumno();
+                                        %>
+                                        <tr>
+                                            <td><%=ramo.getNombreRamo()%></td>
+                                            <td><%=seccion.getCodSeccion()%></td>                                    
+                                            <td><%=rutA%></td>
+                                            <td><%=parseador.format(inasistencia.getFechaInasistencia()) + fecha2%></td>
+                                            <%fecha2 = ""; //para que no se repita%>
+                                            <td>
+                                                <button class="btn amber waves-effect waves-light" 
+                                                        type="submit" 
+                                                        name="opcion" 
+                                                        value="J<%=r.getIdJustificacion()%>">
+                                                    Ver
+                                                </button>
+                                            </td>
+                                        </tr> 
+                                     <% }
+                                    }
                                 }%>                        
                             </tbody>
                         </table> 

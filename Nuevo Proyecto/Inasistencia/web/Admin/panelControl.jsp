@@ -72,6 +72,8 @@
                         <br><br>    --> 
                         <button type="submit" value="Secretaria" name="opcion"  class="btn waves-effect waves-light color-AzulClaro" >Secretaria</button>
                         <!--<button type="submit" value="Administrador" name="opcion"  class="btn waves-effect waves-light color-AzulClaro" >Administrador</button> -->
+                       
+                        <span class="red-text"> ${param.mensaje}</span>
                         <br><br> <br> <br> <br>
                         <a  class="white-text btn  waves-effect waves-light  red" href="../<%=estado%>.jsp">Volver</a>
                     </div>
@@ -90,6 +92,7 @@
                         <h4 class="color-Plomo center-align">Datos Globales</h4>     
                         <div class="input-field">                                
                             <button type="submit" value="Semestre" name="opcion"  class="btn waves-effect waves-light color-AzulClaro" >Cambiar Semestre y Año</button>
+                            
                         </div>
                     </div>
                 </form>

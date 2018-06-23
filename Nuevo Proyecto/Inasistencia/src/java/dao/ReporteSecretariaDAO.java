@@ -56,7 +56,43 @@ public class ReporteSecretariaDAO implements GeneralReporteSDAO{
         }
         return arrayReportes;
     }
+    
+    public ArrayList mostrarDatosSubdirector(int semeste, int ani) {
+        ReporteSecretaria obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
 
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM reporte_secretaria where activo=1 and semestre="+semeste+" and anio="+ani+" order by activo desc;";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+            int id, idIna, idJus, idAlum,idSecr,idDire,idlum,semestre,anio,activo;
+            
+      
+            arrayReportes.removeAll(arrayReportes);
+            while (results.next()) {
+                id = results.getInt("id_reporte");                
+                idIna = results.getInt("id_inasistencia");
+                idJus = results.getInt("id_justificacion");
+                idSecr = results.getInt("id_secretaria");
+                idDire = results.getInt("id_director");
+                idAlum = results.getInt("id_alumno");
+                semestre = results.getInt("semestre");                
+                anio = results.getInt("anio");                
+                activo = results.getInt("activo");
+                
+                obj = new ReporteSecretaria(id, idIna, idJus, idSecr, idDire, idAlum, semestre, anio, activo);
+                arrayReportes.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayReportes;
+    }
     @Override
     public ReporteSecretaria buscarDatos(int idJ) {
         ReporteSecretaria obj =null;
@@ -151,7 +187,7 @@ public class ReporteSecretariaDAO implements GeneralReporteSDAO{
 
             Statement statement = connection.createStatement();
 
-            String consultaSQL = "SELECT * FROM reporte_secretaria where id_director="+idDirector+" and semestre="+semestre+" and anio="+anio+" and activo=1 order by id_justificacion asc;";
+            String consultaSQL = "SELECT * FROM reporte_secretaria where id_director="+idDirector+" and semestre="+semestre+" and anio="+anio+" and activo=1 order by id_justificacion asc, activo asc;";
 
             ResultSet results = statement.executeQuery(consultaSQL);
             
@@ -284,5 +320,42 @@ public class ReporteSecretariaDAO implements GeneralReporteSDAO{
         return arrayReportes;
     }
 
+    public ArrayList mostrarDatosAllSubdirector(int semestre, int anio) {
+         ReporteSecretaria obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM reporte_secretaria where semestre="+semestre+" and anio="+anio+" order by id_justificacion asc, activo desc;";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+            
+            int id, idIna, idJus, idAlum,idSecr,idDire,idlum,semestre1,anio1,activo1;
+            
+      
+            arrayReportes.removeAll(arrayReportes);
+            while (results.next()) {
+                id = results.getInt("id_reporte");                
+                idIna = results.getInt("id_inasistencia");
+                idJus = results.getInt("id_justificacion");
+                idSecr = results.getInt("id_secretaria");
+                idDire = results.getInt("id_director");
+                idAlum = results.getInt("id_alumno");
+                semestre1 = results.getInt("semestre");                
+                anio1 = results.getInt("anio");                
+                activo1 = results.getInt("activo");
+                
+                obj = new ReporteSecretaria(id, idIna, idJus, idSecr, idDire, idAlum, semestre1, anio1, activo1);
+                arrayReportes.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayReportes;
+    }
     
 }

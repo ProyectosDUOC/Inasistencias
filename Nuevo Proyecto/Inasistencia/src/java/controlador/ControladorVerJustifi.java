@@ -11,8 +11,8 @@ import dao.InasistenciaDAO;
 import dao.JustificacionDAO;
 import dao.ReporteSecretariaDAO;
 import dao.SeccionDAO;
+import dao.SecretariaDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +24,7 @@ import modelo.Inasistencia;
 import modelo.Justificacion;
 import modelo.ReporteSecretaria;
 import modelo.Seccion;
+import modelo.Secretaria;
 
 /**
  *
@@ -51,12 +52,14 @@ public class ControladorVerJustifi extends HttpServlet {
         Seccion seccion = new Seccion();
         Docente doce = new Docente();
         Alumno alum = new Alumno();
+        Secretaria secretaria=new Secretaria();
         Justificacion justi = new Justificacion();
         String opcion = request.getParameter("opcion");
         String mensaje="", asunto="";
         int x;
         if (opcion.equals("Aprobar")) {
             reporte = (ReporteSecretaria)sesion.getAttribute("reporte");
+            secretaria = (new SecretariaDAO()).buscarDatos(reporte.getIdSecretaria());
             x= (new ReporteSecretariaDAO()).actualizarActivo(reporte.getIdReporte(),2);
             inasistencia=(new InasistenciaDAO()).buscar(reporte.getIdInasistencia());
             inasistencia.setIdEstadoi(6);
@@ -69,9 +72,9 @@ public class ControladorVerJustifi extends HttpServlet {
             //Enviar Correo Electronico
             mensaje = (new ControladorCorreo()).mensajeAprobadoAlumno(alum,inasistencia,justi);
             asunto = "Justificacion Aprobada";                
-            x = (new ControladorCorreo()).enviar(alum.getEmail(), mensaje,"Justificacion aprobada por director");
+            x = (new ControladorCorreo()).enviar(alum.getEmail(),secretaria.getEmail(), mensaje,"Justificacion aprobada",1);
             mensaje = (new ControladorCorreo()).mensajeAprobadoDocente(doce, alum, inasistencia, justi);
-            x= (new ControladorCorreo()).enviar(doce.getEmail(), mensaje, "Informe de justificacion alumno aprobada");
+            x= (new ControladorCorreo()).enviar(doce.getEmail(),secretaria.getEmail(), mensaje, "Informe de justificacion alumno aprobada",1);
             
             response.sendRedirect("Director/justificaciones.jsp");
         }
@@ -79,8 +82,14 @@ public class ControladorVerJustifi extends HttpServlet {
             reporte = (ReporteSecretaria)sesion.getAttribute("reporte");  
             x= (new ReporteSecretariaDAO()).actualizarActivo(reporte.getIdReporte(),3);
             inasistencia=(new InasistenciaDAO()).buscar(reporte.getIdInasistencia());
-            inasistencia.setIdEstadoi(7);
+            inasistencia.setIdEstadoi(7);            
+            secretaria = (new SecretariaDAO()).buscarDatos(reporte.getIdSecretaria());
             (new InasistenciaDAO()).actualizar(inasistencia);
+            alum = (new AlumnoDAO()).buscarDatosId(inasistencia.getIdAlumno());
+            justi = (new JustificacionDAO()).buscar(reporte.getIdJustificacion());
+            mensaje = (new ControladorCorreo()).mensajeRechazoDirector(alum,inasistencia,justi);
+            x= (new ControladorCorreo()).enviar(alum.getEmail(),secretaria.getEmail(), mensaje, "Informe de justificacion alumno Rechazada",1);
+           
             response.sendRedirect("Director/justificaciones.jsp");
         }
         
