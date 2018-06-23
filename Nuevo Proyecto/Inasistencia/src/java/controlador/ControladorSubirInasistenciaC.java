@@ -50,7 +50,7 @@ public class ControladorSubirInasistenciaC extends HttpServlet {
         Secretaria secre = new Secretaria();
         Docente docente = new Docente();
         String mensaje = "";        
-        SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat parseador = new SimpleDateFormat("dd-MM-yyyy");
         
         if (opcion.equals("CONFIRMAR")) {
         
@@ -63,23 +63,28 @@ public class ControladorSubirInasistenciaC extends HttpServlet {
                 alum = (new AlumnoDAO()).buscarDatosId(alumno.getIdAlumno());
                 
                 mensaje = "<strong>Estimado Alumno: </strong> "+alum.getPnombre()+" "+alum.getAppaterno();
-                mensaje = mensaje + "<br> Nuestro sistema registra que tienes inasistencias <br>";  
+                mensaje = mensaje + "<br> Nuestro sistema registra que tienes inasistencias <br>";
+                mensaje = mensaje + "<table>";
+                mensaje = mensaje + "<tr>\n" +
+"                  <th>Fecha</th>\n" +
+"                  <th>Seccion</th> \n" +
+"                  <th>Profesor</th>\n" +
+"                </tr>";
                 
-                for (Inasistencia ina: arrayInasistencias) {      
-                    
+                for (Inasistencia ina: arrayInasistencias) {                          
                     seccion = (new SeccionDAO()).buscar(ina.getIdSeccion());
                     docente = (new DocenteDAO()).buscarDatos(seccion.getIdDocente());
-                    
-                    mensaje = mensaje + "<br><strong>Seccion: </strong>"+seccion.getCodSeccion();
-                    mensaje = mensaje + "<br><strong>Profesor: </strong>"+docente.getPnombre()+""+docente.getAppaterno();
-                    mensaje = mensaje + "<br><strong>Fecha Inasistencia: </strong>"+parseador.format(ina.getFechaInasistencia());
-                    mensaje = mensaje + "<br><br>";ina.setIdEstadoc(1);
+                    mensaje = mensaje + "<tr>";                    
+                    mensaje = mensaje + "<td><strong></strong>"+parseador.format(ina.getFechaInasistencia())+"</td>"; 
+                    mensaje = mensaje + "<td><strong></strong>"+seccion.getCodSeccion()+"</td>";
+                    mensaje = mensaje + "<td><strong></strong>"+docente.getPnombre()+""+docente.getAppaterno()+"</td>";                   
+                    mensaje = mensaje + "</tr>";
+                    ina.setIdEstadoc(1);
                     ina.setIdEstadoi(1);
-                    x = (new InasistenciaDAO()).actualizar(ina);
-                    
+                    x = (new InasistenciaDAO()).actualizar(ina);                    
                 }
-                
-                x = (new ControladorCorreo()).enviar(alum.getEmail(),"", mensaje, "Justificacar Inasistencia",1);
+                mensaje = mensaje + "</table>";
+                x = (new ControladorCorreo()).enviar(alum.getEmail(),"", mensaje, "Justificacar Inasistencia",0);
                 if (x!=-1) {
                     System.out.println("No Enviado "+alum.getEmail());
                 }else{

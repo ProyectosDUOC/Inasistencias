@@ -27,7 +27,7 @@
         <%
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
-            String nombre = "", estado = "", nombreA = "", rutA = "", carreraA = "", seccionA = "";
+            String nombre = "", estado = "", nombreA = "", rutA = "", carreraA = "", seccionA = "", fecha="";
             Administrador admin = new Administrador();
             Seccion seccion = new Seccion();
             Carrera carrera = new Carrera();
@@ -101,6 +101,7 @@
                         <thead>
                             <tr class="amber darken-3">
                                 <th>Carrera</th>
+                                <th>Fecha</th>
                                 <th>Codigo Seccion</th>
                                 <th>Nombre Alumno</th>
                                 <th>Rut</th>
@@ -109,16 +110,18 @@
                         <tbody>
                             <% for (Inasistencia ina : arrayInasistencias) {
                                     alumno = (new AlumnoDAO()).buscarDatosId(ina.getIdAlumno());
-                                    nombreA = alumno.getPnombre() + " " + alumno.getApmaterno();
+                                    nombreA = alumno.getPnombre() + " " + alumno.getAppaterno();
                                     rutA = alumno.getRutAlumno();
                                     seccion = (new SeccionDAO()).buscar(ina.getIdSeccion());
                                     carrera = (new CarreraDAO()).buscar(alumno.getIdCarrera());
                                     carreraA = carrera.getNombreCarrera();
                                     seccionA = seccion.getCodSeccion();
+                                    fecha = ina.getFechaInasistencia().toString();
 
                             %>
                             <tr>                                    
                                 <td><%=carreraA%></td>
+                                <td><%=fecha%></td>
                                 <td><%=seccionA%></td>
                                 <td><%=nombreA%></td>
                                 <td><%=rutA%></td>

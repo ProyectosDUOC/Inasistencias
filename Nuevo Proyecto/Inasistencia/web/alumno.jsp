@@ -122,8 +122,8 @@
                                         <button class="btn amber waves-effect waves-light" 
                                                 type="submit" 
                                                 name="opcion" 
-                                                value="I<%=ina.getIdInasistencia()%>">
-                                            Pendiente
+                                                value="j<%=ina.getIdInasistencia()%>">
+                                            Justificar
                                         </button>
                                         <%}%>
                                         <%if (ina.getIdEstadoi() == 2) {%>
