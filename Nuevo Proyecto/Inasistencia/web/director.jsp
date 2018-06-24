@@ -94,12 +94,17 @@
                     <h4 class="color-Plomo color-Azul-text center-align" ></h4>   
                     <%if (estado.equals("director")) { %>
                     <div class="col s12">                        
-                        <a href="Director/justificaciones.jsp" class="btn waves-effect waves-light color-AzulClaro" > Nuevas Justificaciones</a>
+                        <a href="Director/justificaciones.jsp" class="btn waves-effect waves-light color-AzulClaro" >Nuevas Justificaciones</a>
                         <br>
                         <br>
                     </div>
                     <div class="col s12">
-                        <a href="Director/allJustificaciones.jsp" class="btn waves-effect waves-light color-AzulClaro" > Ver todas las justificaciones </a>
+                        <a href="Director/allJustificaciones.jsp" class="btn waves-effect waves-light color-AzulClaro" >Ver todas las justificaciones </a>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="col s12">
+                        <a href="Director/justificacionesAlumnos.jsp" class="btn waves-effect waves-light color-AzulClaro" >Justificaciones de Alumnos</a>
                         <br>
                         <br>
                     </div>

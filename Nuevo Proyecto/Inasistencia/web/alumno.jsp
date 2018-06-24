@@ -122,7 +122,7 @@
                                         <button class="btn amber waves-effect waves-light" 
                                                 type="submit" 
                                                 name="opcion" 
-                                                value="j<%=ina.getIdInasistencia()%>">
+                                                value="J<%=ina.getIdInasistencia()%>">
                                             Justificar
                                         </button>
                                         <%}%>

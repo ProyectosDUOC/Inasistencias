@@ -150,7 +150,18 @@ public class ControladorCorreo {
 
         mensaje = "<strong>Estimado Director </strong> " + dire.getPnombre() + " " + dire.getAppaterno() + " <br><br><br>"
                 + "Se ha solicitado una  justificacion de inasistencia del alumno(a) <strong>" + alum.getPnombre() + " " + alum.getAppaterno() + "   rut: " + alum.getRutAlumno()
-                + "</strong> <br><br><br> <strong>Por favor justificar en <a href='http://www.cittsb.cl:8080/Inasistencia/'>Enlace</a></strong>";
+                + "</strong>";
+        return mensaje;
+
+    }
+    
+    
+       public String mensajeDirectorAlumno(Director dire, Alumno alum) {
+        String mensaje;
+
+        mensaje = "<strong>Estimado Director </strong> " + dire.getPnombre() + " " + dire.getAppaterno() + " <br><br><br>"
+                + "Se ha solicitado una  justificacion de inasistencia del alumno(a) <strong>" + alum.getPnombre() + " " + alum.getAppaterno() + "   rut: " + alum.getRutAlumno()
+                + "</strong> <br><br><br>";
         return mensaje;
 
     }
@@ -165,6 +176,14 @@ public class ControladorCorreo {
 
     }
      public String mensajeConfirmacionEnvio(Secretaria secre, Alumno alum) {
+        String mensaje;
+
+        mensaje = "<strong>Estimado Alumno </strong> " + alum.getPnombre() + " " + alum.getAppaterno() + " <br><br><br>"
+                + "Se enviado su solicitud de justificacion de inasistencia<br>";
+        return mensaje;
+
+    }
+      public String mensajeConfirmacionEnvioAlumno(Alumno alum) {
         String mensaje;
 
         mensaje = "<strong>Estimado Alumno </strong> " + alum.getPnombre() + " " + alum.getAppaterno() + " <br><br><br>"

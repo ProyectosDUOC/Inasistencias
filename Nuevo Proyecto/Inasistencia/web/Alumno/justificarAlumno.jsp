@@ -3,6 +3,7 @@
     Created on : 09-may-2018, 11:20:48
     Author     : benja
 --%>
+<%@page import="dao.InasistenciaDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="modelo.GlobalSemestre"%>
@@ -18,7 +19,6 @@
 <%@page import="modelo.Secretaria"%>
 <%@page import="dao.AlumnoDAO"%>
 <%@page import="modelo.Inasistencia"%>
-<%@page import="modelo.Justificacion"%>
 <%@page import="dao.MotivoDAO"%>
 <%@page import="modelo.Motivo"%>
 <%@page import="modelo.Motivo"%>
@@ -48,14 +48,15 @@
             Seccion seccion = new Seccion();
             Director dire = new Director();
             Carrera carrera = new Carrera();
-
-            SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = new Date();
-            String fechaActual = parseador.format(date);
+            Inasistencia ina = new Inasistencia();
+            
+            SimpleDateFormat parseador = new SimpleDateFormat("dd-MM-yyyy");
+            
             GlobalSemestre semestreActual = new GlobalSemestre();
 
-            String idSeccion = "", rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreDocente = "", nombreAsig = "", nombreCod = "";
+            String idSeccion = "", rut = "", rutA = "", nombreA = "", carreraA = "", correoA = "", nombre = "", estado = "", semestre = "", nombreDocente = "", nombreAsig = "", nombreCod = "", fecha="";
             String nombreDirector = "";
+            int id=0;
             ArrayList<Motivo> motivos = new MotivoDAO().mostrarDatos();
 
             if (session.getAttribute("usuario") == null) {
@@ -63,31 +64,28 @@
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
                 if (estado.equals("alumno")) {
-                    if (sesion.getAttribute("rut") != null) {
-                        if (sesion.getAttribute("idSeccion") != null) {
-                            semestreActual = (GlobalSemestre) session.getAttribute("semestreActual");
+                    
+                        if (sesion.getAttribute("idIna") != null) {                          
+                            id = Integer.parseInt(sesion.getAttribute("idIna").toString());                            
+                            ina = (new InasistenciaDAO()).buscar(id);
+                            
                             alum = (new AlumnoDAO()).buscarDatos(user.getRutUsuario());
                             nombre = alum.getPnombre() + " " + alum.getSnombre() + " " + alum.getAppaterno() + " " + alum.getApmaterno();
-                            nombre = nombreA;
-                            rut = rutA;
-                            alum = (new AlumnoDAO()).buscarDatos(rutA);
-                            idSeccion = sesion.getAttribute("idSeccion").toString();
+                            nombreA = nombre;
+                            rutA= alum.getRutAlumno();
                             carrera = (new CarreraDAO()).buscar(alum.getIdCarrera());
                             carreraA = carrera.getNombreCarrera();
                             dire = (new DirectorDAO()).buscarDatos(carrera.getIdDirector());
                             nombreDirector = dire.getPnombre() + " " + dire.getAppaterno();
-                            seccion = (new SeccionDAO()).buscar(Integer.parseInt(idSeccion));
+                            seccion = (new SeccionDAO()).buscar(ina.getIdSeccion());
                             nombreAsig = (new RamoDAO()).buscar(seccion.getCodRamo()).getNombreRamo();
                             docente = (new DocenteDAO()).buscarDatos(seccion.getIdDocente());
                             nombreDocente = docente.getPnombre() + " " + docente.getSnombre() + " " + docente.getAppaterno() + " " + docente.getApmaterno();
-
+                            fecha = parseador.format(ina.getFechaInasistencia());
                         } else {
-                            response.sendRedirect("");
-                        }
-                    } else {
-                        response.sendRedirect("../alumno.jsp");
-                    }
-                } else {
+                             response.sendRedirect("../alumno.jsp");
+                        }                   
+                    }else {
                     response.sendRedirect("../index.jsp");
                 }
             }
@@ -130,11 +128,11 @@
                 </div>
                 <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo center-align">Justificación</h4>
-                    <form action="ControladorJustiS" method="post" enctype="multipart/form-data">
+                    <form action="../ControladorJustificarAlumno" method="post" enctype="multipart/form-data">
                         <table class="color-Plomo color-Azul-text">
                             <tr>
                                 <td><p><strong>Fecha Inasistencia:</strong></td>
-                                <td><p><input type="date" id="fecha" name="fecha"  value="" required="" min="<%=semestreActual.getFechaInicio()%>" max="<%=fechaActual%>"></p></td>
+                                <td><p><%=fecha%></p></td>
                             </tr>
                             <tr>
                                 <td><strong>Motivo:</strong></td>
@@ -143,11 +141,16 @@
                                         <option value="" disabled selected>Seleccione un Motivo</option>                    
                                         <% for (Motivo mot : motivos) {
                                                 if (mot.getIdMotivo() != 0) {
-                                        %>
-                                        <option value="<%=mot.getIdMotivo()%>" >
-                                            <%= mot.getNombreMotivo()%>
-                                        </option>
-                                        <%      }
+                                                    if(mot.getIdMotivo()!=11){
+                                                        if(mot.getIdMotivo()!=3){
+                                                            %>
+                                                        <option value="<%=mot.getIdMotivo()%>" >
+                                                            <%= mot.getNombreMotivo()%>
+                                                        </option>
+                                                        <%  
+                                                        }
+                                                    }
+                                            }
                                             }
                                         %>
                                     </select>
@@ -163,12 +166,13 @@
                         </table>
                         <br>
                         <div>
-                            <input type="file" name="file" required="" accept="image/*"/>
+                            <input type="file" name="file" accept="image/*;capture=camera"/>
+                           
                         </div>
                         <br>
                         <div>
                             <a class="white-text btn  waves-effect waves-light  red" href="../<%=estado%>.jsp">Volver</a>
-                            <button class="btn amber waves-effect waves-light" type="submit" name="opcion" value="G<%=idSeccion%>">Guardar</button>
+                            <button class="btn amber waves-effect waves-light" type="submit" name="opcion" value="G<%=id%>">Guardar</button>
                         </div>
                     </form>
                 </div>

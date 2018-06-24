@@ -13,13 +13,11 @@
 <%@page import="dao.SeccionDAO"%>
 <%@page import="dao.AlumnoDAO"%>
 <%@page import="dao.SecretariaDAO"%>
-<%@page import="dao.ReporteSecretariaDAO"%>
 <%@page import="dao.JustificacionDAO"%>
 <%@page import="dao.InasistenciaDAO"%>
 <%@page import="dao.InasistenciaDAO"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="modelo.ReporteSecretaria"%>
 <%@page import="modelo.Carrera"%>
 <%@page import="modelo.JustificacionImagen"%>
 <%@page import="modelo.Justificacion"%>
@@ -55,7 +53,6 @@
             Carrera carrera = new Carrera();
             Inasistencia ina = new Inasistencia();
             Justificacion justi = new Justificacion();
-            ReporteSecretaria reporte = new ReporteSecretaria();
             JustificacionImagen justiImg = new JustificacionImagen();
 
             SimpleDateFormat parseador = new SimpleDateFormat("dd-MM-yyyy");
@@ -72,15 +69,10 @@
                 if (estado.equals("alumno")) {
                     rut = user.getRutUsuario();
                     alum = (new AlumnoDAO()).buscarDatos(rut);
-                    System.out.println("Mensaje jejejje :   " + sesion.getAttribute("idInasistencia").toString());
                     if (sesion.getAttribute("idInasistencia") != null) {
                         ina = (new InasistenciaDAO()).buscar(Integer.parseInt(sesion.getAttribute("idInasistencia").toString()));
-                        justi = (new JustificacionDAO()).buscar(ina.getIdInasistencia());
-                        reporte = (new ReporteSecretariaDAO()).buscarDatos(ina.getIdInasistencia());
-                        if (reporte != null) {
-                            secre = (new SecretariaDAO()).buscarDatos(reporte.getIdSecretaria());
-                            nombreS = secre.getSnombre() + " " + secre.getAppaterno();
-                        }
+                        justi = (new JustificacionDAO()).buscarSubdirector(ina.getIdInasistencia());
+                        
                         alum = (new AlumnoDAO()).buscarDatosId(ina.getIdAlumno());
                         seccion = (new SeccionDAO()).buscar(ina.getIdSeccion());
                         carrera = (new CarreraDAO()).buscar(alum.getIdCarrera());
@@ -108,10 +100,13 @@
                         if (ina.getFechaInasistencia2() != null) {
                             fecha2 = parseador.format(ina.getFechaInasistencia2());
                         }
-                        justiImg = (new ImagenDAO()).buscar(justi.getIdJustificacion());
-                        if (justiImg != null) {
-                            isImg = 1;
+                        if((new ImagenDAO()).buscar(justi.getIdJustificacion())!=null){
+                            justiImg = (new ImagenDAO()).buscar(justi.getIdJustificacion());
+                            if (justiImg != null) {
+                                isImg = 1;
+                            }
                         }
+                        
                     } else {
                         response.sendRedirect("../index.jsp");
                     }

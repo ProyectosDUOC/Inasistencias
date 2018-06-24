@@ -39,7 +39,14 @@ public class ControladorAlumno extends HttpServlet {
         if (opcion.charAt(0) == 'v') {
             idInasistencia = opcion.substring(1);
             session.setAttribute("idInasistencia",idInasistencia);
+            session.setAttribute("idIna",null);
             response.sendRedirect("Alumno/verJustificacion.jsp");  
+        }
+        if (opcion.charAt(0) == 'J') {
+            idInasistencia = opcion.substring(1);            
+            session.setAttribute("idInasistencia",null);
+            session.setAttribute("idIna",idInasistencia);
+            response.sendRedirect("Alumno/justificarAlumno.jsp");  
         }
     }
 

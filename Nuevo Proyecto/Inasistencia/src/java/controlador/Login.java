@@ -86,11 +86,12 @@ public class Login extends HttpServlet {
                     
                         case 1:
                             sesion.setAttribute("tipoUsuario", "alumno");
-                            if (ingreso.getUsuario().equals("alumDemo")) {
-                                response.sendRedirect("alumno.jsp");
-                                break;
-                            }
-                            response.sendRedirect("index.jsp");                           
+                           // if (ingreso.getUsuario().equals("alumDemo")) {
+                           //     response.sendRedirect("alumno.jsp");
+                           //     break;
+                          //  }
+                          //  response.sendRedirect("index.jsp");    
+                            response.sendRedirect("alumno.jsp");
                             break;
                     /*       
                         case 2:

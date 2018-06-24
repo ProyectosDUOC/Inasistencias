@@ -52,11 +52,11 @@
                                 <table>
                                     <tr>
                                         <td>Usuario:</td>
-                                        <td><input type="text" name="txtUser" required="" maxlength="15" placeholder="Usuario"/></td>
+                                        <td><input type="text" name="txtUser" required="" maxlength="30" placeholder="Usuario"/></td>
                                     </tr>
                                     <tr>
                                         <td>Contraseña:</td>
-                                        <td><input type="password" name="txtPass" id="pass1" required="" maxlength="10" placeholder="********" /></td>
+                                        <td><input type="password" name="txtPass" id="pass1" required="" maxlength="30" placeholder="********" /></td>
                                     </tr>    
                                 </table>
                                 <div >
