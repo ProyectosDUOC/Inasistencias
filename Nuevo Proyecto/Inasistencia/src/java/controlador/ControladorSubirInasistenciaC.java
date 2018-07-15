@@ -77,7 +77,7 @@ public class ControladorSubirInasistenciaC extends HttpServlet {
                     mensaje = mensaje + "<tr>";                    
                     mensaje = mensaje + "<td><strong></strong>"+parseador.format(ina.getFechaInasistencia())+"</td>"; 
                     mensaje = mensaje + "<td><strong></strong>"+seccion.getCodSeccion()+"</td>";
-                    mensaje = mensaje + "<td><strong></strong>"+docente.getPnombre()+""+docente.getAppaterno()+"</td>";                   
+                    mensaje = mensaje + "<td><strong></strong>"+docente.getPnombre()+" "+docente.getAppaterno()+"</td>";                   
                     mensaje = mensaje + "</tr>";
                     ina.setIdEstadoc(1);
                     ina.setIdEstadoi(1);

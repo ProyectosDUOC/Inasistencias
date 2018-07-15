@@ -4,6 +4,8 @@
     Author     : benja
 --%>
 
+<%@page import="dao.DocenteDAO"%>
+<%@page import="modelo.Docente"%>
 <%@page import="dao.ControlUsuarioDAO"%>
 <%@page import="modelo.ControlUsuario"%>
 <%@page import="dao.AlumnoDAO"%>
@@ -40,7 +42,27 @@
             <p>Usuario : <%=control.getUsuario()%>  clave: <%=control.getClave()%> rut: <%=control.getRutUsuario()%> </p>
             <%
         }
-       
+%>
+<p> DOCENTES </p>
+        <%
+        ArrayList<Docente> docentes = (new DocenteDAO()).mostrarDatosEspecificos();
+
+        for(Docente d: docentes){
+            e = d.getEmail();
+            for (int x=0;x<e.length();x++){                
+                if(e.charAt(x)=='@'){
+                    break;
+                }
+                u = u + e.charAt(x);
+            }
+            u = u.toLowerCase();
+            control = new ControlUsuario(0,u,u,d.getRutDocente(),2,1);
+            (new ControlUsuarioDAO()).agregar(control);
+            u="";
+            %> 
+            <p>Usuario : <%=control.getUsuario()%>  clave: <%=control.getClave()%> rut: <%=control.getRutUsuario()%> </p>
+            <%
+        }
        
        %>
     </body>

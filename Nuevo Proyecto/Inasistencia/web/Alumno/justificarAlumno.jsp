@@ -116,7 +116,7 @@
                 <div class="col s12 m6 color-Azul-text">                    
                     <h4 class="color-Plomo center-align">Asignatura</h4>  
                     <p><strong>Nombre Asignatura :</strong> <span><%=nombreAsig%></span></p>
-                    <p><strong>Sección :</strong> <span><%=seccion.getCodRamo()%></span></p>
+                    <p><strong>Sección :</strong> <span><%=seccion.getCodSeccion()%></span></p>
                     <p><strong>Profesor : </strong><span><%=nombreDocente%></span></p>
                     <h4 class="color-Plomo center-align">Alumno</h4>  
                     <p><strong>Nombre Alumno :</strong> <span><%=nombreA%></span></p>
@@ -128,7 +128,7 @@
                 </div>
                 <div class="col s12 m6 color-Azul-text">
                     <h4 class="color-Plomo center-align">Justificación</h4>
-                    <form action="../ControladorJustificarAlumno" method="post" enctype="multipart/form-data">
+                    <form action="../ControladorJustificarAlumno" method="post">
                         <table class="color-Plomo color-Azul-text">
                             <tr>
                                 <td><p><strong>Fecha Inasistencia:</strong></td>
@@ -165,10 +165,6 @@
                             </tr>
                         </table>
                         <br>
-                        <div>
-                            <input type="file" name="file" accept="image/*;capture=camera"/>
-                           
-                        </div>
                         <br>
                         <div>
                             <a class="white-text btn  waves-effect waves-light  red" href="../<%=estado%>.jsp">Volver</a>

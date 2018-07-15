@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import modelo.Alumno;
 import modelo.Docente;
 
 /**
@@ -171,4 +172,41 @@ public class DocenteDAO implements GeneralDocenteDAO{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    private ArrayList<Docente> arrayDocente = new ArrayList<>();
+    public ArrayList mostrarDatosEspecificos() {
+        Docente obj = null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM docente doce left JOIN control_usuario con ON doce.rut_docente=con.rut_usuario WHERE con.usuario is null  group by doce.rut_docente;";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+
+            int id, activo;
+            String rut, pnombre, snombre, appaterno, apmaterno, email;
+
+            arrayDocente.removeAll(arrayDocente);
+            while (results.next()) {
+                id = results.getInt("id_docente");
+                rut = results.getString("rut_docente");
+                pnombre = results.getString("pnombre");
+                snombre = results.getString("snombre");
+                appaterno = results.getString("appaterno");
+                apmaterno = results.getString("apmaterno");
+                email = results.getString("email");
+                activo = results.getInt("activo");
+
+                obj = new Docente(id, rut, pnombre, snombre, appaterno, apmaterno, email, activo);
+                arrayDocente.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayDocente;
+    }
 }

@@ -88,7 +88,7 @@ public class SeccionDAO implements GeneralSeccionDAO{
             ResultSet results = statement.executeQuery(consultaSQL);
           
             int idSec,idDoce, semes, anyo;
-            String codSec;
+            String codSec, codRamo;
 
             arraySeccion.removeAll(arraySeccion);
             
@@ -97,9 +97,9 @@ public class SeccionDAO implements GeneralSeccionDAO{
                 codSec = results.getString("cod_seccion");                
                 idDoce = results.getInt("id_docente");
                 semes = results.getInt("semestre");
+                codRamo = results.getString("cod_ramo");
                 anyo = results.getInt("anio");
-                
-                obj = new Seccion(idSec, codSec, codSec, idDocente, semes, anyo);
+                obj = new Seccion(idSec, codSec, codRamo, idDocente, semes, anyo);
                 arraySeccion.add(obj);
             }
             connection.close();
@@ -110,6 +110,41 @@ public class SeccionDAO implements GeneralSeccionDAO{
         return arraySeccion;
     }
 
+    public ArrayList mostrarDocente(int idDocente, int anio, int semestre) {
+        Seccion obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM seccion WHERE id_docente = "+ idDocente +" and anio="+anio+" and semestre="+semestre+";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+          
+            int idSec,idDoce, semes, anyo;
+            String codSec, codRamo;
+
+            arraySeccion.removeAll(arraySeccion);
+            
+            while (results.next()) {
+                idSec = results.getInt("id_seccion");
+                codSec = results.getString("cod_seccion");                
+                idDoce = results.getInt("id_docente");                
+                codRamo = results.getString("cod_ramo");
+                semes = results.getInt("semestre");
+                anyo = results.getInt("anio");
+                obj = new Seccion(idSec, codSec, codRamo, idDocente, semes, anyo);
+                arraySeccion.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arraySeccion;
+    }
+    
     @Override
     public ArrayList seccionesAnyoSemestre(int semestre, int anio) {
         Seccion obj =null;
@@ -135,8 +170,7 @@ public class SeccionDAO implements GeneralSeccionDAO{
                 semes = results.getInt("semestre");
                 codRamo = results.getString("cod_ramo");
                 anyo = results.getInt("anio");
-                
-                obj = new Seccion(idSec, codSec, codRamo, idDoce, semestre, anio);
+                obj = new Seccion(idSec, codSec, codRamo, idDoce, semes, anyo);
                 arraySeccion.add(obj);
             }
             connection.close();

@@ -54,7 +54,7 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        try{
         HttpSession sesion = request.getSession(true);
         String user = request.getParameter("txtUser");
         String pass = request.getParameter("txtPass");
@@ -86,31 +86,18 @@ public class Login extends HttpServlet {
                     
                         case 1:
                             sesion.setAttribute("tipoUsuario", "alumno");
-                           // if (ingreso.getUsuario().equals("alumDemo")) {
-                           //     response.sendRedirect("alumno.jsp");
-                           //     break;
-                          //  }
-                          //  response.sendRedirect("index.jsp");    
                             response.sendRedirect("alumno.jsp");
-                            break;
-                    /*       
+                            break;                          
                         case 2:
                             sesion.setAttribute("tipoUsuario", "docente");
-                            doce = (new DocenteDAO()).buscarDatos(ingreso.getRutUsuario());
-                            sesion.setAttribute("login",doce);
                             response.sendRedirect("docente.jsp");
-                            break;
-                    */
+                            break;                    
                         case 3:
-                            sesion.setAttribute("tipoUsuario", "director");
-                            dire = (new DirectorDAO()).buscarDatos(ingreso.getRutUsuario());
-                            sesion.setAttribute("login",dire);
+                            sesion.setAttribute("tipoUsuario", "director");                          
                             response.sendRedirect("director.jsp");
                             break;                           
                         case 4:
                             sesion.setAttribute("tipoUsuario", "administrador");
-                            admin= (new AdministradorDAO()).buscarDatos(ingreso.getRutUsuario());
-                            sesion.setAttribute("login",admin);
                             response.sendRedirect("administrador.jsp");                            
                             break;
                         case 5:
@@ -180,6 +167,9 @@ public class Login extends HttpServlet {
             } else {
                 response.sendRedirect("cambiarContra.jsp?mensaje=Las claves nuevas no coinciden");
             }
+        }}
+          catch(Exception ex){
+             response.sendRedirect("index.jsp");  
         }
     }
 

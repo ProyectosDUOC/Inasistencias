@@ -31,7 +31,7 @@ public class ControladorAlumno extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        try{
         HttpSession session = request.getSession(true);    
         String idInasistencia = "";
         String opcion = request.getParameter("opcion");
@@ -47,6 +47,9 @@ public class ControladorAlumno extends HttpServlet {
             session.setAttribute("idInasistencia",null);
             session.setAttribute("idIna",idInasistencia);
             response.sendRedirect("Alumno/justificarAlumno.jsp");  
+        }}
+        catch(Exception ex){
+             response.sendRedirect("index.jsp");  
         }
     }
 

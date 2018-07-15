@@ -78,7 +78,7 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO {
 
             Statement statement = connection.createStatement();
 
-            String consultaSQL = "SELECT * FROM inasistencia WHERE id_seccion = " + idSeccion + ";";
+            String consultaSQL = "SELECT * FROM inasistencia WHERE id_seccion = " + idSeccion + " order by id_estadoi desc;";
 
             ResultSet results = statement.executeQuery(consultaSQL);
             int idIna, idSec, idAlu, idEstI, idEstC;
@@ -319,6 +319,31 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO {
 
     }
 
+       public int contadorInasistenciasDocente(int idSeccion) {
+        int contador = 0;
+
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM inasistencia WHERE id_estadoi = 2 and  id_seccion = " + idSeccion +";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+
+            while (results.next()) {
+                contador++;
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return contador;
+
+    }
+    
     @Override
     public int agregar(Inasistencia inasistencia) {
         try {

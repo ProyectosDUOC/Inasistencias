@@ -196,7 +196,7 @@
                                         type="submit" 
                                         name="opcion" 
                                         value="">
-                                    Ver justificación
+                                    Justificado
                                 </button>
                                 <%}%>
                                 <%if (ina.getIdEstadoi() == 3) {%>

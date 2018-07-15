@@ -56,6 +56,10 @@
         <servlet-name>ControladorJustificarAlumno</servlet-name>
         <servlet-class>controlador.ControladorJustificarAlumno</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorDocente</servlet-name>
+        <servlet-class>controlador.ControladorDocente</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -111,6 +115,10 @@
     <servlet-mapping>
         <servlet-name>ControladorJustificarAlumno</servlet-name>
         <url-pattern>/ControladorJustificarAlumno</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorDocente</servlet-name>
+        <url-pattern>/ControladorDocente</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

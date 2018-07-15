@@ -38,7 +38,7 @@ import modelo.Subdirector;
  *
  * @author benja
  */
-@MultipartConfig
+
 public class ControladorJustificarAlumno extends HttpServlet {
 
     /**
@@ -53,6 +53,7 @@ public class ControladorJustificarAlumno extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        try{
         HttpSession session = request.getSession(true);
         ControlUsuario user = session.getAttribute("usuario") == null ? new ControlUsuario() : (ControlUsuario) session.getAttribute("usuario");
 
@@ -62,22 +63,17 @@ public class ControladorJustificarAlumno extends HttpServlet {
         miselect = request.getParameterValues("motivo");
         String glosa = request.getParameter("glosa");
         String motivo = "", rutA = "", fechaActual = "", idSeccion = "", descripcion="", mensaje="", correo="", idIna="";
-
         
         SimpleDateFormat parseador = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String fechaHoy = parseador.format(date);
         int x = 0, estadoIna=2;
         Alumno alum = new Alumno();
-        //Secretaria secre = new Secretaria();
         Justificacion justificacion = new Justificacion();
         Inasistencia inasistencia = new Inasistencia();
         JustificacionImagen img = new JustificacionImagen();
-        //ReporteSecretaria report = new ReporteSecretaria();
         GlobalSemestre semestreActual = new GlobalSemestre();
         Carrera carrera = new Carrera();
-        Part filePart = request.getPart("file"); //img
-        //String dias = request.getParameter("grupo1");
         Director dire = new Director();
         Subdirector subd = new Subdirector();
         
@@ -90,45 +86,23 @@ public class ControladorJustificarAlumno extends HttpServlet {
             for (int i = 0; i < miselect.length; i++) {
                 motivo = miselect[i];
             }
-            alum = (new AlumnoDAO()).buscarDatos(rutA);
                         
-            inasistencia.setIdEstadoi(2);
-
-            //inasistencia = new Inasistencia(0, fechaInasistencia,fechaInasistencia, Integer.parseInt(idSeccion), alum.getIdAlumno(), estadoIna, 7);
-            x = (new InasistenciaDAO()).actualizar(inasistencia);
-            
-            
+            inasistencia.setIdEstadoi(2);            x = (new InasistenciaDAO()).actualizar(inasistencia);           
             justificacion = new Justificacion(0, inasistencia.getIdInasistencia(), fechaHoy, Integer.parseInt(motivo), glosa);
            
             x = (new JustificacionDAO()).agregar(justificacion);
             justificacion = (new JustificacionDAO()).buscarEspecifica(justificacion);
-            
-            if (filePart.getSize()>0) {
-                File file = File.createTempFile("foto-", ".jpg");
-                File file2 = new File(System.getenv("UPLOADS"), file.getName());
-                try (InputStream input = filePart.getInputStream()) {
-                    Files.copy(input, file2.toPath());
-                }            
-                String nombreFile = file2.getName();
-                descripcion="idIna:"+inasistencia.getIdInasistencia()+" rut:"+rutA+" fecha:"+fechaInasistencia;
-                img = new JustificacionImagen(0, justificacion.getIdJustificacion(), nombreFile, descripcion);
-                x = (new ImagenDAO()).agregar(img);
-            }            
-           
-         
-            carrera = (new CarreraDAO()).buscar(alum.getIdCarrera());
-            dire = (new DirectorDAO()).buscarDatos(carrera.getIdDirector());
-            mensaje= (new ControladorCorreo()).mensajeDirector(dire, alum);
-            correo = dire.getEmail();
-            
-            //Correo
-            x =(new ControladorCorreo()).enviar(correo,"", mensaje, "Justificar Inasistencia",0);
+                          
             //Correo alumno
             mensaje = (new ControladorCorreo()).mensajeConfirmacionEnvioAlumno(alum);
             x = (new ControladorCorreo()).enviar(alum.getEmail(),"",mensaje,"Informe de solicitud enviada",0);
             
             session.setAttribute("idIna", null);
             response.sendRedirect("alumno.jsp");
+        }
+        }
+        catch(Exception ex){
+            response.sendRedirect("index.jsp");
         }
     }
 
