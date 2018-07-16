@@ -104,7 +104,7 @@
                         <br>
                     </div>
                     <div class="col s12">
-                        <a href="Director/justificacionesAlumnos.jsp" class="btn waves-effect waves-light color-AzulClaro" >Justificaciones de Alumnos</a>
+                        <a href="Director/justificacionesAlumnos.jsp" class="btn waves-effect waves-light color-AzulClaro" >Informes Alumnos</a>
                         <br>
                         <br>
                     </div>
