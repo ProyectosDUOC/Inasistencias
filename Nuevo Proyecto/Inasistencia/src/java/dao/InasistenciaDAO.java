@@ -115,8 +115,8 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO {
 
             Statement statement = connection.createStatement();
 
-            String consultaSQL = "SELECT * FROM inasistencia ina join seccion sec on(ina.id_seccion = sec.id_seccion) join ramo ram on (ram.cod_ramo = sec.cod_ramo)"
-                    + "join carrera car on (car.id_carrera = ram.id_carrera)  WHERE car.id_carrera = " + idCarrera + " AND  sec.semestre = "+ semestre +" AND sec.anio =" + anyo  +  ";";
+            String consultaSQL = "SELECT * FROM inasistencia ina join seccion sec on(ina.id_seccion=sec.id_seccion) join ramo ram on(ram.cod_ramo=sec.cod_ramo)"
+                    + " join  carrera car on(car.cod_carrera=ram.cod_carrera) where car.id_carrera = " + idCarrera + " AND  sec.semestre="+ semestre +" AND sec.anio=" + anyo  +  ";";
 
             ResultSet results = statement.executeQuery(consultaSQL);
          
