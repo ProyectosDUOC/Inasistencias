@@ -216,7 +216,7 @@ public class AlumnoDAO implements GeneralAlumnoDAO {
             Connection connection = conn.getConnection();
 
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM alumno WHERE email=" + correo + "  ;";
+             String query = "SELECT * FROM alumno WHERE email='" + correo + "';";
 
 
             ResultSet results = statement.executeQuery(query);
