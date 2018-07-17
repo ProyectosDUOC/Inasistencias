@@ -1,11 +1,12 @@
 <%-- 
-    Document   : justificacionesAlumnos
-    Created on : 15-07-2018, 1:14:58
+    Document   : inasistenciaMotivo
+    Created on : 17-07-2018, 13:11:30
     Author     : benja
 --%>
 
-
-
+<%@page import="dao.MotivoDAO"%>
+<%@page import="modelo.Motivo"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="dao.SubdirectorDAO"%>
 <%@page import="dao.SubSecretariaDAO"%>
 <%@page import="modelo.SecretariaSda"%>
@@ -34,6 +35,10 @@
             SecretariaSda secreSDA = new SecretariaSda();
             GlobalSemestre semestreActual = new GlobalSemestre();
             String nombre = "", estado = "", rut = "", link="", texto="";
+            
+            
+            ArrayList<Motivo> arrayMotivo = new ArrayList<Motivo>();
+            
             if (user == null) {
                 response.sendRedirect("../index.jsp");
             } else {
@@ -45,6 +50,7 @@
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
                     link="director";
                     texto="Director de carrera";
+                    arrayMotivo = (new MotivoDAO()).mostrarDatos();
                 }else{
                     response.sendRedirect("../index.jsp");
                 }
@@ -69,49 +75,55 @@
                     </div>
                 </div>
             </div>                   
-        </header>  
-
+        </header>   
         <div class="container">
             <div class="row">
-                <h4 class="color-Plomo color-Azul-text center-align" >Menu <%=texto%></h4>
-
-
-                <div class="col s12 m6 color-Azul-text">
-                    <h4 class="color-Plomo color-Azul-text center-align" ></h4>   
-                    
-                    <div class="col s12">                        
-                        <a href="#login" class="btn waves-effect waves-light color-AzulClaro" >Cantidad de inasistencia por Ramo</a>
-                        <br>
-                        <br>
-                        <a href="inasistenciaMotivo.jsp" class="btn waves-effect waves-light color-AzulClaro" >Cantidad general de inasitencia motivo </a>
-                        <br>
-                        <br>
-                       
-                    </div>
-                                 
-                   
-                    <div class="col s12">
-                        <a  class="white-text btn  waves-effect waves-light  red" href="../director.jsp">volver</a>
-                        <br>
-                        <br>
-                        <br>                        
-                        <br>
-                        <br>                        
-                        <br>
-                        <br>
-                        <br>                
-                        <br>
-                        <br>
-                    </div>
+                <h4 class="color-Azul-text color-Plomo center-align">Todas las Justificaciones</h4>
+                <div class="col s12 m12" style="overflow-x:auto;">
+                    <form action="../ControladorJustificacion" method="POST" >
+                        <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
+                            <thead>
+                                <tr class="amber darken-3">
+                                    <th>Motivo</th>
+                                    <th>Cantidad</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (Motivo motivo : arrayMotivo) {
+                                        if(motivo.getIdMotivo()==0) continue; %>
+                                    <tr>
+                                    <td><%=motivo.getNombreMotivo()%></td>
+                                    <td>2</td>
+                                    <td>
+                                        <button class="btn red waves-effect waves-light" 
+                                                type="submit" 
+                                                name="opcion" 
+                                                value="V">Rechazado
+                                        </button>
+                                    </td>
+                                </tr>                                        
+                              <%  }
+                                %>
+                                
+                                        
+                                                 
+                            </tbody>
+                        </table> 
+                    </form>
                 </div>
+                <a class="btn  waves-effect waves-light  red" href="../<%=estado%>.jsp">Volver</a>     
             </div>
-        </div>   
+        </div>             
         <footer class="color-Azul">            
             <div class="container">
                 <br>
                 <p class="color-Amarillo-text center-align">Desarrollado por Estudiantes DUOC San Bernardo</p>                                
                 <br>
             </div>
-        </footer>   
+        </footer> 
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/jquery.dataTables.js"></script>
+        <script src="../js/script.js"></script>      
     </body>
 </html>
