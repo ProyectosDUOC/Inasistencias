@@ -166,15 +166,56 @@ public class AlumnoDAO implements GeneralAlumnoDAO {
         return obj;
     }
 
-    @Override
-    public Alumno buscarDatosCorreo(String correo) {
+     public Alumno buscarDatos(String rut) {
         Alumno obj = null;
         try {
             conn = new Conectar();
             Connection connection = conn.getConnection();
 
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM alumno WHERE email='" + correo + "';";
+            String query = "SELECT * FROM alumno WHERE rut_alumno='" + rut + "' and activo=1;";
+
+            ResultSet results = statement.executeQuery(query);
+
+            int id, idCarrera, activo;
+            String rut1, pnombre, snombre, appaterno, apmaterno, email, jornada, sexo, celular, tele;
+
+            while (results.next()) {
+                id = results.getInt("id_alumno");
+                rut1 = results.getString("rut_alumno");
+                pnombre = results.getString("pnombre");
+                snombre = results.getString("snombre");
+                appaterno = results.getString("appaterno");
+                apmaterno = results.getString("apmaterno");
+                email = results.getString("email");
+                idCarrera = results.getInt("id_carrera");
+                jornada = results.getString("jornada");
+                sexo = results.getString("sexo");
+                celular = results.getString("celular");
+                tele = results.getString("telefono");
+                activo = results.getInt("activo");
+
+                if (rut1.equals(rut)) {
+                    obj = new Alumno(id, rut, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo, sexo, tele, celular, jornada);
+                    break;
+                }
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return obj;
+    }
+    
+    public Alumno buscarONEDatosCarrea(int id_carrera) {
+        Alumno obj = null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+            String query = "SELECT * FROM alumno WHERE id_carrera=" + id_carrera + ";";
 
             ResultSet results = statement.executeQuery(query);
 
@@ -196,7 +237,7 @@ public class AlumnoDAO implements GeneralAlumnoDAO {
                 idCarrera = results.getInt("id_carrera");
                 activo = results.getInt("activo");
 
-                if (email.equals(correo)) {
+                if (idCarrera==id_carrera) {
 
                     obj = new Alumno(id, rut, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo, sexo, tele, celular, jornada);
                     break;
