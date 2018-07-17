@@ -166,14 +166,14 @@ public class AlumnoDAO implements GeneralAlumnoDAO {
         return obj;
     }
 
-     public Alumno buscarDatos(String rut) {
+      public Alumno buscarONEDatosCarrera(int car) {
         Alumno obj = null;
         try {
             conn = new Conectar();
             Connection connection = conn.getConnection();
 
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM alumno WHERE rut_alumno='" + rut + "' and activo=1;";
+            String query = "SELECT * FROM alumno WHERE id_carrera=" + car + " limit 1;";
 
             ResultSet results = statement.executeQuery(query);
 
@@ -195,8 +195,8 @@ public class AlumnoDAO implements GeneralAlumnoDAO {
                 tele = results.getString("telefono");
                 activo = results.getInt("activo");
 
-                if (rut1.equals(rut)) {
-                    obj = new Alumno(id, rut, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo, sexo, tele, celular, jornada);
+                if (idCarrera==car) {
+                    obj = new Alumno(id, rut1, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo, sexo, tele, celular, jornada);
                     break;
                 }
             }
@@ -208,14 +208,15 @@ public class AlumnoDAO implements GeneralAlumnoDAO {
         return obj;
     }
     
-    public Alumno buscarONEDatosCarrea(int id_carrera) {
+    @Override
+    public Alumno buscarDatosCorreo(String correo) {
         Alumno obj = null;
         try {
             conn = new Conectar();
             Connection connection = conn.getConnection();
 
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM alumno WHERE id_carrera=" + id_carrera + ";";
+            String query = "SELECT * FROM alumno WHERE email='" + correo + "';";
 
             ResultSet results = statement.executeQuery(query);
 
@@ -237,7 +238,7 @@ public class AlumnoDAO implements GeneralAlumnoDAO {
                 idCarrera = results.getInt("id_carrera");
                 activo = results.getInt("activo");
 
-                if (idCarrera==id_carrera) {
+                if (email.equals(correo)) {
 
                     obj = new Alumno(id, rut, pnombre, snombre, appaterno, apmaterno, email, idCarrera, activo, sexo, tele, celular, jornada);
                     break;
