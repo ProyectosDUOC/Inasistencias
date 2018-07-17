@@ -1,20 +1,29 @@
 <%-- 
-    Document   : inasistenciaMotivo
-    Created on : 17-07-2018, 13:11:30
+    Document   : justificaciones
+    Created on : 06-may-2018, 1:52:15
     Author     : benja
 --%>
 
-<%@page import="dao.MotivoDAO"%>
 <%@page import="modelo.Motivo"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="dao.SubdirectorDAO"%>
-<%@page import="dao.SubSecretariaDAO"%>
-<%@page import="modelo.SecretariaSda"%>
-<%@page import="modelo.Subdirector"%>
+<%@page import="dao.MotivoDAO"%>
+<%@page import="dao.JustificacionDAO"%>
+<%@page import="modelo.Justificacion"%>
+<%@page import="dao.AlumnoDAO"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="dao.SeccionDAO"%>
+<%@page import="modelo.Seccion"%>
+<%@page import="modelo.Ramo"%>
+<%@page import="dao.RamoDAO"%>
+<%@page import="modelo.Inasistencia"%>
+<%@page import="dao.InasistenciaDAO"%>
+<%@page import="dao.GlobalSemestreDAO"%>
 <%@page import="modelo.GlobalSemestre"%>
+<%@page import="dao.ReporteSecretariaDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="modelo.ReporteSecretaria"%>
 <%@page import="dao.DirectorDAO"%>
-<%@page import="modelo.ControlUsuario"%>
 <%@page import="modelo.Director"%>
+<%@page import="modelo.ControlUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,6 +33,8 @@
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+        <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.min.css"> 
         <link rel="stylesheet" type="text/css" href="../css/styleLogin.css">  
         <link rel="shortcut icon" href="../images/favicon.ico?" type="images/favicon.ico" />
         <title>Menu Director</title>
@@ -31,29 +42,32 @@
             HttpSession sesion = request.getSession(true);
             ControlUsuario user = sesion.getAttribute("usuario") == null ? null : (ControlUsuario) sesion.getAttribute("usuario");
             Director dire = new Director();
-            Subdirector subdire = new Subdirector();
-            SecretariaSda secreSDA = new SecretariaSda();
-            GlobalSemestre semestreActual = new GlobalSemestre();
-            String nombre = "", estado = "", rut = "", link="", texto="";
-            
             
             ArrayList<Motivo> arrayMotivo = new ArrayList<Motivo>();
+            
+            String nombre = "", estado = "", rut = "", fecha2 = "";
             
             if (user == null) {
                 response.sendRedirect("../index.jsp");
             } else {
                 estado = sesion.getAttribute("tipoUsuario").toString();
-                rut = user.getRutUsuario();
-                semestreActual = (GlobalSemestre) session.getAttribute("semestreActual");
                 if (estado.equals("director")) {
+                    rut = user.getRutUsuario();
                     dire = (new DirectorDAO()).buscarDatos(rut);
+
+                    
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
-                    link="director";
-                    texto="Director de carrera";
                     arrayMotivo = (new MotivoDAO()).mostrarDatos();
-                }else{
+                  
+                    
+                    
+                    
+                    
+                    
+                } else {
                     response.sendRedirect("../index.jsp");
                 }
+
             }
         %>
     </head>
@@ -65,8 +79,8 @@
                         <br>
                         <h5 class="white-text"><strong>Sistema de inasistencias</strong></h5>
                         <div class="col s6 offset-s6">
-                            <a href="<%=link%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>  
-                            <a href="<%=link%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
+                            <a href="../<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">home</i></strong></a>  
+                            <a href="../<%=estado%>.jsp" class="color-Amarillo-text"><strong><i class="Tiny material-icons prefix">person</i>Bienvenido </strong><span class="white-text"><%=nombre%></span></a>
                             <div class="cols s6">
                                 <a class="waves-effect waves-light" href="../configuracion.jsp"><i class="material-icons color-Amarillo-text left">settings_applications</i><span class="white-text"><strong>Configuración</strong></span></a>&nbsp;&nbsp;&nbsp;
                                 <a class="waves-effect waves-light" href="../index.jsp"><i class="material-icons color-Amarillo-text left">exit_to_app</i><span class="white-text"><strong>Salir</strong></span></a>                         
@@ -75,7 +89,8 @@
                     </div>
                 </div>
             </div>                   
-        </header>   
+        </header>  
+
         <div class="container">
             <div class="row">
                 <h4 class="color-Azul-text color-Plomo center-align">Todas las Justificaciones</h4>
@@ -84,30 +99,26 @@
                         <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
                             <thead>
                                 <tr class="amber darken-3">
-                                    <th>Motivo</th>
+                                    <th>Nombre Motivo</th>
                                     <th>Cantidad</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% for (Motivo motivo : arrayMotivo) {
-                                        if(motivo.getIdMotivo()==0) continue; %>
-                                    <tr>
-                                    <td><%=motivo.getNombreMotivo()%></td>
-                                    <td>2</td>
+                                <% for(Motivo mo : arrayMotivo){
+                                    if(mo.getIdMotivo()==0) continue;
+                                %>
+                                <tr>                               
+                                    <td><%=mo.getNombreMotivo()%></td>
+                                    <td>100</td>
                                     <td>
-                                        <button class="btn red waves-effect waves-light" 
+                                        <button class="btn green waves-effect waves-light" 
                                                 type="submit" 
                                                 name="opcion" 
-                                                value="V">Rechazado
-                                        </button>
-                                    </td>
-                                </tr>                                        
-                              <%  }
-                                %>
-                                
-                                        
-                                                 
+                                                value="V">ver</button>
+                                    </td>     
+                                </tr>  
+                                <%}%>
                             </tbody>
                         </table> 
                     </form>
