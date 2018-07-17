@@ -93,5 +93,38 @@ public class CarreraDAO implements GeneralCarreraDAO{
         }
         return arrayCarreras;
     }
-    
+      public ArrayList mostrarDatosDirector(int id1) {
+        Carrera obj =null;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM carrera where id_director="+id1+";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+
+             int id, director;
+            String codCar, nombCar;
+            
+            //int idDetSecc, idSecc, activo, idAlumno ;
+            arrayCarreras.removeAll(arrayCarreras);
+            
+            while (results.next()) {
+               id = results.getInt("id_carrera"); 
+                codCar = results.getString("cod_carrera");
+                nombCar = results.getString("nombre_carrera");
+                director = results.getInt("id_director");
+                
+                obj = new Carrera(id, codCar, nombCar, director);
+                arrayCarreras.add(obj);
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return arrayCarreras;
+    }
 }
