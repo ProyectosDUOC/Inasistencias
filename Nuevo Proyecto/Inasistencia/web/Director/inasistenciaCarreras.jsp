@@ -46,6 +46,8 @@
             Director dire = new Director();
             
             ArrayList<Carrera> arrayCarrera = new ArrayList<Carrera>();
+            int countI = 0;
+            GlobalSemestre glob = new GlobalSemestre();
             
             String nombre = "", estado = "", rut = "", fecha2 = "", jornada= "";
             
@@ -61,9 +63,7 @@
                     nombre = dire.getPnombre() + " " + dire.getSnombre() + " " + dire.getAppaterno() + " " + dire.getApmaterno();
                     arrayCarrera = (new CarreraDAO()).mostrarDatosDirector(dire.getIdDirector());
                   
-                    
-                    
-                    
+                    glob = (new GlobalSemestreDAO()).buscar();
                     
                     
                 } else {
@@ -101,18 +101,22 @@
                         <table id="example" class="striped grey lighten-2 table table-striped table-bordered color-Azul-text" cellspacing="0"  width="100%"> 
                             <thead>
                                 <tr class="amber darken-3">
-                                    <th>Nombre Motivo</th>
+                                    <th>Nombre Motivo</th>                                
+                                    <th>Jornada</th>
                                     <th>Cantidad</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <% for(Carrera ca : arrayCarrera){
-                                    jornada = (new AlumnoDAO()).buscarONEDatosCarrea(ca.getIdCarrera()).getJornada().toString();
-                                    %>
+                                    jornada = (new AlumnoDAO()).buscarONEDatosCarrera(ca.getIdCarrera()).getJornada().toString();
+                             
+                                    countI = (new InasistenciaDAO()).inasistenciaContador( ca.getIdCarrera(), glob.getSemestre(), glob.getAnio());
+                                %>
                                 <tr>                               
                                     <td><%=ca.getNombreCarrera()%></td>
                                     <td><%=jornada%></td>
+                                    <td> <%=countI %>  </td> <!-- Cantidad  -->
                                     <td>
                                         <button class="btn green waves-effect waves-light" 
                                                 type="submit" 

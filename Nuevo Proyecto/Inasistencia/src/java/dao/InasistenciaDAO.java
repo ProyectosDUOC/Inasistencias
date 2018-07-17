@@ -105,6 +105,33 @@ public class InasistenciaDAO implements GeneralInasistenciasDAO {
         }
         return arrayInasistencia;
     }
+    
+    public int inasistenciaContador( int idCarrera, int semestre, int anyo) {
+        Inasistencia obj = null;
+        int count = 0;
+        try {
+            conn = new Conectar();
+            Connection connection = conn.getConnection();
+
+            Statement statement = connection.createStatement();
+
+            String consultaSQL = "SELECT * FROM inasistencia ina join seccion sec on(ina.id_seccion = sec.id_seccion) join ramo ram on (ram.cod_ramo = sec.cod_ramo)"
+                    + "join carrera car on (car.id_carrera = ram.id_carrera)  WHERE car.id_carrera = " + idCarrera + " AND  sec.semestre = "+ semestre +" AND sec.anio =" + anyo  +  ";";
+
+            ResultSet results = statement.executeQuery(consultaSQL);
+         
+            while (results.next()) {
+               count = count +1;
+            }
+            connection.close();
+            conn.desconectar();
+        } catch (java.lang.Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return count;
+    }
+    
+    
      public ArrayList inasistenciaSubdirector(int semestre, int anio) {
         Inasistencia obj = null;
         try {
