@@ -80,7 +80,7 @@
                     <h4 class="color-Plomo color-Azul-text center-align" ></h4>   
                     
                     <div class="col s12">                        
-                        <a href="#login" class="btn waves-effect waves-light color-AzulClaro" >Cantidad de inasistencia por Ramo</a>
+                        <a href="inasistenciaCarreras.jsp" class="btn waves-effect waves-light color-AzulClaro" >Cantidad de inasistencia por Ramo</a>
                         <br>
                         <br>
                         <a href="inasistenciaMotivo.jsp" class="btn waves-effect waves-light color-AzulClaro" >Cantidad general de inasitencia motivo </a>
